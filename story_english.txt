@@ -1,0 +1,4 @@
+You are an astronaut who had an accident and you cannot remember anything.
+Your spaceship can keep you alive but you cannot go back home. Your goal is 
+to discover all the pieces that you need for repairing the ship to
+go home.
