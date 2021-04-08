@@ -24,13 +24,17 @@ public class GameEngine extends Application {
     public final int BUTTON_WIDTH = 600;
     public final int BUTTON_HEIGHT = 75;
 
+    /* the page of the current scene (not sure if useful)*/
     enum Page {LANGUAGE, INITIAL, MAIN, GAME, PUZZLE};
+    
+    /* the language of the game */
     enum Language {ENGLISH, FRENCH};
 
     private Scene scene;
     private Stage stage_;
 
     private static Page page_;
+    private static Language language_;
     
     @Override
     public void start(Stage theStage) {
@@ -72,7 +76,7 @@ public class GameEngine extends Application {
 
         //set all the layout of the language scene
         Group root_language = new Group();
-        Scene language = new Scene(root_language);
+        Scene scene_language = new Scene(root_language);
         Canvas canvas_language = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
         Button english_button = new Button("English (US)");
@@ -85,10 +89,12 @@ public class GameEngine extends Application {
         french_button.setLayoutX(450);
         french_button.setLayoutY(600);
 
+        //set the button handler and switch to a different scene
         english_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 page_ = Page.INITIAL;
-                scene = getInitialScene(Language.ENGLISH);
+                language_ = Language.ENGLISH;
+                scene = getInitialScene(language_);
                 stage_.setScene(scene);
                 stage_.show();
             }
@@ -97,7 +103,8 @@ public class GameEngine extends Application {
         french_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 page_ = Page.INITIAL;
-                scene = getInitialScene(Language.FRENCH);
+                language_ = Language.FRENCH;
+                scene = getInitialScene(language_);
                 stage_.setScene(scene);
                 stage_.show();
             }
@@ -111,7 +118,7 @@ public class GameEngine extends Application {
 
         Image background = new Image(".//Images/Background-4.png");
         gc_language.drawImage(background, 0, 0);
-        return language;
+        return scene_language;
     }
 
     /**
@@ -120,6 +127,7 @@ public class GameEngine extends Application {
      * @return the initial scene
      */
     private Scene getInitialScene(Language lang) {
+        //set the basic element of the initial scene
         Group root_initial = new Group();
         Scene initial = new Scene(root_initial);
         Canvas canvas_initial = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -128,14 +136,19 @@ public class GameEngine extends Application {
         root_initial.getChildren().add(canvas_initial);
 
         Image background = new Image(".//Images/Background-4.png");
+
+        //depends on the language of the game
+        //the initial scene will load different file
         switch (lang) {
             case ENGLISH:
+                /* TODO: load the english story file */
                 break;
             case FRENCH:
+                /* TODO: load the french story file*/
                 break;
         }
-        
-
+        /* TODO: display the file loaded (or also include this in the switch statement) */
+        gc_initial.drawImage(background, 0, 0);
         return initial;
     }
 
