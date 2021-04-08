@@ -17,12 +17,16 @@ import java.applet.AudioClip;
 import javafx.event.EventHandler;
 import java.beans.XMLEncoder;
 
+import java.util.ArrayList;
+
 public class GameEngine extends Application {
 
     public final int CANVAS_WIDTH = 1600;
     public final int CANVAS_HEIGHT = 1200;
     public final int BUTTON_WIDTH = 600;
     public final int BUTTON_HEIGHT = 75;
+
+    public final Font FONT_LARGE = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50);
 
     /* the page of the current scene (not sure if useful)*/
     enum Page {LANGUAGE, INITIAL, MAIN, GAME, PUZZLE};
@@ -139,16 +143,26 @@ public class GameEngine extends Application {
 
         //depends on the language of the game
         //the initial scene will load different file
+        String fileName = "";
         switch (lang) {
             case ENGLISH:
-                /* TODO: load the english story file */
+                fileName = "story_english.txt";
                 break;
             case FRENCH:
-                /* TODO: load the french story file*/
+                fileName = "story_french.txt";
                 break;
+            default:
+                fileName = "story_english.txt";    
         }
-        /* TODO: display the file loaded (or also include this in the switch statement) */
+        
+        FileReader fr = new FileReader(".//text_files/" + fileName);
+        ArrayList<String> all = fr.allLines();
         gc_initial.drawImage(background, 0, 0);
+        gc_initial.setFill(Color.WHITE);
+        gc_initial.setFont(FONT_LARGE);
+        for (int i = 0; i < all.size(); i++) {
+            gc_initial.fillText(all.get(i), 70, 150 + 80 * i);
+        }
         return initial;
     }
 
