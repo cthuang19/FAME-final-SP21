@@ -135,12 +135,37 @@ public class GameEngine extends Application {
         Group root_initial = new Group();
         Scene initial = new Scene(root_initial);
         Canvas canvas_initial = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-        GraphicsContext gc_initial = canvas_initial.getGraphicsContext2D();
 
+        String next_label = "";
+        switch (lang) {
+            case ENGLISH:
+                next_label = "next";
+                break;
+            case FRENCH:
+                next_label = "next in french"; /* TODO: fill in "next" in french */
+                break;
+            default:
+                next_label = "next";    
+        }
+
+        Button next_button = new Button(next_label);
+        next_button.setMinSize(100, 100);
+        next_button.setLayoutX(1335);
+        next_button.setLayoutY(712);
+        next_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                page_ = Page.MAIN;
+                scene = getMainScene();
+                stage_.setScene(scene);
+                stage_.show();
+            }
+        });
         root_initial.getChildren().add(canvas_initial);
-
+        root_initial.getChildren().add(next_button);
+        
+        GraphicsContext gc_initial = canvas_initial.getGraphicsContext2D();
         Image background = new Image(".//Images/Background-4.png");
-
+        
         //depends on the language of the game
         //the initial scene will load different file
         String fileName = "";
@@ -163,7 +188,20 @@ public class GameEngine extends Application {
         for (int i = 0; i < all.size(); i++) {
             gc_initial.fillText(all.get(i), 70, 150 + 80 * i);
         }
+        
         return initial;
+    }
+
+    public Scene getMainScene() {
+        Group root_main = new Group();
+        Scene scene_main = new Scene(root_main);
+        Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_main = canvas_main.getGraphicsContext2D();
+
+        Image background = new Image(".//Images/Background-4.png");
+        gc_main.drawImage(background, 0, 0);
+        root_main.getChildren().add(canvas_main);
+        return scene_main;
     }
 
     public static void main(String args[]) {

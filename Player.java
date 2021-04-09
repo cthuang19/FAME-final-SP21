@@ -16,7 +16,7 @@ public class Player extends MovingAnimatedImage {
     private double currMaxEnergy;
     private final double maxEnergy = 100;
 
-    enum State {idle, moving, hurt, dead, door, respawn};
+    enum State {IDLE, MOVING, HURT, DEAD, DOOR, RESPAWN};
     private State state;
     public State getState() {return this.state;}
 
@@ -24,10 +24,10 @@ public class Player extends MovingAnimatedImage {
         super(n, x, y, width, height, mass);
         lives = 3;
         fieldEnergy = currMaxEnergy;
-        state = idle;
+        state = State.IDLE;
     }
 
-    public void Player(String n, int x, int y, int l, int e, int s) {
+    public void Player(String n, int x, int y, int l, int e, State s) {
         super(n, x, y, width, height, mass);
         if (l <= currMaxLives) {lives = l;}
         else {lives = currMaxLives;}
@@ -38,18 +38,18 @@ public class Player extends MovingAnimatedImage {
 
     public void update(double time) {
 
-        switch (state)
-            case idle :
+        switch (state) {
+            case IDLE :
                 break;
-            case moving :
+            case MOVING :
                 break;
-            case hurt :
+            case HURT :
                 break;
-            case dead :
+            case DEAD :
                 break;
-            case door :
+            case DOOR :
                 break;
-            case respawn :
+            case RESPAWN :
                 break;
     }
 
