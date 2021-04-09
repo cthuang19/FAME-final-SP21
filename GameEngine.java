@@ -21,12 +21,12 @@ import java.util.ArrayList;
 
 public class GameEngine extends Application {
 
-    public final int CANVAS_WIDTH = 1600;
-    public final int CANVAS_HEIGHT = 1200;
-    public final int BUTTON_WIDTH = 600;
-    public final int BUTTON_HEIGHT = 75;
+    public static final int CANVAS_WIDTH = 1600;
+    public static final int CANVAS_HEIGHT = 1200;
+    public static final int BUTTON_WIDTH = 600;
+    public static final int BUTTON_HEIGHT = 75;
 
-    public final Font FONT_LARGE = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50);
+    public static final Font FONT_LARGE = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50);
 
     /* the page of the current scene (not sure if useful)*/
     enum Page {LANGUAGE, INITIAL, MAIN, GAME, PUZZLE};
@@ -201,6 +201,7 @@ public class GameEngine extends Application {
         Image background = new Image(".//Images/Background-4.png");
         gc_main.drawImage(background, 0, 0);
         root_main.getChildren().add(canvas_main);
+        Player p = new Player("player test", 0, 0);
         return scene_main;
     }
 

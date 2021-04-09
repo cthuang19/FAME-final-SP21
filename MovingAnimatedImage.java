@@ -11,9 +11,9 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 	private double forceY;
 	private String name;
 
-	private double width;
-    private double height;
-    private double mass;
+	protected double width;
+    protected double height;
+    protected double mass;
     
 	public void setState(MovingAnimatedImage x){
 		positionX=x.getPositionX();
@@ -24,7 +24,7 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		accelerationY=0;
 	}	
 	
-	public MovingAnimatedImage(String n,int x,int y, int w, int h, int m){
+	public MovingAnimatedImage(String n,double x, double y, double w, double h, double m){
 		super();
 		this.name=n;
 		positionX=x;
