@@ -1,1 +1,7 @@
-/* TODO: enter french version story */
+Vous êtes un astronaute. Vous avez eu un 
+accident dont vous n'avez aucune mémoire. 
+Votre vaisseau peut vous maintenir en vie 
+mais il est trop endommagé pour vous ramener 
+chez vous. Votre objectif est de trouver 
+toutes les pièces dont vous avez besoin pour 
+le réparer et rentrer chez vous.
