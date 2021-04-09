@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.event.*;
 import javafx.scene.paint.*;
 import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 
 import java.util.*;
 import java.io.*;
@@ -26,7 +27,7 @@ public class GameEngine extends Application {
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 75;
 
-    public static final Font FONT_LARGE = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50);
+    public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 40);
 
     /* the page of the current scene (not sure if useful)*/
     enum Page {LANGUAGE, INITIAL, MAIN, GAME, PUZZLE};
@@ -160,6 +161,7 @@ public class GameEngine extends Application {
                 stage_.show();
             }
         });
+
         root_initial.getChildren().add(canvas_initial);
         root_initial.getChildren().add(next_button);
         
@@ -183,10 +185,13 @@ public class GameEngine extends Application {
         FileReader fr = new FileReader(".//text_files/" + fileName);
         ArrayList<String> all = fr.allLines();
         gc_initial.drawImage(background, 0, 0);
-        gc_initial.setFill(Color.WHITE);
+        gc_initial.setFill(Color.MIDNIGHTBLUE);
+        gc_initial.fillRect(50, 50, 1200, 700);
+        //Drawing a Rectangle
+        gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_initial.fillText(all.get(i), 70, 150 + 80 * i);
+            gc_initial.fillText(all.get(i), 120, 150 + 80 * i);
         }
         
         return initial;
