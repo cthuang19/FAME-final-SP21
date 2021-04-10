@@ -15,7 +15,6 @@ public class Player extends MovingAnimatedImage {
      * whenever the player respawns, is set to currMaxEnergy */
     private double fieldEnergy;
     private double currMaxEnergy;
-    private double energy;
 
     enum PlayerState {IDLE, MOVING, HURT, DEAD, DOOR, RESPAWN};
     private PlayerState state;
@@ -33,7 +32,7 @@ public class Player extends MovingAnimatedImage {
         if (l <= currMaxLives) {lives = l;}
         else {lives = currMaxLives;}
         if (e <= currMaxEnergy) {fieldEnergy = e;}
-        else {energy = currMaxEnergy;} // not sure if you want to have a field name "energy"?
+        else {fieldEnergy = currMaxEnergy;}
         state = s;
     }
 
@@ -52,6 +51,8 @@ public class Player extends MovingAnimatedImage {
                 break;
             case RESPAWN :
                 break;
+            default:
+                state = PlayerState.IDLE;
         }        
     }
 

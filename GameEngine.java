@@ -143,7 +143,7 @@ public class GameEngine extends Application {
                 next_label = "next";
                 break;
             case FRENCH:
-                next_label = "next in french"; /* TODO: fill in "next" in french */
+                next_label = "suivant";
                 break;
             default:
                 next_label = "next";    
