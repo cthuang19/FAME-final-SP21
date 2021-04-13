@@ -187,6 +187,7 @@ public class GameEngine extends Application {
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
         gc_initial.setFill(Color.MIDNIGHTBLUE);
         gc_initial.fillRect(50, 50, 1200, 700);
+        gc_initial.fillRect(0, 0, 25, 25);
         //Drawing a Rectangle
         gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
