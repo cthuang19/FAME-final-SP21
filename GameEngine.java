@@ -235,7 +235,7 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page_ = Page.LANGUAGE;
+        page_ = Page.GAME;
         current_game_level_ = 1;
         launch(args);
     }

@@ -13,6 +13,7 @@ public class MainGame {
     /* the array that represents each location on the game page */
     //private int[][] game_array_ = new int[40][30];
     private int[][] game_array_ = new int[36][20];
+    private AnimatedImage[][] display_array = new AnimatedImage[36][20];
 
     /* the level of the current game */
     private int level_;
@@ -50,6 +51,27 @@ public class MainGame {
                             cell_int = 0;
                         }
                         game_array_[c][i] = cell_int;
+                        
+                        switch(cell_int) {
+                            case EMPTY_CELL:
+                                display_array[c][i] = null;
+                                break;
+                            case ROCK_CELL:
+                                display_array[c][i] = new Asteroid(c, i);
+                                break;
+                            case PLAYER_CELL:
+                                //TODO: add a player here with given location
+                                break;
+                            case GHOST_CELL:
+                                //TODO: add a ghost here with given location
+                                // or probably separate each ghost color by more 
+                                // different cell_int
+                                break;    
+                            default:
+                                display_array[c][i] = null;
+                                break;
+                        }
+                        
                     }
                 }
             }
