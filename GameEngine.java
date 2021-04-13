@@ -29,6 +29,8 @@ public class GameEngine extends Application {
 
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 40);
 
+    public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
+
     /* the page of the current scene (not sure if useful)*/
     enum Page {LANGUAGE, INITIAL, MAIN, GAME, PUZZLE};
     
@@ -121,8 +123,7 @@ public class GameEngine extends Application {
 
         GraphicsContext gc_language = canvas_language.getGraphicsContext2D();
 
-        Image background = new Image(".//Images/Background-4.png");
-        gc_language.drawImage(background, 0, 0);
+        gc_language.drawImage(BACKGROUND_IMAGE, 0, 0);
         return scene_language;
     }
 
@@ -166,7 +167,6 @@ public class GameEngine extends Application {
         root_initial.getChildren().add(next_button);
         
         GraphicsContext gc_initial = canvas_initial.getGraphicsContext2D();
-        Image background = new Image(".//Images/Background-4.png");
         
         //depends on the language of the game
         //the initial scene will load different file
@@ -184,7 +184,7 @@ public class GameEngine extends Application {
         
         FileReader fr = new FileReader(".//text_files/" + fileName);
         ArrayList<String> all = fr.allLines();
-        gc_initial.drawImage(background, 0, 0);
+        gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
         gc_initial.setFill(Color.MIDNIGHTBLUE);
         gc_initial.fillRect(50, 50, 1200, 700);
         //Drawing a Rectangle
@@ -203,13 +203,12 @@ public class GameEngine extends Application {
         Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_main = canvas_main.getGraphicsContext2D();
 
-        Image background = new Image(".//Images/Background-4.png");
-        gc_main.drawImage(background, 0, 0);
+        gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
         root_main.getChildren().add(canvas_main);
         Player p = new Player("player test", 0, 0);
         return scene_main;
     }
-
+    
     public static void main(String args[]) {
         page_ = Page.LANGUAGE;
         launch(args);
