@@ -13,7 +13,7 @@ public class MainGame {
     /* the array that represents each location on the game page */
     //private int[][] game_array_ = new int[40][30];
     private int[][] game_array_ = new int[36][20];
-    private AnimatedImage[][] display_array = new AnimatedImage[36][20];
+    private AnimatedImage[][] display_array_ = new AnimatedImage[36][20];
 
     /* the level of the current game */
     private int level_;
@@ -54,10 +54,10 @@ public class MainGame {
                         
                         switch(cell_int) {
                             case EMPTY_CELL:
-                                display_array[c][i] = null;
+                                display_array_[c][i] = null;
                                 break;
                             case ROCK_CELL:
-                                display_array[c][i] = new Asteroid(c, i);
+                                display_array_[c][i] = new Asteroid(c, i);
                                 break;
                             case PLAYER_CELL:
                                 //TODO: add a player here with given location
@@ -68,7 +68,7 @@ public class MainGame {
                                 // different cell_int
                                 break;    
                             default:
-                                display_array[c][i] = null;
+                                display_array_[c][i] = null;
                                 break;
                         }
                         
@@ -77,10 +77,50 @@ public class MainGame {
             }
         }
     }
+    /**
+     * find the type of the object in the given cell
+     * or null if the cell is empty
+     * @param x the x coordinate of the cell
+     * @param y the y coordinate of the cell
+     * @return a string that represents the type of the object
+     */
+    public String cellType(int x, int y) {
+        if (x > 36 || y > 20) {
+            return "null";
+        }
+        if (display_array_[x][y] == null) {
+            return "null";
+        }
+        AnimatedImage aImage = display_array_[x][y];
+        if (aImage instanceof Asteroid) {
+            return "asteroid";
+        }
+        if (aImage instanceof Player) {
+            return "player";
+        }
+        if (aImage instanceof Ghost) {
+            return "ghost";
+        }
+        return "null";
+    }
+
+    /**
+     * check if the cell is empty
+     * @param x the x coordinate of the cell
+     * @param y the y coordinate of the cell
+     * @return true if the cell is empty; else false
+     */
+    public boolean isCellEmpty(int x, int y) {
+        return (display_array_[x][y] == null);
+    }
 
     //getter functions
     public int[][] getGameArray() {
         return game_array_;
+    }
+
+    public AnimatedImage[][] getDisplayArray() {
+        return display_array_;
     }
 
 
