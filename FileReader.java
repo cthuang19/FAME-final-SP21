@@ -15,7 +15,12 @@ public class FileReader {
         */
         file = new File(file_name);
     }
-
+    
+    /**
+     * helper function.
+     * help read string text file
+     * @return an arraylist of all the string in the text file
+     */
     public ArrayList<String> allLines() {
         ArrayList<String> lines = new ArrayList<>();
         try {

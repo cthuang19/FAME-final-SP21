@@ -42,6 +42,9 @@ public class GameEngine extends Application {
 
     private static Page page_;
     private static Language language_;
+
+    /* the current game level */
+    private static int current_game_level_;
     
     @Override
     public void start(Stage theStage) {
@@ -55,13 +58,13 @@ public class GameEngine extends Application {
             case INITIAL:
                 scene = getInitialScene(Language.ENGLISH);
                 break;
-            /*    
             case MAIN:
-
+                scene = getMainScene();
                 break;
             case GAME:
-
+                scene = getGameScene();
                 break;
+            /* 
             case PUZZLE:
                 break;
             */    
@@ -187,7 +190,7 @@ public class GameEngine extends Application {
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
         gc_initial.setFill(Color.MIDNIGHTBLUE);
         gc_initial.fillRect(50, 50, 1200, 700);
-        gc_initial.fillRect(0, 0, 25, 25);
+        gc_initial.fillRect(0, 0, 40, 40);
         //Drawing a Rectangle
         gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
@@ -209,9 +212,31 @@ public class GameEngine extends Application {
         Player p = new Player("player test", 0, 0);
         return scene_main;
     }
+
+    public Scene getGameScene() {
+        Group root_game = new Group();
+        Scene scene_game = new Scene(root_game);
+        Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
+        MainGame main_game = new MainGame(current_game_level_);
+        int[][] game_status = main_game.getGameArray();
+        gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
+
+        gc_game.setFill(Color.LIGHTYELLOW);
+        for (int i = 0; i < game_status.length; i++) {
+            for (int j = 0; j < game_status[i].length; j++) {
+                // for testing purpose now
+                // switch to drawing the picture later
+                gc_game.fillText(String.valueOf(game_status[i][j]), 20 + 40 * i, 20 + 40 * j); 
+            }
+        }
+        root_game.getChildren().add(canvas_game);
+        return scene_game;
+    }
     
     public static void main(String args[]) {
-        page_ = Page.LANGUAGE;
+        page_ = Page.GAME;
+        current_game_level_ = 1;
         launch(args);
     }
 }
