@@ -1,6 +1,8 @@
 import javafx.geometry.Rectangle2D;
 
 public class MovingAnimatedImage extends AnimatedImage implements java.io.Serializable{
+	enum CharacterDirection {LEFT, RIGHT, UP, DOWN};
+	
 	protected double positionX;
     protected double positionY;    
     protected double velocityX;
@@ -13,7 +15,9 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 
 	protected double width;
     protected double height;
-    protected double mass;
+	protected double mass;
+	
+	protected CharacterDirection direction_;
     
 	public void setState(MovingAnimatedImage x){
 		positionX=x.getPositionX();
@@ -34,6 +38,7 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		mass=m;
 		velocityX=0;
 		velocityY=0;
+		direction_ = CharacterDirection.DOWN;
 	}
 
 	public double getWidth(){
@@ -56,6 +61,12 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 	}
 	public double getPositionY(){
 		return positionY;
+	}
+	public CharacterDirection getDirection() {
+		return direction_;
+	}
+	public void setCharacterDirection(CharacterDirection cd) {
+		direction_ = cd;
 	}
 	public void setPosition(double x, double y)
     {

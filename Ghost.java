@@ -22,12 +22,20 @@ public class Ghost extends MovingAnimatedImage {
         super(n, x, y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = Colour.RED;
         state = GhostState.PASSIVE;
+        initializeImages();
     }
 
     public Ghost(String n, int x, int y, Colour c, GhostState s) {
         super(n, x, y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = c;
         state = s;
+        initializeImages();
+    }
+    /**
+     * initialize the image frame and duration
+     */
+    public void initializeImages() {
+        setDuration(0.1);
     }
 
     public void setColour(Colour c) {this.colour = c;}
