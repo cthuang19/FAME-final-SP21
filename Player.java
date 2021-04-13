@@ -16,7 +16,9 @@ public class Player extends MovingAnimatedImage {
     private double fieldEnergy;
     private double currMaxEnergy;
 
-    enum PlayerState {IDLE, MOVING, HURT, DEAD, DOOR, RESPAWN};
+    private long timeStamp;
+
+    enum PlayerState {ALIVE, HURT, DEAD, DOOR};
     private PlayerState state;
     public PlayerState getState() {return this.state;}
 
@@ -39,20 +41,44 @@ public class Player extends MovingAnimatedImage {
     public void update(double time) {
 
         switch (state) {
-            case IDLE :
-                break;
-            case MOVING :
+            case ALIVE :
+                /* if (the player has circa the same coordinates as a door) {
+                *   this.state = PlayerState.DOOR;
+                *   this.timeStamp = System.currentTimeMillis();
+                * }
+                * if (the player has the same coordinates as a ghost) {
+                *   this.state = PlayerState.HURT;
+                *   this.timeStamp = System.currentTimeMillis();
+                * } */
                 break;
             case HURT :
+                this.lives -= 1;
+                if (this.lives == 0) {
+                    this.state = PlayerState.DEAD;
+                    this.timeStamp = System.currentTimeMillis();
+                }
                 break;
-            case DEAD :
+            case DEAD : // wait for some time before respawning at the beginning of the level
+                double timePassed = (System.currentTimeMillis()-timeStamp)/1000;
+                // sets velocity of zero
+                this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
+                if (timePassed > 10) {
+                    // this.setPosition(Level.getStartingX(), Level.getStartingY());
+                    this.state = PlayerState.ALIVE;
+                    this.lives = 3;
+                }
                 break;
-            case DOOR :
-                break;
-            case RESPAWN :
+            case DOOR : // wait for the time of the animation of going through the door
+                double timePassed = (System.currentTimeMillis()-timeStamp)/1000;
+                // sets velocity of zero
+                this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
+                if (timePassed > 10) {
+                    // this.setPosition(Level.getStartingX(), Level.getStartingY());
+                    this.state = PlayerState.ALIVE;
+                }
                 break;
             default:
-                state = PlayerState.IDLE;
+                state = PlayerState.ALIVE;
         }        
     }
 

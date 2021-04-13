@@ -97,11 +97,11 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
         if (positionY<0) 
 			{positionY=0;
 			velocityY=-velocityY;} 
-        if (positionX>1712) 
-			{positionX=1712;
+        if (positionX>1600)
+			{positionX=1600;
 			velocityX=-velocityX;}
-		if (positionY>450) 
-			{positionY=450;
+		if (positionY>1200)
+			{positionY=1200;
 			velocityY=-velocityY;
 			}
 	}
