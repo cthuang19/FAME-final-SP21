@@ -9,7 +9,7 @@ public class Ghost extends MovingAnimatedImage {
     private final double GHOST_MASS = 30;
 
     /* the colour of the ghost determine its behaviour */
-    enum Colour {RED, BLUE, ORANGE, GREEN};
+    enum Colour {RED, BLUE, YELLOW, GREEN};
     enum GhostState {PASSIVE, SUSPICIOUS, ACTIVE, EXPLOSIVE};
 
     private Colour colour;
@@ -90,7 +90,7 @@ public class Ghost extends MovingAnimatedImage {
             }
         }
 
-        if (this.colour == Colour.ORANGE) {
+        if (this.colour == Colour.YELLOW) {
             switch (state) {
                 case PASSIVE:
                     if (seesPlayer) {
@@ -173,7 +173,7 @@ public class Ghost extends MovingAnimatedImage {
                         seesPlayer = true;
                     }
                     break;
-                case ORANGE:
+                case YELLOW:
                     if ((Math.abs(positionX - player.getPositionX()) > 200) &&
                         (Math.abs(positionY - player.getPositionY()) > 200)) {
                         seesPlayer = false;
