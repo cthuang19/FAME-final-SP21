@@ -17,6 +17,7 @@ public class Player extends MovingAnimatedImage {
     private double currMaxEnergy;
 
     private long timeStamp;
+    private double timePassed;
 
     enum PlayerState {ALIVE, HURT, DEAD, DOOR};
     private PlayerState state;
@@ -26,7 +27,7 @@ public class Player extends MovingAnimatedImage {
         super(n, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
         lives = 3;
         fieldEnergy = currMaxEnergy;
-        state = PlayerState.IDLE;
+        state = PlayerState.ALIVE;
     }
 
     public Player(String n, int x, int y, int l, int e, PlayerState s) {
@@ -59,7 +60,7 @@ public class Player extends MovingAnimatedImage {
                 }
                 break;
             case DEAD : // wait for some time before respawning at the beginning of the level
-                double timePassed = (System.currentTimeMillis()-timeStamp)/1000;
+                timePassed = (System.currentTimeMillis()-timeStamp)/1000;
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
                 if (timePassed > 10) {
@@ -69,7 +70,7 @@ public class Player extends MovingAnimatedImage {
                 }
                 break;
             case DOOR : // wait for the time of the animation of going through the door
-                double timePassed = (System.currentTimeMillis()-timeStamp)/1000;
+                timePassed = (System.currentTimeMillis()-timeStamp)/1000;
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
                 if (timePassed > 10) {
