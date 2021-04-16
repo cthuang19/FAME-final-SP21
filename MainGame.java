@@ -3,12 +3,15 @@ import java.util.ArrayList;
 public class MainGame {
 
     /* the width of each array showing on the screen*/
-    public static final int CELL_WIDTH = 40;
+    public static final int CELL_WIDTH = 64;
 
     private static final int EMPTY_CELL = 0;
     private static final int ROCK_CELL = 1;
     private static final int PLAYER_CELL = 2;
-    private static final int GHOST_CELL = 3;
+    private static final int RED_GHOST_CELL = 3;
+    private static final int BLUE_GHOST_CELL = 4;
+    private static final int YELLOW_GHOST_CELL = 5;
+    private static final int GREEN_GHOST_CELL = 6;
 
     /* the array that represents each location on the game page */
     //private int[][] game_array_ = new int[40][30];
@@ -17,6 +20,20 @@ public class MainGame {
 
     /* the level of the current game */
     private int level_;
+
+    /* lists that contain all the Ghosts of given level */
+    private ArrayList<Ghost> redGhosts = new ArrayList<Ghost>();
+    private ArrayList<Ghost> blueGhosts = new ArrayList<Ghost>();
+    private ArrayList<Ghost> yellowGhosts = new ArrayList<Ghost>();
+    private ArrayList<Ghost> greenGhosts = new ArrayList<Ghost>();
+
+    /* starting coordinates of the player
+     * initialized in initializeArray()
+     * needed for when the player dies and goes back at the beginning of the level */
+    private int startingX;
+    private int startingY;
+    public int getStartingX() {return startingX;}
+    public int getStartingY() {return startingY;}
 
     public MainGame() {
         level_ = 1;
@@ -60,18 +77,26 @@ public class MainGame {
                                 display_array_[c][i] = new Asteroid(c, i);
                                 break;
                             case PLAYER_CELL:
-                                //TODO: add a player here with given location
+                                Player player = new Player("player", i, c, 3, 30, PlayerState.ALIVE);
+                                startingX = i;
+                                startingY = c;
                                 break;
-                            case GHOST_CELL:
-                                //TODO: add a ghost here with given location
-                                // or probably separate each ghost color by more 
-                                // different cell_int
+                            case RED_GHOST_CELL:
+                                redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Colour.RED, GhostState.PASSIVE));
+                                break;
+                            case BLUE_GHOST_CELL:
+                                blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, i, c, Colour.BLUE, GhostState.PASSIVE));
+                                break;
+                            case YELLOW_GHOST_CELL:
+                                yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, i, c, Colour.YELLOW, GhostState.PASSIVE));
+                                break;
+                            case GREEN_GHOST_CELL:
+                                greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, i, c, Colour.GREEN, GhostState.PASSIVE));
                                 break;    
                             default:
                                 display_array_[c][i] = null;
                                 break;
                         }
-                        
                     }
                 }
             }

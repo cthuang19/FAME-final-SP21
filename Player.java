@@ -1,7 +1,7 @@
 public class Player extends MovingAnimatedImage {
 
-    private static final double PLAYER_WIDTH = 10;
-    private static final double PLAYER_HEIGHT = 30;
+    private static final double PLAYER_WIDTH = 35;
+    private static final double PLAYER_HEIGHT = 52;
     private static final double PLAYER_MASS = 40;
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
@@ -64,7 +64,7 @@ public class Player extends MovingAnimatedImage {
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
                 if (timePassed > 10) {
-                    // this.setPosition(Level.getStartingX(), Level.getStartingY());
+                    this.setPosition(MainGame.getStartingX(), MainGame.getStartingY());
                     this.state = PlayerState.ALIVE;
                     this.lives = 3;
                 }
@@ -74,7 +74,7 @@ public class Player extends MovingAnimatedImage {
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
                 if (timePassed > 10) {
-                    // this.setPosition(Level.getStartingX(), Level.getStartingY());
+                    // this.setPosition(PuzzleLevel.getStartingX(), PuzzleLevel.getStartingY());
                     this.state = PlayerState.ALIVE;
                 }
                 break;
