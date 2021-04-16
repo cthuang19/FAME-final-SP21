@@ -9,8 +9,7 @@ import javafx.scene.image.Image;
 public class Asteroid extends AnimatedImage{
     
     /* image of asteroid, use background image for not*/
-    // TODO: substitute this with an actual asteroid image
-    private static final Image ASTEROID_IMAGE = new Image(".//Images/Background-4.png"); 
+    private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR4");
 
     private double positionX_;
     private double positionY_;
