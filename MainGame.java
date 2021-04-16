@@ -30,10 +30,12 @@ public class MainGame {
     /* starting coordinates of the player
      * initialized in initializeArray()
      * needed for when the player dies and goes back at the beginning of the level */
+    /*
     private int startingX;
     private int startingY;
     public int getStartingX() {return startingX;}
     public int getStartingY() {return startingY;}
+    */
 
     public MainGame() {
         level_ = 1;
@@ -77,21 +79,21 @@ public class MainGame {
                                 display_array_[c][i] = new Asteroid(c, i);
                                 break;
                             case PLAYER_CELL:
-                                Player player = new Player("player", i, c, 3, 30, PlayerState.ALIVE);
-                                startingX = i;
-                                startingY = c;
+                                Player player = new Player("player", i, c, 3, 30, Player.PlayerState.ALIVE);
+                                //startingX = i;
+                                //startingY = c;
                                 break;
                             case RED_GHOST_CELL:
-                                redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Colour.RED, GhostState.PASSIVE));
+                                redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
                                 break;
                             case BLUE_GHOST_CELL:
-                                blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, i, c, Colour.BLUE, GhostState.PASSIVE));
+                                blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, i, c, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
                                 break;
                             case YELLOW_GHOST_CELL:
-                                yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, i, c, Colour.YELLOW, GhostState.PASSIVE));
+                                yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, i, c, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
                                 break;
                             case GREEN_GHOST_CELL:
-                                greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, i, c, Colour.GREEN, GhostState.PASSIVE));
+                                greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, i, c, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
                                 break;    
                             default:
                                 display_array_[c][i] = null;

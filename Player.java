@@ -11,6 +11,9 @@ public class Player extends MovingAnimatedImage {
     private double lives;
     private double currMaxLives;
 
+    private double initialX_;
+    private double initialY_;
+
     /* level of energy for the defensive force field, from 0 to 30 at the beginning, up to 100 at the end
      * whenever the player respawns, is set to currMaxEnergy */
     private double fieldEnergy;
@@ -28,6 +31,8 @@ public class Player extends MovingAnimatedImage {
         lives = 3;
         fieldEnergy = currMaxEnergy;
         state = PlayerState.ALIVE;
+        initialX_ = x;
+        initialY_ = y;
     }
 
     public Player(String n, int x, int y, int l, int e, PlayerState s) {
@@ -37,6 +42,8 @@ public class Player extends MovingAnimatedImage {
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
+        initialX_ = x;
+        initialY_ = y;
     }
 
     public void update(double time) {
@@ -64,7 +71,7 @@ public class Player extends MovingAnimatedImage {
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
                 if (timePassed > 10) {
-                    this.setPosition(MainGame.getStartingX(), MainGame.getStartingY());
+                    this.setPosition(initialX_, initialY_);
                     this.state = PlayerState.ALIVE;
                     this.lives = 3;
                 }
@@ -81,6 +88,15 @@ public class Player extends MovingAnimatedImage {
             default:
                 state = PlayerState.ALIVE;
         }        
+    }
+
+    //getter function
+    public double getInitialX() {
+        return initialX_;
+    }
+
+    public double getInitialY() {
+        return initialY_;
     }
 
 }
