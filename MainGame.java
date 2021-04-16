@@ -12,6 +12,7 @@ public class MainGame {
     private static final int BLUE_GHOST_CELL = 4;
     private static final int YELLOW_GHOST_CELL = 5;
     private static final int GREEN_GHOST_CELL = 6;
+    private static final int TREASURE_CELL = 7;
 
     /* the array that represents each location on the game page */
     //private int[][] game_array_ = new int[40][30];
@@ -26,16 +27,6 @@ public class MainGame {
     private ArrayList<Ghost> blueGhosts = new ArrayList<Ghost>();
     private ArrayList<Ghost> yellowGhosts = new ArrayList<Ghost>();
     private ArrayList<Ghost> greenGhosts = new ArrayList<Ghost>();
-
-    /* starting coordinates of the player
-     * initialized in initializeArray()
-     * needed for when the player dies and goes back at the beginning of the level */
-    /*
-    private int startingX;
-    private int startingY;
-    public int getStartingX() {return startingX;}
-    public int getStartingY() {return startingY;}
-    */
 
     public MainGame() {
         level_ = 1;
@@ -80,8 +71,6 @@ public class MainGame {
                                 break;
                             case PLAYER_CELL:
                                 Player player = new Player("player", i, c, 3, 30, Player.PlayerState.ALIVE);
-                                //startingX = i;
-                                //startingY = c;
                                 break;
                             case RED_GHOST_CELL:
                                 redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
@@ -94,6 +83,9 @@ public class MainGame {
                                 break;
                             case GREEN_GHOST_CELL:
                                 greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, i, c, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
+                                break;    
+                            case TREASURE_CELL:
+                                display_array_[c][i] = new Treasure(c, i);
                                 break;    
                             default:
                                 display_array_[c][i] = null;
