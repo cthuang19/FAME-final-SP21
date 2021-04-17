@@ -1,6 +1,6 @@
 /**
  * the class that draws asteroid
- * assuming that the image of asteroid does not 
+ * assuming that the image of asteroid is not
  * animated for now
  */
 

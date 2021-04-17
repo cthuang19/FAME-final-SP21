@@ -54,7 +54,7 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.DOOR;
                 *   this.timeStamp = System.currentTimeMillis();
                 * }
-                * if (the player has the same coordinates as a ghost) {
+                * if (the player is around an explosive ghost) {
                 *   this.state = PlayerState.HURT;
                 *   this.timeStamp = System.currentTimeMillis();
                 * } */

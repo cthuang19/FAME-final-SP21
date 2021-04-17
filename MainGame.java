@@ -72,23 +72,29 @@ public class MainGame {
                                 break;
                             case PLAYER_CELL:
                                 Player player = new Player("player", i, c, 3, 30, Player.PlayerState.ALIVE);
+                                display_array_[c][i] = player;
                                 break;
                             case RED_GHOST_CELL:
                                 redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
+                                display_array_[c][i] = redGhosts.get(redGhosts.size()-1);
                                 break;
                             case BLUE_GHOST_CELL:
                                 blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, i, c, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
+                                display_array_[c][i] = blueGhosts.get(blueGhosts.size()-1);
                                 break;
                             case YELLOW_GHOST_CELL:
                                 yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, i, c, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
+                                display_array_[c][i] = yellowGhosts.get(yellowGhosts.size()-1);
                                 break;
                             case GREEN_GHOST_CELL:
                                 greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, i, c, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
+                                display_array_[c][i] = greenGhosts.get(greenGhosts.size()-1);
                                 break;    
                             case TREASURE_CELL:
                                 display_array_[c][i] = new Treasure(c, i);
                                 break;
                             case DOOR_CELL:
+                                display_array_[c][i] = new Door(c, i);
                                 break;
                             default:
                                 display_array_[c][i] = null;
@@ -122,6 +128,12 @@ public class MainGame {
         }
         if (aImage instanceof Ghost) {
             return "ghost";
+        }
+        if (aImage instanceof Treasure) {
+            return "treasure";
+        }
+        if (aImage instanceof Door) {
+            return "door";
         }
         return "null";
     }
