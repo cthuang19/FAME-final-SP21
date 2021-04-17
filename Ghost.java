@@ -49,8 +49,9 @@ public class Ghost extends MovingAnimatedImage {
      * @param time
      * @param player
      */
-    @Override
+    //@Override
     public void update(double time, Player player) {
+        double timePassed = 0;
 
         if (this.colour == Colour.RED) {
             switch (state) {
@@ -61,7 +62,7 @@ public class Ghost extends MovingAnimatedImage {
                     // patrols in its area
                     break;
                 case SUSPICIOUS:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (seesPlayer) state = GhostState.ACTIVE;
                     if (timePassed > 4) {
                         state = GhostState.PASSIVE;
@@ -79,7 +80,7 @@ public class Ghost extends MovingAnimatedImage {
                     // chase player in its patrolling area
                     break;
                 case EXPLOSIVE:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (timePassed > 4) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                     }
@@ -109,7 +110,7 @@ public class Ghost extends MovingAnimatedImage {
                     }
                     break;
                 case EXPLOSIVE:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (timePassed > 4) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                     }
@@ -128,7 +129,7 @@ public class Ghost extends MovingAnimatedImage {
                     // patrols in its area
                     break;
                 case SUSPICIOUS:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (seesPlayer) state = GhostState.ACTIVE;
                     if (timePassed > 4) {
                         state = GhostState.PASSIVE;
@@ -146,7 +147,7 @@ public class Ghost extends MovingAnimatedImage {
                     // chases player in an area thrice the size of the patrolling area
                     break;
                 case EXPLOSIVE:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (timePassed > 4) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                     }
@@ -159,7 +160,7 @@ public class Ghost extends MovingAnimatedImage {
         if (this.colour == Colour.GREEN) {
             switch (state) {
                 case PASSIVE:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if ((seesPlayer)&&(timePassed > 4)) {
                         state = GhostState.ACTIVE;
                     }
@@ -179,7 +180,7 @@ public class Ghost extends MovingAnimatedImage {
                     // gets in the path of the player
                     break;
                 case EXPLOSIVE:
-                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (timePassed > 4) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                         timeStamp = System.currentTimeMillis();
