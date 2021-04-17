@@ -219,9 +219,17 @@ public class GameEngine extends Application {
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
-        int[][] game_status = main_game.getGameArray();
+        //int[][] game_status = main_game.getGameArray();
         gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
-
+        AnimatedImage[][] display = main_game.getDisplayArray();
+        for (int i = 0; i < display.length; i++) {
+            for (int j = 0; j < display[i].length; j++) {
+                if (main_game.cellType(i, j).equals("asteroid")) {
+                    gc_game.drawImage(display[i][j].getFrame(0), 20 + 40 * i, 20 + 40 * j);
+                }
+            }
+        }
+        /*
         gc_game.setFill(Color.LIGHTYELLOW);
         for (int i = 0; i < game_status.length; i++) {
             for (int j = 0; j < game_status[i].length; j++) {
@@ -230,6 +238,7 @@ public class GameEngine extends Application {
                 gc_game.fillText(String.valueOf(game_status[i][j]), 20 + 40 * i, 20 + 40 * j); 
             }
         }
+        */
         root_game.getChildren().add(canvas_game);
         return scene_game;
     }
