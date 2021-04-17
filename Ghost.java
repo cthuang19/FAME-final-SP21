@@ -204,8 +204,7 @@ public class Ghost extends MovingAnimatedImage {
                                                 Math.abs(positionX-player.getPositionX()),
                                                 Math.abs(positionY-player.getPositionY()));
 
-        for (MovingAnimatedImage obstacle : obstacles)
-        {
+        for (MovingAnimatedImage obstacle : obstacles) {
             if (analysis.intersects(obstacle.getBoundary())) {
                 return false;
             }
@@ -219,7 +218,6 @@ public class Ghost extends MovingAnimatedImage {
      * @param obstacles all the walls/asteorids that could hide the player to the ghosts
      */
     public void setSeesPlayer(Player player, ArrayList<MovingAnimatedImage> obstacles) {
-
         if (canSeePlayer(player, obstacles)) {
             switch (colour) {
                 case RED:       // can see the player up to 8 cells ahead of him
@@ -295,8 +293,7 @@ public class Ghost extends MovingAnimatedImage {
                 default:
                     seesPlayer = false;
             }
-        }
-        else {
+        } else {
             seesPlayer = false;
             if (this.colour == Colour.GREEN) {
                 // same block as in the switch case
@@ -304,12 +301,10 @@ public class Ghost extends MovingAnimatedImage {
                 if ((Math.abs(positionX - player.getPositionX()) < 256) ||
                     (Math.abs(positionY - player.getPositionY()) < 256)) {
                     seesPlayer = true;
-                    }
                 } else {
                     seesPlayer = false;
                 }
             }
         }
     }
-
 }
