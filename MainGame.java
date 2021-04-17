@@ -13,6 +13,7 @@ public class MainGame {
     private static final int YELLOW_GHOST_CELL = 5;
     private static final int GREEN_GHOST_CELL = 6;
     private static final int TREASURE_CELL = 7;
+    private static final int DOOR_CELL = 8;
 
     /* the array that represents each location on the game page */
     //private int[][] game_array_ = new int[40][30];
@@ -86,7 +87,9 @@ public class MainGame {
                                 break;    
                             case TREASURE_CELL:
                                 display_array_[c][i] = new Treasure(c, i);
-                                break;    
+                                break;
+                            case DOOR_CELL:
+                                break;
                             default:
                                 display_array_[c][i] = null;
                                 break;

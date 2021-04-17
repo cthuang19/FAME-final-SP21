@@ -47,9 +47,10 @@ public class Ghost extends MovingAnimatedImage {
     /**
      * updates the state of the ghost
      * @param time
+     * @param player
      */
     @Override
-    public void update(double time) {
+    public void update(double time, Player player) {
 
         if (this.colour == Colour.RED) {
             switch (state) {
@@ -57,14 +58,13 @@ public class Ghost extends MovingAnimatedImage {
                     if (seesPlayer) {
                         state = GhostState.ACTIVE;
                     }
+                    // patrols in its area
                     break;
                 case SUSPICIOUS:
                     double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (seesPlayer) state = GhostState.ACTIVE;
                     if (timePassed > 4) {
                         state = GhostState.PASSIVE;
-                        //startingPoint = positionX;
-                        velocityX = +2;
                     }
                     break;
                 case ACTIVE:
@@ -72,8 +72,17 @@ public class Ghost extends MovingAnimatedImage {
                         state = GhostState.SUSPICIOUS;
                         timeStamp = System.currentTimeMillis();
                     }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    // chase player in its patrolling area
                     break;
                 case EXPLOSIVE:
+                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 4) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                    }
                     break;
                 default:
                     state = GhostState.PASSIVE;
@@ -87,11 +96,23 @@ public class Ghost extends MovingAnimatedImage {
                         state = GhostState.ACTIVE;
                     }
                     break;
-                case SUSPICIOUS:
-                    break;
+                // case SUSPICIOUS:       // blue doesn't go in this state
+                //    break;
                 case ACTIVE:
+                    if (!seesPlayer) {
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
                     break;
                 case EXPLOSIVE:
+                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 4) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                    }
                     break;
                 default:
                     state = GhostState.PASSIVE;
@@ -104,12 +125,31 @@ public class Ghost extends MovingAnimatedImage {
                     if (seesPlayer) {
                         state = GhostState.ACTIVE;
                     }
+                    // patrols in its area
                     break;
                 case SUSPICIOUS:
+                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (seesPlayer) state = GhostState.ACTIVE;
+                    if (timePassed > 4) {
+                        state = GhostState.PASSIVE;
+                    }
                     break;
                 case ACTIVE:
+                    if (!seesPlayer) {
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    // chases player in an area thrice the size of the patrolling area
                     break;
                 case EXPLOSIVE:
+                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 4) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                    }
                     break;
                 default:
                     state = GhostState.PASSIVE;
@@ -119,15 +159,31 @@ public class Ghost extends MovingAnimatedImage {
         if (this.colour == Colour.GREEN) {
             switch (state) {
                 case PASSIVE:
-                    if (seesPlayer) {
+                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if ((seesPlayer)&&(timePassed > 4)) {
                         state = GhostState.ACTIVE;
                     }
+                    // stays hidden behind a rock
                     break;
                 case SUSPICIOUS:
                     break;
                 case ACTIVE:
+                    if (!seesPlayer) {
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    // gets in the path of the player
                     break;
                 case EXPLOSIVE:
+                    double timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 4) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
                     break;
                 default:
                     state = GhostState.PASSIVE;
@@ -136,12 +192,12 @@ public class Ghost extends MovingAnimatedImage {
     }
     /**
      * determines if the player is in the line of sight of the ghost
-     * will be used in setSeePlayer
+     * will be used in setSeesPlayer
      * @param player
      * @param obstacles all the walls/asteorids that could hide the player to the ghosts
      * @return true if the ghost can see the player else false
      */
-    public boolean canSeePlayer(MovingAnimatedImage player, ArrayList<MovingAnimatedImage> obstacles) {
+    public boolean canSeePlayer(Player player, ArrayList<MovingAnimatedImage> obstacles) {
         Rectangle2D analysis = new Rectangle2D(	Math.min(player.getPositionX(), positionX),
                                                 Math.min(player.getPositionY(), positionY),
                                                 Math.abs(positionX-player.getPositionX()),
@@ -157,49 +213,102 @@ public class Ghost extends MovingAnimatedImage {
     }
 
     /**
-     * updates the value of seesPlayer
+     * updates the value of seesPlayer according to the colour of the ghost
      * @param player
      * @param obstacles all the walls/asteorids that could hide the player to the ghosts
      */
-    public void setSeesPlayer(MovingAnimatedImage player, ArrayList<MovingAnimatedImage> obstacles) {
+    public void setSeesPlayer(Player player, ArrayList<MovingAnimatedImage> obstacles) {
 
-        if (canSeePlayer(player, obstacles))
+        if (canSeePlayer(player, obstacles)) {
             switch (colour) {
-                case RED:
-                    if ((Math.abs(positionX - player.getPositionX()) > 200) &&
-                        (Math.abs(positionY - player.getPositionY()) > 200)) {
-                        seesPlayer = false;
+                case RED:       // can see the player up to 8 cells ahead of him
+                    if ((Math.abs(positionX - player.getPositionX()) < 512) ||
+                        (Math.abs(positionY - player.getPositionY()) < 512)) {
+                        switch(this.direction_) {
+                            case UP :
+                                if (positionY > player.getPositionY()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            case RIGHT :
+                                if (positionX < player.getPositionX()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            case DOWN :
+                                if (positionY < player.getPositionY()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            case LEFT :
+                                if (positionX > player.getPositionX()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            default :
+                                seesPlayer = false;
+                        }
                     } else {
-                        seesPlayer = true;
+                        seesPlayer = false;
                     }
                     break;
-                case BLUE:
-                    if ((Math.abs(positionX - player.getPositionX()) > 50) &&
-                        (Math.abs(positionY - player.getPositionY()) > 50)) {
-                        seesPlayer = false;
-                    } else {
+                case BLUE:      // can see the player only when he's less than a cell around him
+                    if ((Math.abs(positionX - player.getPositionX()) < 64) ||
+                        (Math.abs(positionY - player.getPositionY()) < 64)) {
                         seesPlayer = true;
+                    } else {
+                        seesPlayer = false;
                     }
                     break;
-                case YELLOW:
-                    if ((Math.abs(positionX - player.getPositionX()) > 200) &&
-                        (Math.abs(positionY - player.getPositionY()) > 200)) {
-                        seesPlayer = false;
+                case YELLOW:    // can see the player up to 8 cells ahead of him
+                    if ((Math.abs(positionX - player.getPositionX()) < 512) ||
+                        (Math.abs(positionY - player.getPositionY()) < 512)) {
+                        switch(this.direction_) {
+                            case UP :
+                                if (positionY > player.getPositionY()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            case RIGHT :
+                                if (positionX < player.getPositionX()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            case DOWN :
+                                if (positionY < player.getPositionY()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            case LEFT :
+                                if (positionX > player.getPositionX()) {seesPlayer = true;}
+                                else {seesPlayer = false;}
+                                break;
+                            default :
+                                seesPlayer = false;
+                        }
                     } else {
-                        seesPlayer = true;
+                        seesPlayer = false;
                     }
                     break;
-                case GREEN:
-                    if ((Math.abs(positionX - player.getPositionX()) > 100) &&
-                        (Math.abs(positionY - player.getPositionY()) > 100)) {
-                        seesPlayer = false;
-                    } else {
+                case GREEN:     // knows the player is here when he's less than 4 cells away, even if hidden
+                    if ((Math.abs(positionX - player.getPositionX()) < 256) ||
+                        (Math.abs(positionY - player.getPositionY()) < 256)) {
                         seesPlayer = true;
+                    } else {
+                        seesPlayer = false;
                     }
                     break;
                 default:
                     seesPlayer = false;
             }
+        }
+        else {
+            seesPlayer = false;
+            if (this.colour == Colour.GREEN) {
+                // same block as in the switch case
+                // maybe find a prettier way to put it
+                if ((Math.abs(positionX - player.getPositionX()) < 256) ||
+                    (Math.abs(positionY - player.getPositionY()) < 256)) {
+                    seesPlayer = true;
+                    }
+                } else {
+                    seesPlayer = false;
+                }
+            }
+        }
     }
 
 }
