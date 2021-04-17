@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 public class Treasure extends AnimatedImage{
     
     //TODO: change this to a image of an element/ treasure
-    private static final Image TREASURE_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR4.png");
+    private static final Image TREASURE_IMAGE = new Image(".//Images/treasures/Treasure1.png");
     private double positionX_;
     private double positionY_;
 
