@@ -8,7 +8,7 @@ public class Ghost extends MovingAnimatedImage {
     private static final double GHOST_HEIGHT = 32;
     private static final double GHOST_MASS = 30;
 
-    /* the colour of the ghost determine its behaviour */
+    /* the colour of the ghost determines its behaviour */
     enum Colour {RED, BLUE, YELLOW, GREEN};
     enum GhostState {PASSIVE, SUSPICIOUS, ACTIVE, EXPLOSIVE};
 
@@ -42,6 +42,7 @@ public class Ghost extends MovingAnimatedImage {
     public Colour getColour() {return this.colour;}
     public void setGhostState(GhostState s) {this.state = s;}
     public GhostState getGhostState() {return this.state;}
+    public boolean getSeesPlayer() {return this.seesPlayer;}
 
 
     /**
@@ -211,6 +212,20 @@ public class Ghost extends MovingAnimatedImage {
         }
         return true;
     }
+
+    /* public boolean canSeePlayer(Player player, ArrayList<Asteroid> asteroids) {
+        Rectangle2D analysis = new Rectangle2D(	Math.min(player.getPositionX(), positionX),
+                Math.min(player.getPositionY(), positionY),
+                Math.abs(positionX-player.getPositionX()),
+                Math.abs(positionY-player.getPositionY()));
+
+        for (Asteroid a : asteroids) {
+            if (analysis.intersects(a.getBoundary())) {
+                return false;
+            }
+        }
+        return true;
+    } */
 
     /**
      * updates the value of seesPlayer according to the colour of the ghost
