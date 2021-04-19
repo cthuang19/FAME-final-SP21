@@ -7,11 +7,11 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
     protected double positionY;    
     protected double velocityX;
     protected double velocityY;
-    private double accelerationX;
-    private double accelerationY;
-    private double forceX;
-	private double forceY;
-	private String name;
+    protected double accelerationX;
+    protected double accelerationY;
+    protected double forceX;
+	protected double forceY;
+	protected String name;
 
 	protected double width;
     protected double height;
@@ -102,30 +102,40 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		positionX += velocityX ;
 		positionY += velocityY ;
         
-        if (positionX<0) 
-			{positionX=0;
-			 velocityX=-velocityX;}
-        if (positionY<0) 
-			{positionY=0;
-			velocityY=-velocityY;} 
-        if (positionX>1600)
-			{positionX=1600;
-			velocityX=-velocityX;}
-		if (positionY>1200)
-			{positionY=1200;
+        if (positionX<0) {
+			positionX=0;
+			 velocityX=-velocityX;
+        }
+        if (positionY<0) {
+			positionY=0;
 			velocityY=-velocityY;
-			}
+        }
+        if (positionX>1600) {
+			positionX=1600;
+			velocityX=-velocityX;
+        }
+		if (positionY>1200) {
+			positionY=1200;
+			velocityY=-velocityY;
+		}
 	}
     
     public Rectangle2D getBoundary()
     {
         return new Rectangle2D(positionX,positionY,width,height);
     }
-    
+
+    // MovingAnimatedImage intersects MovingAnimatedImage
     public boolean intersects(MovingAnimatedImage s)
     {
         return s.getBoundary().intersects(this.getBoundary());
     }
+    // MovingAnimatedImage intersects Asteroid
+	public boolean intersects(Asteroid a)
+	{
+		return a.getBoundary().intersects(this.getBoundary());
+	}
+
 
 
 

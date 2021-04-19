@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+
 public class Player extends MovingAnimatedImage {
 
     private static final double PLAYER_WIDTH = 35;
     private static final double PLAYER_HEIGHT = 52;
-    private static final double PLAYER_MASS = 40;
+    private static final double PLAYER_MASS = 80;
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
 
@@ -46,7 +48,7 @@ public class Player extends MovingAnimatedImage {
         initialY_ = y;
     }
 
-    public void update(double time) {
+    public void update(double time, ArrayList<Asteroid> asteroids) {
 
         switch (state) {
             case ALIVE :
@@ -58,6 +60,38 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.HURT;
                 *   this.timeStamp = System.currentTimeMillis();
                 * } */
+                accelerationX = forceX/PLAYER_MASS;
+                accelerationY = forceY/PLAYER_MASS;
+
+                velocityX = velocityX+accelerationX;
+                velocityY = velocityY+accelerationY;
+
+                positionX += velocityX ;
+                positionY += velocityY ;
+
+                if (positionX<0) {
+                    positionX=0;
+                    velocityX=-velocityX;
+                }
+                if (positionY<0) {
+                    positionY=0;
+                    velocityY=-velocityY;
+                }
+                if (positionX>1600) {
+                    positionX=1600;
+                    velocityX=-velocityX;
+                }
+                if (positionY>1200) {
+                    positionY=1200;
+                    velocityY=-velocityY;
+                }
+                for (Asteroid a : asteroids) {
+                    if (this.intersects(a)) {
+                        velocityX = -velocityX;
+                        velocityY = -velocityY;
+                    }
+                }
+
                 break;
             case HURT :
                 this.lives -= 1;
@@ -87,6 +121,7 @@ public class Player extends MovingAnimatedImage {
                 break;
             default:
                 state = PlayerState.ALIVE;
+                break;
         }        
     }
 
