@@ -77,12 +77,12 @@ public class Player extends MovingAnimatedImage {
                     positionY=0;
                     velocityY=-velocityY;
                 }
-                if (positionX>1600) {
-                    positionX=1600;
+                if (positionX>1000) {
+                    positionX=1000;
                     velocityX=-velocityX;
                 }
-                if (positionY>1200) {
-                    positionY=1200;
+                if (positionY>800) {
+                    positionY=800;
                     velocityY=-velocityY;
                 }
                 for (Asteroid a : asteroids) {

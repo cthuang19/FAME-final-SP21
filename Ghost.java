@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class Ghost extends MovingAnimatedImage {
 
-    private static final double GHOST_WIDTH = 24;
+    private static final double GHOST_WIDTH = 32;
     private static final double GHOST_HEIGHT = 32;
     private static final double GHOST_MASS = 30;
 
