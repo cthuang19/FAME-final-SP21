@@ -229,10 +229,11 @@ public class GameEngine extends Application {
                     //gc_game.drawImage(display[i][j].getFrame(0), 20 + 40 * i, 20 + 40 * j);
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j);
                 }
-                
+                /*
                 if (object_type.equals("treasure")) {
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j);
                 }
+                */
                 
             }
         }

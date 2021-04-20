@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 
 public class Player extends MovingAnimatedImage {
 
@@ -46,6 +47,11 @@ public class Player extends MovingAnimatedImage {
         state = s;
         initialX_ = x;
         initialY_ = y;
+        /* set default for now*/
+        Image default_image = new Image(".//Images/spaceman/Spaceman1.png");
+        Image[] f = new Image[]{default_image};
+        setFrames(f);
+        setDuration(0.1);
     }
 
     public void update(double time, ArrayList<Asteroid> asteroids) {
