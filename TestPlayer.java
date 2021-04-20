@@ -98,8 +98,8 @@ public class TestPlayer extends Application {
                     }
                 });
 
-        Image explosionI[] = new Image[6];
-        for (int i=0;i<6;i++) explosionI[i]=new Image(".//Images/explosion/test_explosion/explosion"+i+".png");
+        Image explosionI[] = new Image[7];
+        for (int i=0;i<7;i++) explosionI[i]=new Image(".//Images/explosion/test_explosion_2/explosion_"+i+".png");
 
         ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
         asteroids.add(new Asteroid(new Image(".//Images/asteroids/Mega/asteroidR1.png"),30,300));
@@ -152,9 +152,10 @@ public class TestPlayer extends Application {
 
                 player.update(t, asteroids);
                 ghost.update(t, player);
-/*
+
+                /* offsets */
                 // values are wrong
-                double offsetAsteroidsX = player.getPositionX() - 750;
+                /*double offsetAsteroidsX = player.getPositionX() - 750;
                 if (offsetAsteroidsX<0) offsetAsteroidsX=0;
                 if (offsetAsteroidsX>1600) offsetAsteroidsX=1600;
 

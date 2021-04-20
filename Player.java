@@ -77,12 +77,12 @@ public class Player extends MovingAnimatedImage {
                     positionY=0;
                     velocityY=-velocityY;
                 }
-                if (positionX>1500-PLAYER_WIDTH) {
-                    positionX=1500-PLAYER_WIDTH;
+                if (positionX>1600-PLAYER_WIDTH) {
+                    positionX=1600-PLAYER_WIDTH;
                     velocityX=-velocityX*0.8;
                 }
-                if (positionY>800-PLAYER_HEIGHT) {
-                    positionY=800-PLAYER_HEIGHT;
+                if (positionY>1200-PLAYER_HEIGHT) {
+                    positionY=1200-PLAYER_HEIGHT;
                     velocityY=-velocityY*0.8;
                 }
                 for (Asteroid a : asteroids) {
