@@ -229,21 +229,13 @@ public class GameEngine extends Application {
                     //gc_game.drawImage(display[i][j].getFrame(0), 20 + 40 * i, 20 + 40 * j);
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j);
                 }
+                
                 if (object_type.equals("treasure")) {
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j);
                 }
+                
             }
         }
-        /*
-        gc_game.setFill(Color.LIGHTYELLOW);
-        for (int i = 0; i < game_status.length; i++) {
-            for (int j = 0; j < game_status[i].length; j++) {
-                // for testing purpose now
-                // switch to drawing the picture later
-                gc_game.fillText(String.valueOf(game_status[i][j]), 20 + 40 * i, 20 + 40 * j); 
-            }
-        }
-        */
         root_game.getChildren().add(canvas_game);
         return scene_game;
     }
