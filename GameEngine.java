@@ -245,6 +245,12 @@ public class GameEngine extends Application {
                             break;
                     }
                 }
+                /*
+                shoud be like this at the end
+                if (!object_type.equals("null")) {
+                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
+                }
+                */
                 
             }
         }
