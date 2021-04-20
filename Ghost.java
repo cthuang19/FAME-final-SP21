@@ -46,12 +46,28 @@ public class Ghost extends MovingAnimatedImage {
                 setFrames(f);
                 break;
             case BLUE:
+                //TODO: create file for each color and initialize it
+                Image red = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] f = new Image[]{red};
+                setFrames(f);
                 break;
             case YELLOW:
+                //TODO: create file for each color and initialize it
+                Image red = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] f = new Image[]{red};
+                setFrames(f);
                 break;
             case GREEN:
+                //TODO: create file for each color and initialize it
+                Image red = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] f = new Image[]{red};
+                setFrames(f);
                 break;
             default:
+                //TODO: create file for each color and initialize it
+                Image red = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] f = new Image[]{red};
+                setFrames(f);
                 break;
         }
     }

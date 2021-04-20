@@ -238,12 +238,7 @@ public class GameEngine extends Application {
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
                 }
                 if (object_type.equals("ghost")) {
-                    Ghost temp_ghost = (Ghost)(display[i][j]);
-                    switch (temp_ghost.getColour()) {
-                        case RED:
-                            gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
-                            break;
-                    }
+                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
                 }
                 /*
                 shoud be like this at the end
