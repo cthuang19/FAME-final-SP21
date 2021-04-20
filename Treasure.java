@@ -18,6 +18,8 @@ public class Treasure extends AnimatedImage{
         positionX_ = 0;
         positionY_ = 0;
         Image[] f = new Image[] {TREASURE_IMAGE};
+        setFrames(f);
+        setDuration(0.1);
     }
 
     public Treasure(Image image) {
@@ -26,12 +28,16 @@ public class Treasure extends AnimatedImage{
         positionY_ = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
+        setDuration(0.1);
     }
 
     public Treasure(double x, double y) {
         super();
         positionX_ = x;
         positionY_ = y;
+        Image[] f = new Image[] {TREASURE_IMAGE};
+        setFrames(f);
+        setDuration(0.1);
     }
     
 }

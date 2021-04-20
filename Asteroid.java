@@ -9,7 +9,6 @@ import javafx.geometry.Rectangle2D;
 
 public class Asteroid extends AnimatedImage{
     
-    /* image of asteroid, use background image for not*/
     //TODO: still figuring how to resize the image and made it fit into 40*40 pixel size
     private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mini/01.png");
     private double positionX_;

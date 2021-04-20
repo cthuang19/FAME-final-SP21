@@ -224,8 +224,13 @@ public class GameEngine extends Application {
         AnimatedImage[][] display = main_game.getDisplayArray();
         for (int i = 0; i < display.length; i++) {
             for (int j = 0; j < display[i].length; j++) {
-                if (main_game.cellType(i, j).equals("asteroid")) {
-                    gc_game.drawImage(display[i][j].getFrame(0), 20 + 40 * i, 20 + 40 * j);
+                String object_type = main_game.cellType(i, j);
+                if (object_type.equals("asteroid")) {
+                    //gc_game.drawImage(display[i][j].getFrame(0), 20 + 40 * i, 20 + 40 * j);
+                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j);
+                }
+                if (object_type.equals("treasure")) {
+                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j);
                 }
             }
         }
