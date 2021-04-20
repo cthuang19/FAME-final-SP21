@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
 import java.lang.*;
 
 public class Ghost extends MovingAnimatedImage {
@@ -36,6 +37,23 @@ public class Ghost extends MovingAnimatedImage {
      */
     public void initializeImages() {
         setDuration(0.1);
+        switch(colour) {
+            case RED:
+                /* use test file now*/
+                //TODO: create file for each color and initialize it
+                Image red = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] f = new Image[]{red};
+                setFrames(f);
+                break;
+            case BLUE:
+                break;
+            case YELLOW:
+                break;
+            case GREEN:
+                break;
+            default:
+                break;
+        }
     }
 
     public void setColour(Colour c) {this.colour = c;}

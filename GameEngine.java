@@ -233,7 +233,18 @@ public class GameEngine extends Application {
                 if (object_type.equals("treasure")) {
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
                 }
-                
+
+                if (object_type.equals("player")) {
+                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
+                }
+                if (object_type.equals("ghost")) {
+                    Ghost temp_ghost = (Ghost)(display[i][j]);
+                    switch (temp_ghost.getColour()) {
+                        case RED:
+                            gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
+                            break;
+                    }
+                }
                 
             }
         }
