@@ -11,8 +11,10 @@ import javafx.event.*;
 import javafx.scene.paint.*;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
+import javafx.geometry.Rectangle2D;
 
 public class TestPlayer extends Application {
 
@@ -30,12 +32,42 @@ public class TestPlayer extends Application {
 
         Image background = new Image( ".//Images/Background-4.png" );
 
-        Image playerI[] = new Image[1];
-        for (int i=0;i<1;i++) playerI[i]=new Image(".//Images/spaceman/Spaceman1.png");
+        /* frames possible for the player */
+        // idle
+        Image iPlayerIdle[] = new Image[1];
+        for (int i=0;i<1;i++) iPlayerIdle[i]=new Image(".//Images/spaceman/Spaceman1.png");
+
+        // idle left
+        Image iPlayerIdleLeft[] = new Image[5];
+        for (int i=0;i<5;i++) iPlayerIdleLeft[i] = new Image(".//Images/spaceman/SpacemanIdleLeft/SpacemanIdleLeft_"+i+".png");
+
+        // idle right
+        Image iPlayerIdleRight[] = new Image[5];
+        for (int i=0;i<5;i++) iPlayerIdleRight[i] = new Image(".//Images/spaceman/SpacemanIdleRight/SpacemanIdleRight_"+i+".png");
+
+        // thrust up
+        Image iPlayerThrustUp[] = new Image[5];
+        for (int i=0;i<5;i++) iPlayerThrustUp[i] = new Image(".//Images/spaceman/SpacemanThrustUp/SpacemanThrustUp_"+i+".png");
+
+        // thrust right
+        Image iPlayerThrustRight[] = new Image[5];
+        for (int i=0;i<5;i++) iPlayerThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
+
+        // thrust down
+        Image iPlayerThrustDown[] = new Image[5];
+        for (int i=0;i<5;i++) iPlayerThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
+
+        // thrust left
+        Image iPlayerThrustLeft[] = new Image[5];
+        for (int i=0;i<5;i++) iPlayerThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
+
+
+        // initialising player
         Player player = new Player("player 1",500, 500, 3, 30, Player.PlayerState.ALIVE);
-        player.setFrames(playerI);
+        player.setFrames(iPlayerIdle);
         player.setDuration(0.1);
 
+        // initialising ghost
         Image ghostI[] = new Image[1];
         for (int i=0;i<1;i++) ghostI[i]=new Image(".//Images/ghosts/ghost_test.png");
         Ghost ghost = new Ghost("ghost test", 700, 700, Ghost.Colour.RED, Ghost.GhostState.PASSIVE);
@@ -85,15 +117,37 @@ public class TestPlayer extends Application {
                 player.setForces(0,0);
                 if (input.contains("W")) {      // Z on AZERTY keyboard
                     player.addForces(0,-5);     // UP
+                    player.setCharacterDirection(Player.CharacterDirection.UP);
+                    player.setFrames(iPlayerThrustUp);
                 }
                 if (input.contains("D")) {
                     player.addForces(5,0);      // RIGHT
+                    player.setCharacterDirection(Player.CharacterDirection.RIGHT);
+                    player.setFrames(iPlayerThrustRight);
                 }
                 if (input.contains("S")) {
                     player.addForces(0,5);      // DOWN
+                    player.setCharacterDirection(Player.CharacterDirection.DOWN);
+                    player.setFrames(iPlayerThrustDown);
                 }
                 if (input.contains("A")) {      // Q on AZERTY keyboard
                     player.addForces(-5,0);     // LEFT
+                    player.setCharacterDirection(Player.CharacterDirection.LEFT);
+                    player.setFrames(iPlayerThrustLeft);
+                }
+                if (input.contains(null)) {
+                    if (player.getDirection()==Player.CharacterDirection.UP) {
+                        player.setFrames(iPlayerIdleRight);
+                    }
+                    if (player.getDirection()==Player.CharacterDirection.RIGHT) {
+                        player.setFrames(iPlayerIdleRight);
+                    }
+                    if (player.getDirection()==Player.CharacterDirection.DOWN) {
+                        player.setFrames(iPlayerIdleLeft);
+                    }
+                    if (player.getDirection()==Player.CharacterDirection.LEFT) {
+                        player.setFrames(iPlayerIdleLeft);
+                    }
                 }
 
                 player.update(t, asteroids);

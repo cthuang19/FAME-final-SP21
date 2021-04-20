@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Player extends MovingAnimatedImage {
 
-    private static final double PLAYER_WIDTH = 35;
-    private static final double PLAYER_HEIGHT = 52;
+    private static final double PLAYER_WIDTH = 23;
+    private static final double PLAYER_HEIGHT = 42;
     private static final double PLAYER_MASS = 80;
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
