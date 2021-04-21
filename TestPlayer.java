@@ -63,16 +63,17 @@ public class TestPlayer extends Application {
 
 
         // initialising player
-        Player player = new Player("player 1",500, 500, 3, 30, Player.PlayerState.ALIVE);
+        Player player = new Player("player 1",300, 200, 3, 30, Player.PlayerState.ALIVE);
         player.setFrames(iPlayerIdle);
         player.setDuration(0.1);
 
         // initialising ghost
-        Image ghostI[] = new Image[1];
-        for (int i=0;i<1;i++) ghostI[i]=new Image(".//Images/ghosts/ghost_test.png");
-        Ghost ghost = new Ghost("ghost test", 700, 700, Ghost.Colour.RED, Ghost.GhostState.PASSIVE);
-        ghost.setFrames(ghostI);
-        ghost.setDuration(0.1);
+        //Image ghostI[] = new Image[1];
+        //for (int i=0;i<1;i++) ghostI[i]=new Image(".//Images/ghosts/ghost_test.png");
+        Ghost ghost = new Ghost("ghost test", 400, 400, Ghost.Colour.RED, Ghost.GhostState.PASSIVE);
+        //ghost.setFrames(ghostI);
+        //ghost.setDuration(0.1);
+        ghost.initializeImages();
 
         ArrayList<String> input = new ArrayList<String>();
 
@@ -199,7 +200,7 @@ public class TestPlayer extends Application {
                 if (explosion) {
                     ghost.setFrames(explosionI);
                 }
-                else { ghost.setFrames(ghostI); }
+                //else { ghost.setFrames(ghostI); }
 
 
             }
