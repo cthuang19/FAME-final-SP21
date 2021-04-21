@@ -36,64 +36,44 @@ public class Ghost extends MovingAnimatedImage {
      * initialize the image frame and duration
      */
     public void initializeImages() {
-        setDuration(0.1);
+        setDuration(0.25);
+        Image fUp[] = new Image[3];
+        Image fRight[] = new Image[3];
+        Image fDown[] = new Image[3];
+        Image fLeft[] = new Image[3];
         switch(colour) {
             case RED:
-                Image fRedUp[] = new Image[3];
-                for (int i=0;i<3;i++) fRedUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
-                Image fRedRight[] = new Image[3];
-                for (int i=0;i<3;i++) fRedRight[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_right_"+i+".png");
-                Image fRedDown[] = new Image[3];
-                for (int i=0;i<3;i++) fRedDown[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_down_"+i+".png");
-                Image fRedLeft[] = new Image[3];
-                for (int i=0;i<3;i++) fRedLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
-                setFrames(fRedUp);
+                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
+                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_right_"+i+".png");
+                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_down_"+i+".png");
+                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
                 break;
             case BLUE:
-                Image fBlueUp[] = new Image[3];
-                for (int i=0;i<3;i++) fBlueUp[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_up_"+i+".png");
-                Image fBlueRight[] = new Image[3];
-                for (int i=0;i<3;i++) fBlueRight[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_right_"+i+".png");
-                Image fBlueDown[] = new Image[3];
-                for (int i=0;i<3;i++) fBlueDown[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_down_"+i+".png");
-                Image fBlueLeft[] = new Image[3];
-                for (int i=0;i<3;i++) fBlueLeft[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_left_"+i+".png");
-                setFrames(fBlueUp);
+                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_up_"+i+".png");
+                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_right_"+i+".png");
+                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_down_"+i+".png");
+                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_left_"+i+".png");
                 break;
             case YELLOW:
-                Image fYellowUp[] = new Image[3];
-                for (int i=0;i<3;i++) fYellowUp[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_up_"+i+".png");
-                Image fYellowRight[] = new Image[3];
-                for (int i=0;i<3;i++) fYellowRight[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_right_"+i+".png");
-                Image fYellowDown[] = new Image[3];
-                for (int i=0;i<3;i++) fYellowDown[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_down_"+i+".png");
-                Image fYellowLeft[] = new Image[3];
-                for (int i=0;i<3;i++) fYellowLeft[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_left_"+i+".png");
-                setFrames(fYellowUp);
+                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_up_"+i+".png");
+                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_right_"+i+".png");
+                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_down_"+i+".png");
+                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_left_"+i+".png");
                 break;
             case GREEN:
-                Image fGreenUp[] = new Image[3];
-                for (int i=0;i<3;i++) fGreenUp[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_up_"+i+".png");
-                Image fGreenRight[] = new Image[3];
-                for (int i=0;i<3;i++) fGreenRight[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_right_"+i+".png");
-                Image fGreenDown[] = new Image[3];
-                for (int i=0;i<3;i++) fGreenDown[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_down_"+i+".png");
-                Image fGreenLeft[] = new Image[3];
-                for (int i=0;i<3;i++) fGreenLeft[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_left_"+i+".png");
-                setFrames(fGreenUp);
+                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_up_"+i+".png");
+                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_right_"+i+".png");
+                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_down_"+i+".png");
+                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_left_"+i+".png");
                 break;
             default:
-                Image fDefaultUp[] = new Image[3];
-                for (int i=0;i<3;i++) fDefaultUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
-                Image fDefaultRight[] = new Image[3];
-                for (int i=0;i<3;i++) fDefaultRight[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_right_"+i+".png");
-                Image fDefaultDown[] = new Image[3];
-                for (int i=0;i<3;i++) fDefaultDown[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_down_"+i+".png");
-                Image fDefaultLeft[] = new Image[3];
-                for (int i=0;i<3;i++) fDefaultLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
-                setFrames(fDefaultUp);
+                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
+                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_right_"+i+".png");
+                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_down_"+i+".png");
+                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
                 break;
         }
+        setFrames(fLeft);
     }
 
     public void setColour(Colour c) {this.colour = c;}
