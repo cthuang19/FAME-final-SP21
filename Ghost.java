@@ -42,32 +42,32 @@ public class Ghost extends MovingAnimatedImage {
                 /* use test file now*/
                 //TODO: create file for each color and initialize it
                 Image red = new Image(".//Images/ghosts/ghost_test.png");
-                Image[] f = new Image[]{red};
-                setFrames(f);
+                Image[] fr = new Image[]{red};
+                setFrames(fr);
                 break;
             case BLUE:
                 //TODO: create file for each color and initialize it
-                Image red = new Image(".//Images/ghosts/ghost_test.png");
-                Image[] f = new Image[]{red};
-                setFrames(f);
+                Image blue = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] fb = new Image[]{blue};
+                setFrames(fb);
                 break;
             case YELLOW:
                 //TODO: create file for each color and initialize it
-                Image red = new Image(".//Images/ghosts/ghost_test.png");
-                Image[] f = new Image[]{red};
-                setFrames(f);
+                Image yellow = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] fy = new Image[]{yellow};
+                setFrames(fy);
                 break;
             case GREEN:
                 //TODO: create file for each color and initialize it
-                Image red = new Image(".//Images/ghosts/ghost_test.png");
-                Image[] f = new Image[]{red};
-                setFrames(f);
+                Image green = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] fg = new Image[]{green};
+                setFrames(fg);
                 break;
             default:
                 //TODO: create file for each color and initialize it
-                Image red = new Image(".//Images/ghosts/ghost_test.png");
-                Image[] f = new Image[]{red};
-                setFrames(f);
+                Image redd = new Image(".//Images/ghosts/ghost_test.png");
+                Image[] frd = new Image[]{redd};
+                setFrames(frd);
                 break;
         }
     }
