@@ -219,6 +219,7 @@ public class MainGame {
             gg.update(t, player_);
         }
     }
+    
     //getter functions
     public int[][] getGameArray() {
         return game_array_;
@@ -240,4 +241,11 @@ public class MainGame {
         return treasure_;
     }
 
+    public ArrayList<Ghost> getAllGhost() {
+        ArrayList<Ghost> all_ghosts = redGhosts;
+        all_ghosts.addAll(blueGhosts);
+        all_ghosts.addAll(yellowGhosts);
+        all_ghosts.addAll(greenGhosts);
+        return all_ghosts;
+    }
 }
