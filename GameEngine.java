@@ -11,6 +11,7 @@ import javafx.event.*;
 import javafx.scene.paint.*;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.input.KeyEvent;
 
 import java.util.*;
 import java.io.*;
@@ -221,12 +222,19 @@ public class GameEngine extends Application {
         MainGame main_game = new MainGame(current_game_level_);
         //int[][] game_status = main_game.getGameArray();
         gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
+        scene_game.setOnKeyPressed(
+            new EventHandler<KeyEvent> () {
+                public void handle(KeyEvent e) {
+                    main_game.movePlayer(e);
+                }
+            }
+        );
+        /*
         AnimatedImage[][] display = main_game.getDisplayArray();
         for (int i = 0; i < display.length; i++) {
             for (int j = 0; j < display[i].length; j++) {
                 String object_type = main_game.cellType(i, j);
                 if (object_type.equals("asteroid")) {
-                    //gc_game.drawImage(display[i][j].getFrame(0), 20 + 40 * i, 20 + 40 * j);
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
                 }
                 
@@ -240,15 +248,23 @@ public class GameEngine extends Application {
                 if (object_type.equals("ghost")) {
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
                 }
-                /*
+                
                 shoud be like this at the end
                 if (!object_type.equals("null")) {
                     gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
                 }
-                */
+                
                 
             }
         }
+        */
+        ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();
+        for (Asteroid a: display_asteroid) {
+            gc_game.drawImage(a.getFrame(0), 40 * a.getPositionX_(), 40 * a.getPositionY_(), 40, 40);
+        }
+        
+        Player display_player = main_game.getPlayer();
+        gc_game.drawImage(display_player.getFrame(0), 40 * display_player.getPositionX(), 40 * display_player.getPositionY(), 40, 40);
         root_game.getChildren().add(canvas_game);
         return scene_game;
     }

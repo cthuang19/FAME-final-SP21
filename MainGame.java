@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import javafx.scene.input.KeyEvent;
 
 public class MainGame {
 
@@ -28,6 +29,9 @@ public class MainGame {
     private ArrayList<Ghost> blueGhosts = new ArrayList<Ghost>();
     private ArrayList<Ghost> yellowGhosts = new ArrayList<Ghost>();
     private ArrayList<Ghost> greenGhosts = new ArrayList<Ghost>();
+    private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+
+    private Player player_;
 
     public MainGame() {
         level_ = 1;
@@ -69,10 +73,11 @@ public class MainGame {
                                 break;
                             case ROCK_CELL:
                                 display_array_[c][i] = new Asteroid(c, i);
+                                asteroids.add(new Asteroid(c, i));
                                 break;
                             case PLAYER_CELL:
-                                Player player = new Player("player", i, c, 3, 30, Player.PlayerState.ALIVE);
-                                display_array_[c][i] = player;
+                                player_ = new Player("player", c, i, 3, 30, Player.PlayerState.ALIVE);
+                                display_array_[c][i] = player_;
                                 break;
                             case RED_GHOST_CELL:
                                 redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
@@ -157,5 +162,33 @@ public class MainGame {
         return display_array_;
     }
 
+    public ArrayList<Asteroid> getAsteroids() {
+        return asteroids;
+    }
+    
+    public Player getPlayer() {
+        return player_;
+    }
+    /**
+     * move the player according to the keycode
+     * @param code the keycode that represents which key was pressed
+     */
+    public void movePlayer(KeyEvent e) {
+        switch(e.getCode()) {
+            case UP:
+                //System.out.println("up");
+                break;
+            case DOWN:
+                //System.out.println("down");
+                break;
+            case RIGHT:
+                //System.out.println("right");
+                break;    
+            case LEFT:       
+                //System.out.println("left");
+                break;
+
+        }
+    }
 
 }

@@ -45,6 +45,9 @@ public class Player extends MovingAnimatedImage {
         state = PlayerState.ALIVE;
         initialX_ = x;
         initialY_ = y;
+        setPosition(x, y);
+        initializeImages();
+        setDuration(0.1);
     }
 
     public Player(String n, int x, int y, int l, int e, PlayerState s) {
@@ -56,10 +59,8 @@ public class Player extends MovingAnimatedImage {
         state = s;
         initialX_ = x;
         initialY_ = y;
-        /* set default for now*/
-        Image default_image = new Image(".//Images/spaceman/Spaceman1.png");
-        Image[] f = new Image[]{default_image};
-        setFrames(f);
+        setPosition(x, y);
+        initializeImages();
         setDuration(0.1);
     }
     /**
@@ -118,6 +119,7 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.HURT;
                 *   this.timeStamp = System.currentTimeMillis();
                 * } */
+                /*
                 accelerationX = forceX/PLAYER_MASS;
                 accelerationY = forceY/PLAYER_MASS;
 
@@ -151,6 +153,7 @@ public class Player extends MovingAnimatedImage {
                 }
 
                 break;
+                */
             case HURT :
                 this.lives -= 1;
                 if (this.lives == 0) {

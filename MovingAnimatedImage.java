@@ -102,6 +102,7 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 
     public void update(double time)
     {
+		/*
 		accelerationX = forceX/mass;
 		accelerationY = forceY/mass;
 		
@@ -127,6 +128,7 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 			positionY=1200;
 			velocityY=-velocityY;
 		}
+		*/
 	}
     
     public Rectangle2D getBoundary()
@@ -144,8 +146,5 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 	{
 		return a.getBoundary().intersects(this.getBoundary());
 	}
-
-
-
 
 }
