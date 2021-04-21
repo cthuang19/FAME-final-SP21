@@ -276,7 +276,7 @@ public class GameEngine extends Application {
                 gc_game.drawImage(display_treasure.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionX_(), 
                     MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 Player display_player = main_game.getPlayer();
-                gc_game.drawImage(display_player.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionX(), 
+                gc_game.drawImage(display_player.getFrame(current_nano_time), MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionX(), 
                     MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
             }
         }.start();

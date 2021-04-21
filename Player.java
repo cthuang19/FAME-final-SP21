@@ -74,7 +74,7 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
-        setFrames(fIdleLeft);
+        setFrames(fIdleRight);
     }
 
     /** update which set of frames is used accordng to the key typed
@@ -194,7 +194,20 @@ public class Player extends MovingAnimatedImage {
         switch (s) {
             case "up":
                 positionY--;
+                updateImages("thrust up");
                 break;
+            case "down":
+                positionY++;
+                updateImages("thrust down");
+                break;
+            case "right":
+                positionX++;
+                updateImages("thrust right");
+                break;
+            case "left":
+                positionX--;
+                updateImages("thrust left");
+                break;             
         }
     }
 

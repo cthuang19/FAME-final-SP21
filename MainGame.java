@@ -16,9 +16,12 @@ public class MainGame {
     private static final int TREASURE_CELL = 7;
     private static final int DOOR_CELL = 8;
 
+    private static final int X_MAX = 36;
+    private static final int Y_MAX = 20;
+
     /* the array that represents each location on the game page */
     //private int[][] game_array_ = new int[40][30];
-    private int[][] game_array_ = new int[36][20];
+    private int[][] game_array_ = new int[X_MAX][Y_MAX];
     private AnimatedImage[][] display_array_ = new AnimatedImage[36][20];
 
     /* the level of the current game */
@@ -146,13 +149,20 @@ public class MainGame {
     }
 
     /**
-     * check if the cell is empty
+     * check if there is an asteroid in the cell
      * @param x the x coordinate of the cell
      * @param y the y coordinate of the cell
-     * @return true if the cell is empty; else false
+     * @return true if there is an asteroid in the cell
      */
-    public boolean isCellEmpty(int x, int y) {
-        return (display_array_[x][y] == null);
+    public boolean isCellAsteroid(double x, double y) {
+        //System.out.println(x+ "   " + y);
+        for (Asteroid a: asteroids) {
+            //System.out.println("ax = " + a.getPositionX_() + "   ay = " + a.getPositionY_());
+            if (a.getPositionX_() == x && a.getPositionY_() == y) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //getter functions
@@ -182,19 +192,32 @@ public class MainGame {
     public void movePlayer(KeyEvent e) {
         switch(e.getCode()) {
             case UP:
-                if (player_.getPositionY() != 0) {
-                    player_.moveDir("up");
+                if (player_.getPositionY() > 0) {
+                    if (!isCellAsteroid(player_.getPositionX(), player_.getPositionY() - 1)) {
+                        player_.moveDir("up");
+                    }
                 }
-                //System.out.println("up");
                 break;
             case DOWN:
-                //System.out.println("down");
+                if (player_.getPositionY() < Y_MAX - 1) {
+                    if (!isCellAsteroid(player_.getPositionX(), player_.getPositionY() + 1)) {
+                        player_.moveDir("down");
+                    }
+                }
                 break;
             case RIGHT:
-                //System.out.println("right");
+                if (player_.getPositionX() < X_MAX - 1) {
+                    if (!isCellAsteroid(player_.getPositionX() + 1, player_.getPositionY())) {
+                        player_.moveDir("right");
+                    }
+                }
                 break;    
-            case LEFT:       
-                //System.out.println("left");
+            case LEFT:    
+                if (player_.getPositionX() > 0) {
+                    if (!isCellAsteroid(player_.getPositionX() - 1, player_.getPositionY())) {
+                        player_.moveDir("left");
+                    }
+                }
                 break;
 
         }
