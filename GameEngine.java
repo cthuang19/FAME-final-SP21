@@ -264,10 +264,13 @@ public class GameEngine extends Application {
         ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
         Treasure display_treasure = main_game.getTreasure();
 
-        //TODO: probably add this to the AnimationTimer like
-        // what we did in class
+        final long startNanoTime = System.nanoTime();
+
         new AnimationTimer() {
             public void handle(long current_nano_time) {
+                double t = (current_nano_time- startNanoTime) / 1000000000.0;
+                main_game.update_time(t);
+
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(), 

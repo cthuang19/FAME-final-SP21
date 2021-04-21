@@ -164,27 +164,6 @@ public class MainGame {
         }
         return false;
     }
-
-    //getter functions
-    public int[][] getGameArray() {
-        return game_array_;
-    }
-
-    public AnimatedImage[][] getDisplayArray() {
-        return display_array_;
-    }
-
-    public ArrayList<Asteroid> getAsteroids() {
-        return asteroids;
-    }
-    
-    public Player getPlayer() {
-        return player_;
-    }
-    
-    public Treasure getTreasure() {
-        return treasure_;
-    }
     /**
      * move the player according to the keycode
      * @param code the keycode that represents which key was pressed
@@ -219,8 +198,46 @@ public class MainGame {
                     }
                 }
                 break;
-
         }
+    }
+    /**
+     * update each moving element in the game
+     * @param t the time
+     */
+    public void update_time(double t) {
+        player_.update(t, asteroids);
+        for (Ghost rg: redGhosts) {
+            rg.update(t, player_);
+        }
+        for (Ghost bg: blueGhosts) {
+            bg.update(t, player_);
+        }
+        for (Ghost yg: yellowGhosts) {
+            yg.update(t, player_);
+        }
+        for (Ghost gg: greenGhosts) {
+            gg.update(t, player_);
+        }
+    }
+    //getter functions
+    public int[][] getGameArray() {
+        return game_array_;
+    }
+
+    public AnimatedImage[][] getDisplayArray() {
+        return display_array_;
+    }
+
+    public ArrayList<Asteroid> getAsteroids() {
+        return asteroids;
+    }
+    
+    public Player getPlayer() {
+        return player_;
+    }
+    
+    public Treasure getTreasure() {
+        return treasure_;
     }
 
 }
