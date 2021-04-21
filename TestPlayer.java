@@ -32,47 +32,12 @@ public class TestPlayer extends Application {
 
         Image background = new Image( ".//Images/Background-4.png" );
 
-        /* frames possible for the player */
-        // idle
-        Image iPlayerIdle[] = new Image[1];
-        for (int i=0;i<1;i++) iPlayerIdle[i]=new Image(".//Images/spaceman/Spaceman1.png");
-
-        // idle left
-        Image iPlayerIdleLeft[] = new Image[5];
-        for (int i=0;i<5;i++) iPlayerIdleLeft[i] = new Image(".//Images/spaceman/SpacemanIdleLeft/SpacemanIdleLeft_"+i+".png");
-
-        // idle right
-        Image iPlayerIdleRight[] = new Image[5];
-        for (int i=0;i<5;i++) iPlayerIdleRight[i] = new Image(".//Images/spaceman/SpacemanIdleRight/SpacemanIdleRight_"+i+".png");
-
-        // thrust up
-        Image iPlayerThrustUp[] = new Image[5];
-        for (int i=0;i<5;i++) iPlayerThrustUp[i] = new Image(".//Images/spaceman/SpacemanThrustUp/SpacemanThrustUp_"+i+".png");
-
-        // thrust right
-        Image iPlayerThrustRight[] = new Image[5];
-        for (int i=0;i<5;i++) iPlayerThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
-
-        // thrust down
-        Image iPlayerThrustDown[] = new Image[5];
-        for (int i=0;i<5;i++) iPlayerThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
-
-        // thrust left
-        Image iPlayerThrustLeft[] = new Image[5];
-        for (int i=0;i<5;i++) iPlayerThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
-
-
         // initialising player
         Player player = new Player("player 1",300, 200, 3, 30, Player.PlayerState.ALIVE);
-        player.setFrames(iPlayerIdle);
-        player.setDuration(0.1);
+        player.initializeImages();
 
         // initialising ghost
-        //Image ghostI[] = new Image[1];
-        //for (int i=0;i<1;i++) ghostI[i]=new Image(".//Images/ghosts/ghost_test.png");
         Ghost ghost = new Ghost("ghost test", 400, 400, Ghost.Colour.RED, Ghost.GhostState.PASSIVE);
-        //ghost.setFrames(ghostI);
-        //ghost.setDuration(0.1);
         ghost.initializeImages();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -99,9 +64,6 @@ public class TestPlayer extends Application {
                     }
                 });
 
-        Image explosionI[] = new Image[7];
-        for (int i=0;i<7;i++) explosionI[i]=new Image(".//Images/explosion/test_explosion_2/explosion_"+i+".png");
-
         ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
         asteroids.add(new Asteroid(new Image(".//Images/asteroids/Mega/asteroidR1.png"),30,300));
         asteroids.add(new Asteroid(new Image(".//Images/asteroids/Mega/asteroidR2.png"),800,30));
@@ -119,35 +81,35 @@ public class TestPlayer extends Application {
                 if (input.contains("W")) {      // Z on AZERTY keyboard
                     player.addForces(0,-5);     // UP
                     player.setCharacterDirection(Player.CharacterDirection.UP);
-                    player.setFrames(iPlayerThrustUp);
+                    player.updateImages("thrust up");
                 }
                 if (input.contains("D")) {
                     player.addForces(5,0);      // RIGHT
                     player.setCharacterDirection(Player.CharacterDirection.RIGHT);
-                    player.setFrames(iPlayerThrustRight);
+                    player.updateImages("thrust right");
                 }
                 if (input.contains("S")) {
                     player.addForces(0,5);      // DOWN
                     player.setCharacterDirection(Player.CharacterDirection.DOWN);
-                    player.setFrames(iPlayerThrustDown);
+                    player.updateImages("thrust down");
                 }
                 if (input.contains("A")) {      // Q on AZERTY keyboard
                     player.addForces(-5,0);     // LEFT
                     player.setCharacterDirection(Player.CharacterDirection.LEFT);
-                    player.setFrames(iPlayerThrustLeft);
+                    player.updateImages("thrust left");
                 }
                 if (input.contains(null)) {
                     if (player.getDirection()==Player.CharacterDirection.UP) {
-                        player.setFrames(iPlayerIdleRight);
+                        player.updateImages("idle right");
                     }
                     if (player.getDirection()==Player.CharacterDirection.RIGHT) {
-                        player.setFrames(iPlayerIdleRight);
+                        player.updateImages("idle right");
                     }
                     if (player.getDirection()==Player.CharacterDirection.DOWN) {
-                        player.setFrames(iPlayerIdleLeft);
+                        player.updateImages("idle left");
                     }
                     if (player.getDirection()==Player.CharacterDirection.LEFT) {
-                        player.setFrames(iPlayerIdleLeft);
+                        player.updateImages("idle left");
                     }
                 }
 
@@ -156,7 +118,7 @@ public class TestPlayer extends Application {
 
                 /* offsets */
                 // values are wrong
-                /*double offsetAsteroidsX = player.getPositionX() - 750;
+/*              double offsetAsteroidsX = player.getPositionX() - 750;
                 if (offsetAsteroidsX<0) offsetAsteroidsX=0;
                 if (offsetAsteroidsX>1600) offsetAsteroidsX=1600;
 
@@ -197,10 +159,8 @@ public class TestPlayer extends Application {
 
                 boolean explosion = false;
                 if (player.intersects(ghost)) {explosion = true;}
-                if (explosion) {
-                    ghost.setFrames(explosionI);
-                }
-                //else { ghost.setFrames(ghostI); }
+                if (explosion) { ghost.updateImages("explosion"); }
+                else { ghost.updateImages(ghost.getStrDirection()); }
 
 
             }

@@ -29,6 +29,15 @@ public class Player extends MovingAnimatedImage {
     private PlayerState state;
     public PlayerState getState() {return this.state;}
 
+    /* sets of frames */
+    private Image fIdleLeft[] = new Image[5];
+    private Image fIdleRight[] = new Image[5];
+    private Image fThrustUp[] = new Image[5];
+    private Image fThrustRight[] = new Image[5];
+    private Image fThrustDown[] = new Image[5];
+    private Image fThrustLeft[] = new Image[5];
+
+
     public Player(String n, int x, int y) {
         super(n, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
         lives = 3;
@@ -53,7 +62,50 @@ public class Player extends MovingAnimatedImage {
         setFrames(f);
         setDuration(0.1);
     }
+    /**
+     * initialize the sets of frames of the player
+     */
+    public void initializeImages() {
+        setDuration(0.2);
+        for (int i=0;i<5;i++) fIdleLeft[i] = new Image(".//Images/spaceman/SpacemanIdleLeft/SpacemanIdleLeft_"+i+".png");
+        for (int i=0;i<5;i++) fIdleRight[i] = new Image(".//Images/spaceman/SpacemanIdleRight/SpacemanIdleRight_"+i+".png");
+        for (int i=0;i<5;i++) fThrustUp[i] = new Image(".//Images/spaceman/SpacemanThrustUp/SpacemanThrustUp_"+i+".png");
+        for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
+        for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
+        for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
+        setFrames(fIdleLeft);
+    }
 
+    /** update which set of frames is used accordng to the key typed
+     * @param s a string representing the movement of the player
+     */
+    public void updateImages(String s) {
+        switch (s) {
+            case "idle right" :
+                setFrames(fIdleRight);
+                break;
+            case "idle left" :
+                setFrames(fIdleLeft);
+                break;
+            case "thrust up" :
+                setFrames(fThrustUp);
+                break;
+            case "thrust right" :
+                setFrames(fThrustRight);
+                break;
+            case "thrust down" :
+                setFrames(fThrustDown);
+                break;
+            case "thrust left" :
+                setFrames(fThrustLeft);
+                break;
+        }
+    }
+
+    /** updates the state of the player
+     * @param time
+     * @param asteroids
+     */
     public void update(double time, ArrayList<Asteroid> asteroids) {
 
         switch (state) {

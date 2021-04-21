@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -19,6 +20,13 @@ public class Ghost extends MovingAnimatedImage {
     private long timeStamp;
     private boolean seesPlayer;
 
+    /* sets of frames */
+    private Image fUp[] = new Image[3];
+    private Image fRight[] = new Image[3];
+    private Image fDown[] = new Image[3];
+    private Image fLeft[] = new Image[3];
+    private Image fExplosion[] = new Image[7];
+
     public Ghost(String n, int x, int y) {
         super(n, x, y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = Colour.RED;
@@ -32,15 +40,18 @@ public class Ghost extends MovingAnimatedImage {
         state = s;
         initializeImages();
     }
+
+    public void setColour(Colour c) {this.colour = c;}
+    public Colour getColour() {return this.colour;}
+    public void setGhostState(GhostState s) {this.state = s;}
+    public GhostState getGhostState() {return this.state;}
+    public boolean getSeesPlayer() {return this.seesPlayer;}
+
     /**
-     * initialize the image frame and duration
+     * initialize the image frames and duration
      */
     public void initializeImages() {
         setDuration(0.25);
-        Image fUp[] = new Image[3];
-        Image fRight[] = new Image[3];
-        Image fDown[] = new Image[3];
-        Image fLeft[] = new Image[3];
         switch(colour) {
             case RED:
                 for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
@@ -73,15 +84,29 @@ public class Ghost extends MovingAnimatedImage {
                 for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
                 break;
         }
-        setFrames(fLeft);
+        for (int i=0;i<7;i++) fExplosion[i]=new Image(".//Images/explosion/test_explosion_2/explosion_"+i+".png");
+        setFrames(fUp);
     }
 
-    public void setColour(Colour c) {this.colour = c;}
-    public Colour getColour() {return this.colour;}
-    public void setGhostState(GhostState s) {this.state = s;}
-    public GhostState getGhostState() {return this.state;}
-    public boolean getSeesPlayer() {return this.seesPlayer;}
-
+    public void updateImages(String s) {
+        switch (s) {
+            case "up" :
+                setFrames(fUp);
+                break;
+            case "right" :
+                setFrames(fRight);
+                break;
+            case "down" :
+                setFrames(fDown);
+                break;
+            case "left" :
+                setFrames(fLeft);
+                break;
+            case "explosion" :
+                setFrames(fExplosion);
+                break;
+        }
+    }
 
     /**
      * updates the state of the ghost

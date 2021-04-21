@@ -38,7 +38,7 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		mass=m;
 		velocityX=0;
 		velocityY=0;
-		direction_ = CharacterDirection.DOWN;
+		direction_ = CharacterDirection.UP;
 	}
 
 	public double getWidth(){
@@ -64,6 +64,15 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 	}
 	public CharacterDirection getDirection() {
 		return direction_;
+	}
+	public String getStrDirection() {
+		switch (direction_) {
+			case UP : return "up";
+			case RIGHT : return "right";
+			case DOWN : return "down";
+			case LEFT : return "left";
+			default : return "up";
+		}
 	}
 	public void setCharacterDirection(CharacterDirection cd) {
 		direction_ = cd;
