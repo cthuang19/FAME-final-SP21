@@ -186,6 +186,18 @@ public class Player extends MovingAnimatedImage {
         }        
     }
 
+    /**
+     * move the player toward specific duration
+     * @param s
+     */
+    public void moveDir(String s) {
+        switch (s) {
+            case "up":
+                positionY--;
+                break;
+        }
+    }
+
     //getter function
     public double getInitialX() {
         return initialX_;

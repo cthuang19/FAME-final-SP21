@@ -32,6 +32,7 @@ public class MainGame {
     private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 
     private Player player_;
+    private Treasure treasure_;
 
     public MainGame() {
         level_ = 1;
@@ -80,22 +81,23 @@ public class MainGame {
                                 display_array_[c][i] = player_;
                                 break;
                             case RED_GHOST_CELL:
-                                redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, i, c, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
+                                redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c, i, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
                                 display_array_[c][i] = redGhosts.get(redGhosts.size()-1);
                                 break;
                             case BLUE_GHOST_CELL:
-                                blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, i, c, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
+                                blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, c, i, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
                                 display_array_[c][i] = blueGhosts.get(blueGhosts.size()-1);
                                 break;
                             case YELLOW_GHOST_CELL:
-                                yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, i, c, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
+                                yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, c, i, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
                                 display_array_[c][i] = yellowGhosts.get(yellowGhosts.size()-1);
                                 break;
                             case GREEN_GHOST_CELL:
-                                greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, i, c, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
+                                greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c, i, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
                                 display_array_[c][i] = greenGhosts.get(greenGhosts.size()-1);
                                 break;    
                             case TREASURE_CELL:
+                                treasure_ = new Treasure(c, i);
                                 display_array_[c][i] = new Treasure(c, i);
                                 break;
                             case DOOR_CELL:
@@ -169,6 +171,10 @@ public class MainGame {
     public Player getPlayer() {
         return player_;
     }
+    
+    public Treasure getTreasure() {
+        return treasure_;
+    }
     /**
      * move the player according to the keycode
      * @param code the keycode that represents which key was pressed
@@ -176,6 +182,9 @@ public class MainGame {
     public void movePlayer(KeyEvent e) {
         switch(e.getCode()) {
             case UP:
+                if (player_.getPositionY() != 0) {
+                    player_.moveDir("up");
+                }
                 //System.out.println("up");
                 break;
             case DOWN:

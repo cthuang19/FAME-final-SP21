@@ -28,6 +28,8 @@ public class GameEngine extends Application {
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 75;
 
+    private static final int MAIN_GAME_DISPLAY_WIDTH = 40;
+
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 40);
 
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
@@ -221,7 +223,6 @@ public class GameEngine extends Application {
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
         //int[][] game_status = main_game.getGameArray();
-        gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
         scene_game.setOnKeyPressed(
             new EventHandler<KeyEvent> () {
                 public void handle(KeyEvent e) {
@@ -258,13 +259,28 @@ public class GameEngine extends Application {
             }
         }
         */
-        ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();
-        for (Asteroid a: display_asteroid) {
-            gc_game.drawImage(a.getFrame(0), 40 * a.getPositionX_(), 40 * a.getPositionY_(), 40, 40);
-        }
+
+        //getting all the fix information to draw
+        ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
+        Treasure display_treasure = main_game.getTreasure();
+
+        //TODO: probably add this to the AnimationTimer like
+        // what we did in class
+        new AnimationTimer() {
+            public void handle(long current_nano_time) {
+                gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
+                for (Asteroid a: display_asteroid) {
+                    gc_game.drawImage(a.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(), 
+                        MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                }
+                gc_game.drawImage(display_treasure.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionX_(), 
+                    MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                Player display_player = main_game.getPlayer();
+                gc_game.drawImage(display_player.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionX(), 
+                    MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+            }
+        }.start();
         
-        Player display_player = main_game.getPlayer();
-        gc_game.drawImage(display_player.getFrame(0), 40 * display_player.getPositionX(), 40 * display_player.getPositionY(), 40, 40);
         root_game.getChildren().add(canvas_game);
         return scene_game;
     }
