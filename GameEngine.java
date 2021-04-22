@@ -222,7 +222,7 @@ public class GameEngine extends Application {
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
-        //int[][] game_status = main_game.getGameArray();
+        final long startNanoTime = System.nanoTime();
         scene_game.setOnKeyPressed(
             new EventHandler<KeyEvent> () {
                 public void handle(KeyEvent e) {
@@ -234,8 +234,6 @@ public class GameEngine extends Application {
         //getting all the fix information to draw
         ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
         Treasure display_treasure = main_game.getTreasure();
-
-        final long startNanoTime = System.nanoTime();
 
         new AnimationTimer() {
             public void handle(long current_nano_time) {
@@ -266,6 +264,11 @@ public class GameEngine extends Application {
                 }  
 
                 //TODO: draw the doors
+                ArrayList<Door> display_door = main_game.getDoors();
+                for (Door d: display_door) {
+                    gc_game.drawImage(d.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * d.getPositionX(),
+                        MAIN_GAME_DISPLAY_WIDTH * d.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                }
             }
         }.start();
         

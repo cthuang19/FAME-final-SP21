@@ -33,6 +33,7 @@ public class MainGame {
     private ArrayList<Ghost> yellowGhosts = new ArrayList<Ghost>();
     private ArrayList<Ghost> greenGhosts = new ArrayList<Ghost>();
     private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+    private ArrayList<Door> doors = new ArrayList<Door>();
 
     private Player player_;
     private Treasure treasure_;
@@ -104,7 +105,8 @@ public class MainGame {
                                 display_array_[c][i] = new Treasure(c, i);
                                 break;
                             case DOOR_CELL:
-                                display_array_[c][i] = new Door(c, i);
+                                doors.add(new Door(c, i));
+                                //display_array_[c][i] = new Door(c, i);
                                 break;
                             default:
                                 display_array_[c][i] = null;
@@ -247,5 +249,9 @@ public class MainGame {
         all_ghosts.addAll(yellowGhosts);
         all_ghosts.addAll(greenGhosts);
         return all_ghosts;
+    }
+    
+    public ArrayList<Door> getDoors() {
+        return doors;
     }
 }

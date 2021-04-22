@@ -13,11 +13,15 @@ public class Door extends AnimatedImage {
     private double positionX_;
     private double positionY_;
 
+    /* variable that checks if the puzzle in this door has been completed*/
+    private boolean isComplete;
+
     public Door () {
         super();
         positionX_ = 0;
         positionY_ = 0;
         Image[] f = new Image[] {DOOR_IMAGE};
+        isComplete = false;
     }
 
     public Door(Image image) {
@@ -26,12 +30,20 @@ public class Door extends AnimatedImage {
         positionY_ = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
+        isComplete = false;
     }
 
     public Door(double x, double y) {
         super();
         positionX_ = x;
         positionY_ = y;
+        Image[] f = new Image[] {DOOR_IMAGE};
+        setFrames(f);
+        isComplete = false;
+    }
+
+    public boolean getIsComplete() {
+        return isComplete;
     }
 
 }
