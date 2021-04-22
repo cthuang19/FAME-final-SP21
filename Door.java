@@ -46,4 +46,12 @@ public class Door extends AnimatedImage {
         return isComplete;
     }
 
+    public double getPositionX_() {
+        return positionX_;
+    }
+
+    public double getPositionY_() {
+        return positionY_;
+    }
+
 }
