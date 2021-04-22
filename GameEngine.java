@@ -230,35 +230,6 @@ public class GameEngine extends Application {
                 }
             }
         );
-        /*
-        AnimatedImage[][] display = main_game.getDisplayArray();
-        for (int i = 0; i < display.length; i++) {
-            for (int j = 0; j < display[i].length; j++) {
-                String object_type = main_game.cellType(i, j);
-                if (object_type.equals("asteroid")) {
-                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
-                }
-                
-                if (object_type.equals("treasure")) {
-                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
-                }
-
-                if (object_type.equals("player")) {
-                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
-                }
-                if (object_type.equals("ghost")) {
-                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
-                }
-                
-                shoud be like this at the end
-                if (!object_type.equals("null")) {
-                    gc_game.drawImage(display[i][j].getFrame(0), 40 * i, 40 * j, 40, 40);
-                }
-                
-                
-            }
-        }
-        */
 
         //getting all the fix information to draw
         ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
@@ -271,22 +242,30 @@ public class GameEngine extends Application {
                 double t = (current_nano_time- startNanoTime) / 1000000000.0;
                 main_game.update_time(t);
 
+                //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(), 
                         MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 }
+
+                //draw the treasure
                 gc_game.drawImage(display_treasure.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionX_(), 
                     MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                
+                //draw the player
                 Player display_player = main_game.getPlayer();
                 gc_game.drawImage(display_player.getFrame(t), MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionX(), 
                     MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
 
+                //draw the ghosts    
                 ArrayList<Ghost> display_ghosts = main_game.getAllGhost();
                 for (Ghost g: display_ghosts) {
                     gc_game.drawImage(g.getFrame(t), MAIN_GAME_DISPLAY_WIDTH * g.getPositionX(),
                         MAIN_GAME_DISPLAY_WIDTH * g.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 }  
+
+                //TODO: draw the doors
             }
         }.start();
         
