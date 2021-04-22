@@ -3,11 +3,14 @@ import javafx.scene.image.Image;
 
 public class Player extends MovingAnimatedImage {
 
-    private static final double PLAYER_WIDTH = 23;
-    private static final double PLAYER_HEIGHT = 42;
+    private static final double PLAYER_WIDTH = 40;
+    private static final double PLAYER_HEIGHT = 40;
     private static final double PLAYER_MASS = 80;
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
+
+    private static final double WIDTH_MAX = 1080;
+    private static final double HEIGHT_MAX = 800;
 
     /* number of lives of the player, from 0 to 3 at the beginning, up to 10 at the end
     * whenever the player respawns, is set to 3 (no matter the number max of lives) */
@@ -57,9 +60,9 @@ public class Player extends MovingAnimatedImage {
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
-        initialX_ = x;
-        initialY_ = y;
-        setPosition(x, y);
+        initialX_ = 40 * x;
+        initialY_ = 40 * y;
+        setPosition(40 * x, 40 * y);
         initializeImages();
         setDuration(0.1);
     }
@@ -119,7 +122,7 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.HURT;
                 *   this.timeStamp = System.currentTimeMillis();
                 * } */
-                /*
+                
                 accelerationX = forceX/PLAYER_MASS;
                 accelerationY = forceY/PLAYER_MASS;
 
@@ -131,29 +134,32 @@ public class Player extends MovingAnimatedImage {
 
                 if (positionX<0) {
                     positionX=0;
-                    velocityX=-velocityX;
+                    //velocityX=-velocityX;
                 }
                 if (positionY<0) {
                     positionY=0;
-                    velocityY=-velocityY;
+                    //velocityY=-velocityY;
                 }
-                if (positionX>1600-PLAYER_WIDTH) {
-                    positionX=1600-PLAYER_WIDTH;
-                    velocityX=-velocityX*0.8;
+                if (positionX>WIDTH_MAX-PLAYER_WIDTH) {
+                    positionX=WIDTH_MAX-PLAYER_WIDTH;
+                    //velocityX=-velocityX*0.8;
                 }
-                if (positionY>1200-PLAYER_HEIGHT) {
-                    positionY=1200-PLAYER_HEIGHT;
+                if (positionY>HEIGHT_MAX-PLAYER_HEIGHT) {
+                    positionY=HEIGHT_MAX-PLAYER_HEIGHT;
                     velocityY=-velocityY*0.8;
                 }
                 for (Asteroid a : asteroids) {
                     if (this.intersects(a)) {
-                        velocityX = -velocityX*0.8;
-                        velocityY = -velocityY*0.8;
+                        //System.out.println("intersects");
+                        //velocityX = -velocityX*0.8;
+                        //velocityY = -velocityY*0.8;
+                        velocityX = 0;
+                        velocityY = 0;
                     }
                 }
 
                 break;
-                */
+                
             case HURT :
                 this.lives -= 1;
                 if (this.lives == 0) {
@@ -184,31 +190,6 @@ public class Player extends MovingAnimatedImage {
                 state = PlayerState.ALIVE;
                 break;
         }        
-    }
-
-    /**
-     * move the player toward specific duration
-     * @param s
-     */
-    public void moveDir(String s) {
-        switch (s) {
-            case "up":
-                positionY--;
-                updateImages("thrust up");
-                break;
-            case "down":
-                positionY++;
-                updateImages("thrust down");
-                break;
-            case "right":
-                positionX++;
-                updateImages("thrust right");
-                break;
-            case "left":
-                positionX--;
-                updateImages("thrust left");
-                break;             
-        }
     }
 
     //getter function

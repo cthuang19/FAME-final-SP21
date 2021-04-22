@@ -223,6 +223,7 @@ public class GameEngine extends Application {
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
         final long startNanoTime = System.nanoTime();
+
         scene_game.setOnKeyPressed(
             new EventHandler<KeyEvent> () {
                 public void handle(KeyEvent e) {
@@ -253,8 +254,8 @@ public class GameEngine extends Application {
                 
                 //draw the player
                 Player display_player = main_game.getPlayer();
-                gc_game.drawImage(display_player.getFrame(t), MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionX(), 
-                    MAIN_GAME_DISPLAY_WIDTH * display_player.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX(), 
+                    display_player.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
 
                 //draw the ghosts    
                 ArrayList<Ghost> display_ghosts = main_game.getAllGhost();

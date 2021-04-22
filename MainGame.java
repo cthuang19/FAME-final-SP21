@@ -173,32 +173,24 @@ public class MainGame {
     public void movePlayer(KeyEvent e) {
         switch(e.getCode()) {
             case UP:
-                if (player_.getPositionY() > 0) {
-                    if (!isCellAsteroid(player_.getPositionX(), player_.getPositionY() - 1)) {
-                        player_.moveDir("up");
-                    }
-                }
+                player_.addForces(0,-5);     // UP
+                player_.setCharacterDirection(Player.CharacterDirection.UP);
+                player_.updateImages("thrust up");
                 break;
             case DOWN:
-                if (player_.getPositionY() < Y_MAX - 1) {
-                    if (!isCellAsteroid(player_.getPositionX(), player_.getPositionY() + 1)) {
-                        player_.moveDir("down");
-                    }
-                }
+                player_.addForces(0,5);      // DOWN
+                player_.setCharacterDirection(Player.CharacterDirection.DOWN);
+                player_.updateImages("thrust down");
                 break;
             case RIGHT:
-                if (player_.getPositionX() < X_MAX - 1) {
-                    if (!isCellAsteroid(player_.getPositionX() + 1, player_.getPositionY())) {
-                        player_.moveDir("right");
-                    }
-                }
+                player_.addForces(5,0);      // RIGHT
+                player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
+                player_.updateImages("thrust right");
                 break;    
-            case LEFT:    
-                if (player_.getPositionX() > 0) {
-                    if (!isCellAsteroid(player_.getPositionX() - 1, player_.getPositionY())) {
-                        player_.moveDir("left");
-                    }
-                }
+            case LEFT:   
+                player_.addForces(-5,0);     // LEFT
+                player_.setCharacterDirection(Player.CharacterDirection.LEFT);
+                player_.updateImages("thrust left");
                 break;
         }
     }
