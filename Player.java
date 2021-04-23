@@ -3,14 +3,11 @@ import javafx.scene.image.Image;
 
 public class Player extends MovingAnimatedImage {
 
-    private static final double PLAYER_WIDTH = 40;
-    private static final double PLAYER_HEIGHT = 40;
+    private static final double PLAYER_WIDTH = 23;
+    private static final double PLAYER_HEIGHT = 42;
     private static final double PLAYER_MASS = 80;
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
-
-    private static final double WIDTH_MAX = 1080;
-    private static final double HEIGHT_MAX = 800;
 
     /* number of lives of the player, from 0 to 3 at the beginning, up to 10 at the end
     * whenever the player respawns, is set to 3 (no matter the number max of lives) */
@@ -48,9 +45,6 @@ public class Player extends MovingAnimatedImage {
         state = PlayerState.ALIVE;
         initialX_ = x;
         initialY_ = y;
-        setPosition(x, y);
-        initializeImages();
-        setDuration(0.1);
     }
 
     public Player(String n, int x, int y, int l, int e, PlayerState s) {
@@ -60,10 +54,11 @@ public class Player extends MovingAnimatedImage {
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
-        initialX_ = 40 * x;
-        initialY_ = 40 * y;
-        setPosition(40 * x, 40 * y);
-        initializeImages();
+        initialX_ = x;
+        initialY_ = y;
+        Image default_image = new Image(".//Images/spaceman/Spaceman1.png");
+        Image[] f = new Image[]{default_image};
+        setFrames(f);
         setDuration(0.1);
     }
     /**
@@ -77,7 +72,7 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
-        setFrames(fIdleRight);
+        setFrames(fIdleLeft);
     }
 
     /** update which set of frames is used accordng to the key typed
@@ -122,7 +117,6 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.HURT;
                 *   this.timeStamp = System.currentTimeMillis();
                 * } */
-                
                 accelerationX = forceX/PLAYER_MASS;
                 accelerationY = forceY/PLAYER_MASS;
 
@@ -134,32 +128,28 @@ public class Player extends MovingAnimatedImage {
 
                 if (positionX<0) {
                     positionX=0;
-                    //velocityX=-velocityX;
+                    velocityX=-velocityX;
                 }
                 if (positionY<0) {
                     positionY=0;
-                    //velocityY=-velocityY;
+                    velocityY=-velocityY;
                 }
-                if (positionX>WIDTH_MAX-PLAYER_WIDTH) {
-                    positionX=WIDTH_MAX-PLAYER_WIDTH;
-                    //velocityX=-velocityX*0.8;
+                if (positionX>1600-PLAYER_WIDTH) {
+                    positionX=1600-PLAYER_WIDTH;
+                    velocityX=-velocityX*0.8;
                 }
-                if (positionY>HEIGHT_MAX-PLAYER_HEIGHT) {
-                    positionY=HEIGHT_MAX-PLAYER_HEIGHT;
+                if (positionY>1200-PLAYER_HEIGHT) {
+                    positionY=1200-PLAYER_HEIGHT;
                     velocityY=-velocityY*0.8;
                 }
                 for (Asteroid a : asteroids) {
                     if (this.intersects(a)) {
-                        //System.out.println("intersects");
-                        //velocityX = -velocityX*0.8;
-                        //velocityY = -velocityY*0.8;
-                        velocityX = 0;
-                        velocityY = 0;
+                        velocityX = -velocityX*0.8;
+                        velocityY = -velocityY*0.8;
                     }
                 }
 
                 break;
-                
             case HURT :
                 this.lives -= 1;
                 if (this.lives == 0) {

@@ -10,13 +10,13 @@ import javafx.geometry.Rectangle2D;
 public class Treasure extends AnimatedImage{
     
     private static final Image TREASURE_IMAGE = new Image(".//Images/treasures/Treasure1.png");
-    private double positionX_;
-    private double positionY_;
+    private double positionX;
+    private double positionY;
 
     public Treasure () {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[] {TREASURE_IMAGE};
         setFrames(f);
         setDuration(0.1);
@@ -24,8 +24,8 @@ public class Treasure extends AnimatedImage{
 
     public Treasure(Image image) {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
         setDuration(0.1);
@@ -33,8 +33,8 @@ public class Treasure extends AnimatedImage{
 
     public Treasure(double x, double y) {
         super();
-        positionX_ = x;
-        positionY_ = y;
+        positionX = x;
+        positionY = y;
         Image[] f = new Image[] {TREASURE_IMAGE};
         setFrames(f);
         setDuration(0.1);
@@ -42,23 +42,23 @@ public class Treasure extends AnimatedImage{
 
     public Treasure(Image image, double x, double y) {
         super();
-        positionX_ = x;
-        positionY_ = y;
+        positionX = x;
+        positionY = y;
         Image[] f = new Image[]{image};
         setFrames(f);
         setDuration(0.1);
     }
 
-    public double getPositionX_() {
-        return positionX_;
+    public double getPositionX() {
+        return positionX;
     }
 
-    public double getPositionY_() {
-        return positionY_;
+    public double getPositionY() {
+        return positionY;
     }
 
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX_,positionY_,frames[0].getWidth(),frames[0].getHeight());
+        return new Rectangle2D(positionX,positionY,frames[0].getWidth(),frames[0].getHeight());
     }
 
 }

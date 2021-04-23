@@ -18,6 +18,9 @@ import javafx.geometry.Rectangle2D;
 
 public class TestPlayer extends Application {
 
+    private int TILE_SIZE = 64;
+    private Player player = new Player("player",0,0);
+
     public void start(Stage theStage) {
         theStage.setTitle( "Test Player" );
 
@@ -32,13 +35,16 @@ public class TestPlayer extends Application {
 
         Image background = new Image( ".//Images/Background-4.png" );
 
+        MainGame mainGame = new MainGame(2);
+
         // initialising player
-        Player player = new Player("player 1",300, 200, 3, 30, Player.PlayerState.ALIVE);
+        //Player player = new Player("player 1",300, 200, 3, 30, Player.PlayerState.ALIVE);
+        player = mainGame.getPlayer();
         player.initializeImages();
 
         // initialising ghost
-        Ghost ghost = new Ghost("ghost test", 400, 400, Ghost.Colour.RED, Ghost.GhostState.PASSIVE);
-        ghost.initializeImages();
+        //Ghost ghost = new Ghost("ghost test", 400, 400, Ghost.Colour.RED, Ghost.GhostState.PASSIVE);
+        //ghost.initializeImages();
 
         ArrayList<String> input = new ArrayList<String>();
 
@@ -64,12 +70,44 @@ public class TestPlayer extends Application {
                     }
                 });
 
-        ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+        /*ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
         asteroids.add(new Asteroid(new Image(".//Images/asteroids/Mega/asteroidR1.png"),30,300));
         asteroids.add(new Asteroid(new Image(".//Images/asteroids/Mega/asteroidR2.png"),800,30));
         asteroids.add(new Asteroid(new Image(".//Images/asteroids/Mini/06.png"),700,600));
+        */
+
+        ArrayList<Ghost> ghosts = mainGame.getRedGhosts();
+        ghosts.addAll(mainGame.getBlueGhosts());
+        ghosts.addAll(mainGame.getYellowGhosts());
+        ghosts.addAll(mainGame.getGreenGhosts());
+        ArrayList<Asteroid> asteroids = mainGame.getAsteroids();
+        ArrayList<Treasure> treasures = mainGame.getTreasures();
+        ArrayList<Door> doors = mainGame.getDoors();
 
         final long startNanoTime = System.nanoTime();
+
+        /* initialize drawings */
+        gc.drawImage(background, 0, 0);
+        AnimatedImage[][] display = mainGame.getDisplayArray();
+        for (int i = 0; i < display.length; i++) {
+            for (int j = 0; j < display[i].length; j++) {
+                String object_type = mainGame.cellType(i, j);
+                if (object_type.equals("asteroid")) {
+                    gc.drawImage(display[i][j].getFrame(0), TILE_SIZE * i, TILE_SIZE * j);
+                }
+
+                if (object_type.equals("treasure")) {
+                    gc.drawImage(display[i][j].getFrame(0), TILE_SIZE * i, TILE_SIZE * j);
+                }
+
+                if (object_type.equals("player")) {
+                    gc.drawImage(display[i][j].getFrame(0), TILE_SIZE * i, TILE_SIZE * j);
+                }
+                if (object_type.equals("ghost")) {
+                    gc.drawImage(display[i][j].getFrame(0), TILE_SIZE * i, TILE_SIZE * j);
+                }
+            }
+        }
 
         new AnimationTimer()
         {
@@ -114,7 +152,6 @@ public class TestPlayer extends Application {
                 }
 
                 player.update(t, asteroids);
-                ghost.update(t, player);
 
                 /* offsets */
                 // values are wrong
@@ -141,7 +178,7 @@ public class TestPlayer extends Application {
                     gc.drawImage( a.getFrame(t), offsetAsteroidsX+a.getPositionX_(), offsetAsteroidsY+a.getPositionY_(),  1500, 800, a.getPositionX_(), a.getPositionY_(), 1500, 800);
                 }
 */
-                gc.drawImage( background, 0, 0 );
+                /*gc.drawImage( background, 0, 0 );
                 gc.drawImage( player.getFrame(t), player.getPositionX(), player.getPositionY() );
                 gc.drawImage( ghost.getFrame(t), ghost.getPositionX(), ghost.getPositionY() );
                 for (Asteroid a : asteroids) {
@@ -157,10 +194,18 @@ public class TestPlayer extends Application {
                  * and use canSeePlayer(Player player, ArrayList<Asteroid> asteroids) instead */
                 // gc.fillText(String.valueOf(ghost.canSeePlayer(player, asteroids)),400,48);
 
+                gc.drawImage(background, 0, 0);
+                gc.drawImage(player.getFrame(t), player.getPositionX(), player.getPositionY());
+                for (Ghost g : ghosts) {gc.drawImage(g.getFrame(t), g.getPositionX(), g.getPositionY());}
+                for (Asteroid a : asteroids) {gc.drawImage(a.getFrame(t), a.getPositionX(), a.getPositionY());}
+                for (Treasure tr : treasures) {gc.drawImage(tr.getFrame(t), tr.getPositionX(), tr.getPositionY());}
+                for (Door d : doors) {gc.drawImage(d.getFrame(t), d.getPositionX(), d.getPositionY());}
+
+/*
                 boolean explosion = false;
                 if (player.intersects(ghost)) {explosion = true;}
                 if (explosion) { ghost.updateImages("explosion"); }
-                else { ghost.updateImages(ghost.getStrDirection()); }
+                else { ghost.updateImages(ghost.getStrDirection()); }*/
 
 
             }

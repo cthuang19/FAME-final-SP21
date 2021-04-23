@@ -10,48 +10,36 @@ public class Door extends AnimatedImage {
 
     //TODO: change this to a image of an door
     private static final Image DOOR_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR4.png");
-    private double positionX_;
-    private double positionY_;
-
-    /* variable that checks if the puzzle in this door has been completed*/
-    private boolean isComplete;
+    private double positionX;
+    private double positionY;
 
     public Door () {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[] {DOOR_IMAGE};
-        isComplete = false;
     }
 
     public Door(Image image) {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
-        isComplete = false;
     }
 
     public Door(double x, double y) {
         super();
-        positionX_ = x;
-        positionY_ = y;
-        Image[] f = new Image[] {DOOR_IMAGE};
-        setFrames(f);
-        isComplete = false;
+        positionX = x;
+        positionY = y;
     }
 
-    public boolean getIsComplete() {
-        return isComplete;
+    public double getPositionX() {
+        return positionX;
     }
 
-    public double getPositionX_() {
-        return positionX_;
-    }
-
-    public double getPositionY_() {
-        return positionY_;
+    public double getPositionY() {
+        return positionY;
     }
 
 }

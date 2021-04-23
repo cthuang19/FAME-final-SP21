@@ -9,14 +9,16 @@ import javafx.geometry.Rectangle2D;
 
 public class Asteroid extends AnimatedImage{
     
-    private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR1.png");
-    private double positionX_;
-    private double positionY_;
+    //TODO: still figuring how to resize the image and made it fit into 40*40 pixel size
+    //private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR1.png");
+    private static final Image ASTEROID_IMAGE = new Image(".//Images/tileset/tiles/tile01.png");
+    private double positionX;
+    private double positionY;
 
     public Asteroid () {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[] {ASTEROID_IMAGE};
         setFrames(f);
         setDuration(0.1);
@@ -24,8 +26,8 @@ public class Asteroid extends AnimatedImage{
 
     public Asteroid(Image image) {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
         setDuration(0.1);
@@ -33,8 +35,8 @@ public class Asteroid extends AnimatedImage{
 
     public Asteroid(double x, double y) {
         super();
-        positionX_ = x;
-        positionY_ = y;
+        positionX = x;
+        positionY = y;
         Image[] f = new Image[] {ASTEROID_IMAGE};
         setFrames(f);
         setDuration(0.1);
@@ -42,24 +44,23 @@ public class Asteroid extends AnimatedImage{
 
     public Asteroid(Image image, double x, double y) {
         super();
-        positionX_ = x;
-        positionY_ = y;
+        positionX = x;
+        positionY = y;
         Image[] f = new Image[]{image};
         setFrames(f);
         setDuration(0.1);
     }
 
-    public double getPositionX_() {
-        return positionX_;
+    public double getPositionX() {
+        return positionX;
     }
 
-    public double getPositionY_() {
-        return positionY_;
+    public double getPositionY() {
+        return positionY;
     }
 
     public Rectangle2D getBoundary() {
-        //return new Rectangle2D(positionX_,positionY_,frames[0].getWidth(),frames[0].getHeight());
-        return new Rectangle2D(positionX_ * 40, positionY_ * 40, (positionX_ + 1) * 40, (positionY_ + 1) * 40);
+        return new Rectangle2D(positionX,positionY,frames[0].getWidth(),frames[0].getHeight());
     }
 
 }
