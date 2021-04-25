@@ -261,8 +261,8 @@ public class GameEngine extends Application {
                 //draw the ghosts    
                 ArrayList<Ghost> display_ghosts = main_game.getAllGhost();
                 for (Ghost g: display_ghosts) {
-                    gc_game.drawImage(g.getFrame(t), MAIN_GAME_DISPLAY_WIDTH * g.getPositionX(),
-                        MAIN_GAME_DISPLAY_WIDTH * g.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                    gc_game.drawImage(g.getFrame(t), g.getPositionX(),
+                        g.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 }  
 
                 //TODO: draw the doors
@@ -270,17 +270,6 @@ public class GameEngine extends Application {
                 for (Door d: display_door) {
                     gc_game.drawImage(d.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * d.getPositionX_(),
                         MAIN_GAME_DISPLAY_WIDTH * d.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-                }
-
-                //TODO: change to an actual smoke pic
-                Image smoke = new Image(".//Images/smoke_template.png");
-                for (int i = 0; i <= 1430; i +=10) {
-                    for (int j = 0; j < 800; j+=10) {
-                        double distance = Math.sqrt(Math.pow(i - display_player.getPositionX(), 2) + Math.pow(j - display_player.getPositionY(), 2));
-                        if (distance > 200) {
-                            gc_game.drawImage(smoke, i, j, 10, 10);
-                        }
-                    }
                 }
             }
         }.start();

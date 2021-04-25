@@ -20,6 +20,9 @@ public class Ghost extends MovingAnimatedImage {
     private long timeStamp;
     private boolean seesPlayer;
 
+    private double maxX;
+    private double maxY;
+
     /* sets of frames */
     private Image fUp[] = new Image[3];
     private Image fRight[] = new Image[3];
@@ -28,17 +31,22 @@ public class Ghost extends MovingAnimatedImage {
     private Image fExplosion[] = new Image[7];
 
     public Ghost(String n, int x, int y) {
-        super(n, x, y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
+        super(n, 40 * x, 40 * y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = Colour.RED;
         state = GhostState.PASSIVE;
         initializeImages();
     }
 
     public Ghost(String n, int x, int y, Colour c, GhostState s) {
-        super(n, x, y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
+        super(n, 40 * x, 40 * y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = c;
         state = s;
         initializeImages();
+    }
+
+    public void setDimension(double x, double y) {
+        maxX = x;
+        maxY = y;
     }
 
     public void setColour(Colour c) {this.colour = c;}

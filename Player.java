@@ -9,9 +9,6 @@ public class Player extends MovingAnimatedImage {
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
 
-    private static final double WIDTH_MAX = 1430;
-    private static final double HEIGHT_MAX = 800;
-
     /* number of lives of the player, from 0 to 3 at the beginning, up to 10 at the end
     * whenever the player respawns, is set to 3 (no matter the number max of lives) */
     private double lives;
@@ -19,6 +16,9 @@ public class Player extends MovingAnimatedImage {
 
     private double initialX_;
     private double initialY_;
+
+    private double maxX;
+    private double maxY;
 
     /* level of energy for the defensive force field, from 0 to 30 at the beginning, up to 100 at the end
      * whenever the player respawns, is set to currMaxEnergy */
@@ -47,11 +47,17 @@ public class Player extends MovingAnimatedImage {
         lives = 3;
         fieldEnergy = currMaxEnergy;
         state = PlayerState.ALIVE;
-        initialX_ = x;
-        initialY_ = y;
-        setPosition(x, y);
+        initialX_ = 40 * x;
+        initialY_ = 40 * y;
+        setPosition(40 * x, 40 * y);
         initializeImages();
         setDuration(0.1);
+
+        //just default value
+        //change if needed (or change when calling setDimension)
+        maxX = 1080;
+        maxY = 800;
+
     }
 
     public Player(String n, int x, int y, int l, int e, PlayerState s) {
@@ -66,6 +72,10 @@ public class Player extends MovingAnimatedImage {
         setPosition(40 * x, 40 * y);
         initializeImages();
         setDuration(0.1);
+        //just default value
+        //change if needed (or change when calling setDimension)
+        maxX = 1080;
+        maxY = 800;
     }
     /**
      * initialize the sets of frames of the player
@@ -80,6 +90,11 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
         for (int i=0;i<5;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion" + i + ".png");
         setFrames(fIdleRight);
+    }
+
+    public void setDimension(double x, double y) {
+        maxX = x;
+        maxY = y;
     }
 
     /** update which set of frames is used accordng to the key typed
@@ -163,13 +178,13 @@ public class Player extends MovingAnimatedImage {
                     positionY=0;
                     //velocityY=-velocityY;
                 }
-                if (positionX>WIDTH_MAX-PLAYER_WIDTH) {
-                    positionX=WIDTH_MAX-PLAYER_WIDTH;
+                if (positionX>maxX-PLAYER_WIDTH) {
+                    positionX=maxX-PLAYER_WIDTH;
                     //velocityX=-velocityX*0.8;
 
                 }
-                if (positionY>HEIGHT_MAX-PLAYER_HEIGHT) {
-                    positionY=HEIGHT_MAX-PLAYER_HEIGHT;
+                if (positionY>maxY-PLAYER_HEIGHT) {
+                    positionY=maxY-PLAYER_HEIGHT;
                     //velocityY=-velocityY*0.8;
                 }
                 // check if the player intersects with ghost 

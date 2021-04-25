@@ -16,16 +16,14 @@ public class MainGame {
     private static final int TREASURE_CELL = 7;
     private static final int DOOR_CELL = 8;
 
-    private static final int X_MAX = 36;
-    private static final int Y_MAX = 20;
-
-    /* the array that represents each location on the game page */
-    //private int[][] game_array_ = new int[40][30];
-    private int[][] game_array_ = new int[X_MAX][Y_MAX];
-    private AnimatedImage[][] display_array_ = new AnimatedImage[36][20];
+    /* the dimenstion for the easiest levels, change this if needed*/
+    private static final double BASIC_DIMENSIONX = 300;
+    private static final double BASIC_DIMENSIONY = 150;
 
     /* the level of the current game */
     private int level_;
+    private double dimensionX;
+    private double dimensionY;
 
     /* lists that contain all the Ghosts of given level */
     private ArrayList<Ghost> redGhosts = new ArrayList<Ghost>();
@@ -42,12 +40,25 @@ public class MainGame {
         level_ = 1;
         FileReader fr = new FileReader(".//game_environment_files/game_level_" + "1" + ".txt");
         initializeArray(fr.allLines());
+        
+        dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
+        dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
     }
 
     public MainGame(int level) {
         level_ = level;
         FileReader fr = new FileReader(".//game_environment_files/game_level_" + level_ + ".txt");
         initializeArray(fr.allLines());
+
+        //change this if needed
+        dimensionX = 1430;
+        dimensionY = 800;
+        //change it to somethin like this according to the level
+        /*
+        dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
+        dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
+        */
+        initializeDimenstion();
     }
 
     /**
@@ -70,46 +81,31 @@ public class MainGame {
                             System.out.println("Number Format Exception, using default value");
                             cell_int = 0;
                         }
-                        game_array_[c][i] = cell_int;
                         
                         switch(cell_int) {
-                            case EMPTY_CELL:
-                                display_array_[c][i] = null;
-                                break;
                             case ROCK_CELL:
-                                display_array_[c][i] = new Asteroid(c, i);
                                 asteroids.add(new Asteroid(c, i));
                                 break;
                             case PLAYER_CELL:
                                 player_ = new Player("player", c, i, 3, 30, Player.PlayerState.ALIVE);
-                                display_array_[c][i] = player_;
                                 break;
                             case RED_GHOST_CELL:
                                 redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c, i, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
-                                display_array_[c][i] = redGhosts.get(redGhosts.size()-1);
                                 break;
                             case BLUE_GHOST_CELL:
                                 blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, c, i, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
-                                display_array_[c][i] = blueGhosts.get(blueGhosts.size()-1);
                                 break;
                             case YELLOW_GHOST_CELL:
                                 yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, c, i, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
-                                display_array_[c][i] = yellowGhosts.get(yellowGhosts.size()-1);
                                 break;
                             case GREEN_GHOST_CELL:
                                 greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c, i, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
-                                display_array_[c][i] = greenGhosts.get(greenGhosts.size()-1);
                                 break;    
                             case TREASURE_CELL:
                                 treasure_ = new Treasure(c, i);
-                                display_array_[c][i] = new Treasure(c, i);
                                 break;
                             case DOOR_CELL:
                                 doors.add(new Door(c, i));
-                                //display_array_[c][i] = new Door(c, i);
-                                break;
-                            default:
-                                display_array_[c][i] = null;
                                 break;
                         }
                     }
@@ -117,54 +113,21 @@ public class MainGame {
             }
         }
     }
-    /**
-     * find the type of the object in the given cell
-     * or null if the cell is empty
-     * @param x the x coordinate of the cell
-     * @param y the y coordinate of the cell
-     * @return a string that represents the type of the object
-     */
-    public String cellType(int x, int y) {
-        if (x > 36 || y > 20) {
-            return "null";
-        }
-        if (display_array_[x][y] == null) {
-            return "null";
-        }
-        AnimatedImage aImage = display_array_[x][y];
-        if (aImage instanceof Asteroid) {
-            return "asteroid";
-        }
-        if (aImage instanceof Player) {
-            return "player";
-        }
-        if (aImage instanceof Ghost) {
-            return "ghost";
-        }
-        if (aImage instanceof Treasure) {
-            return "treasure";
-        }
-        if (aImage instanceof Door) {
-            return "door";
-        }
-        return "null";
-    }
 
-    /**
-     * check if there is an asteroid in the cell
-     * @param x the x coordinate of the cell
-     * @param y the y coordinate of the cell
-     * @return true if there is an asteroid in the cell
-     */
-    public boolean isCellAsteroid(double x, double y) {
-        //System.out.println(x+ "   " + y);
-        for (Asteroid a: asteroids) {
-            //System.out.println("ax = " + a.getPositionX_() + "   ay = " + a.getPositionY_());
-            if (a.getPositionX_() == x && a.getPositionY_() == y) {
-                return true;
-            }
+    private void initializeDimenstion() {
+        player_.setDimension(dimensionX, dimensionY);
+        for (Ghost rg: redGhosts) {
+            rg.setDimension(dimensionX, dimensionY);
         }
-        return false;
+        for (Ghost yg: yellowGhosts) {
+            yg.setDimension(dimensionX, dimensionY);
+        }
+        for (Ghost bg: blueGhosts) {
+            bg.setDimension(dimensionX, dimensionY);
+        }
+        for (Ghost gg: greenGhosts) {
+            gg.setDimension(dimensionX, dimensionY);
+        }
     }
     /**
      * move the player according to the keycode
@@ -213,15 +176,6 @@ public class MainGame {
             gg.update(t, player_);
         }
     }
-    
-    //getter functions
-    public int[][] getGameArray() {
-        return game_array_;
-    }
-
-    public AnimatedImage[][] getDisplayArray() {
-        return display_array_;
-    }
 
     public ArrayList<Asteroid> getAsteroids() {
         return asteroids;
@@ -246,4 +200,13 @@ public class MainGame {
     public ArrayList<Door> getDoors() {
         return doors;
     }
+
+    public double getDimensionX() {
+        return dimensionX;
+    }
+
+    public double getDimensionY() {
+        return dimensionY;
+    }
+
 }
