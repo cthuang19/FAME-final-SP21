@@ -39,6 +39,7 @@ public class Player extends MovingAnimatedImage {
     private Image fThrustRight[] = new Image[5];
     private Image fThrustDown[] = new Image[5];
     private Image fThrustLeft[] = new Image[5];
+    private Image explosions[] = new Image[5];
 
 
     public Player(String n, int x, int y) {
@@ -77,6 +78,7 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
+        for (int i=0;i<5;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion" + i + ".png");
         setFrames(fIdleRight);
     }
 
@@ -110,7 +112,7 @@ public class Player extends MovingAnimatedImage {
      * @param time
      * @param asteroids
      */
-    public void update(double time, ArrayList<Asteroid> asteroids) {
+    public void update(double time, ArrayList<Asteroid> asteroids, ArrayList<Ghost> ghosts) {
 
         switch (state) {
             case ALIVE :
@@ -170,11 +172,21 @@ public class Player extends MovingAnimatedImage {
                     positionY=HEIGHT_MAX-PLAYER_HEIGHT;
                     //velocityY=-velocityY*0.8;
                 }
+                // check if the player intersects with ghost 
+                // TODO: make sure it only decreases the live once
+                for (Ghost g: ghosts) {
+                    if (this.intersects(g)) {
+                        this.state = PlayerState.HURT;
+                        //System.out.println("hurt");
+                        this.timeStamp = System.currentTimeMillis();
+                    }
+                }
 
                 break;
                 
             case HURT :
                 this.lives -= 1;
+                setFrames(explosions);
                 if (this.lives == 0) {
                     this.state = PlayerState.DEAD;
                     this.timeStamp = System.currentTimeMillis();

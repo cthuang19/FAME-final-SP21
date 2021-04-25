@@ -199,7 +199,7 @@ public class MainGame {
      * @param t the time
      */
     public void update_time(double t) {
-        player_.update(t, asteroids);
+        player_.update(t, asteroids, getAllGhost());
         for (Ghost rg: redGhosts) {
             rg.update(t, player_);
         }
