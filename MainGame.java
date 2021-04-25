@@ -173,22 +173,22 @@ public class MainGame {
     public void movePlayer(KeyEvent e) {
         switch(e.getCode()) {
             case UP:
-                player_.addForces(0,-5);     // UP
+                player_.setVelocity(0, -10);
                 player_.setCharacterDirection(Player.CharacterDirection.UP);
                 player_.updateImages("thrust up");
                 break;
             case DOWN:
-                player_.addForces(0,5);      // DOWN
+                player_.setVelocity(0,10);
                 player_.setCharacterDirection(Player.CharacterDirection.DOWN);
                 player_.updateImages("thrust down");
                 break;
             case RIGHT:
-                player_.addForces(5,0);      // RIGHT
+                player_.setVelocity(10, 0);
                 player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
                 player_.updateImages("thrust right");
                 break;    
             case LEFT:   
-                player_.addForces(-5,0);     // LEFT
+                player_.setVelocity(-10, 0);
                 player_.setCharacterDirection(Player.CharacterDirection.LEFT);
                 player_.updateImages("thrust left");
                 break;

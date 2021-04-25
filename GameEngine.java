@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import java.beans.XMLEncoder;
 
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class GameEngine extends Application {
 
@@ -223,7 +224,7 @@ public class GameEngine extends Application {
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
         final long startNanoTime = System.nanoTime();
-
+        
         scene_game.setOnKeyPressed(
             new EventHandler<KeyEvent> () {
                 public void handle(KeyEvent e) {
@@ -269,6 +270,17 @@ public class GameEngine extends Application {
                 for (Door d: display_door) {
                     gc_game.drawImage(d.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * d.getPositionX_(),
                         MAIN_GAME_DISPLAY_WIDTH * d.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                }
+
+                //TODO: change to an actual smoke pic
+                Image smoke = new Image(".//Images/smoke_template.png");
+                for (int i = 0; i <= 1430; i +=10) {
+                    for (int j = 0; j < 800; j+=10) {
+                        double distance = Math.sqrt(Math.pow(i - display_player.getPositionX(), 2) + Math.pow(j - display_player.getPositionY(), 2));
+                        if (distance > 200) {
+                            gc_game.drawImage(smoke, i, j, 10, 10);
+                        }
+                    }
                 }
             }
         }.start();

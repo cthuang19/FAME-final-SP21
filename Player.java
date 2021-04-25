@@ -3,13 +3,13 @@ import javafx.scene.image.Image;
 
 public class Player extends MovingAnimatedImage {
 
-    private static final double PLAYER_WIDTH = 40;
-    private static final double PLAYER_HEIGHT = 40;
+    private static final double PLAYER_WIDTH = 23;
+    private static final double PLAYER_HEIGHT = 39;
     private static final double PLAYER_MASS = 80;
     private static final double maxLives = 10;
     private static final double maxEnergy = 100;
 
-    private static final double WIDTH_MAX = 1080;
+    private static final double WIDTH_MAX = 1430;
     private static final double HEIGHT_MAX = 800;
 
     /* number of lives of the player, from 0 to 3 at the beginning, up to 10 at the end
@@ -122,15 +122,36 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.HURT;
                 *   this.timeStamp = System.currentTimeMillis();
                 * } */
-                
+                /*
                 accelerationX = forceX/PLAYER_MASS;
                 accelerationY = forceY/PLAYER_MASS;
-
+                */
+                /*
                 velocityX = velocityX+accelerationX;
                 velocityY = velocityY+accelerationY;
+                */
 
+                //save the original x and y
+                //just in case if the future position intersect with an asteroid
+                double originalX = positionX;
+                double originalY = positionY;
                 positionX += velocityX ;
                 positionY += velocityY ;
+
+                boolean isIntersect = false;
+                for (Asteroid a : asteroids) {
+                    if (this.intersects(a)) {
+                        isIntersect = true;
+                    }
+                }
+
+                //if the future position intersects with an asteroid
+                //dont move the player
+                if (isIntersect) {
+                    positionX = originalX;
+                    positionY = originalY;
+                    break;
+                }
 
                 if (positionX<0) {
                     positionX=0;
@@ -143,19 +164,11 @@ public class Player extends MovingAnimatedImage {
                 if (positionX>WIDTH_MAX-PLAYER_WIDTH) {
                     positionX=WIDTH_MAX-PLAYER_WIDTH;
                     //velocityX=-velocityX*0.8;
+
                 }
                 if (positionY>HEIGHT_MAX-PLAYER_HEIGHT) {
                     positionY=HEIGHT_MAX-PLAYER_HEIGHT;
-                    velocityY=-velocityY*0.8;
-                }
-                for (Asteroid a : asteroids) {
-                    if (this.intersects(a)) {
-                        //System.out.println("intersects");
-                        //velocityX = -velocityX*0.8;
-                        //velocityY = -velocityY*0.8;
-                        velocityX = 0;
-                        velocityY = 0;
-                    }
+                    //velocityY=-velocityY*0.8;
                 }
 
                 break;

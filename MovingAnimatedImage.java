@@ -147,4 +147,14 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		return a.getBoundary().intersects(this.getBoundary());
 	}
 
+	public void setVelocity(double x, double y) {
+		velocityX = x;
+		velocityY = y;
+	}
+
+	public void setAcceleration(double x, double y) {
+		accelerationX = x;
+		accelerationY = y;
+	}
+
 }
