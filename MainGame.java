@@ -41,8 +41,14 @@ public class MainGame {
         FileReader fr = new FileReader(".//game_environment_files/game_level_" + "1" + ".txt");
         initializeArray(fr.allLines());
         
+        //change this if needed
+        dimensionX = 1430;
+        dimensionY = 800;
+        //change it to somethin like this according to the level
+        /*
         dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
         dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
+        */
     }
 
     public MainGame(int level) {
