@@ -168,27 +168,27 @@ public class Player extends MovingAnimatedImage {
                     // next lines are to change
                     // if the player bounces from up or down, only change velocityY
                     // else (from sides), only change velocityX
-                    velocityX=-velocityX*0.8;
-                    velocityY=-velocityY*0.8;
+                    velocityX=-velocityX*0.5;
+                    velocityY=-velocityY*0.5;
                     break;
                 }
 
                 if (positionX<0) {
                     positionX=0;
-                    velocityX=-velocityX*0.8;
+                    velocityX=-velocityX*0.5;
                 }
                 if (positionY<0) {
                     positionY=0;
-                    velocityY=-velocityY*0.8;
+                    velocityY=-velocityY*0.5;
                 }
                 if (positionX>maxX-PLAYER_WIDTH) {
                     positionX=maxX-PLAYER_WIDTH;
-                    velocityX=-velocityX*0.8;
+                    velocityX=-velocityX*0.5;
 
                 }
                 if (positionY>maxY-PLAYER_HEIGHT) {
                     positionY=maxY-PLAYER_HEIGHT;
-                    velocityY=-velocityY*0.8;
+                    velocityY=-velocityY*0.5;
                 }
 
                 // check if the player intersects with ghost 
