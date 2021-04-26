@@ -23,8 +23,8 @@ import java.lang.Math;
 
 public class GameEngine extends Application {
 
-    public static final int CANVAS_WIDTH = 1600;
-    public static final int CANVAS_HEIGHT = 1200;
+    public static final int CANVAS_WIDTH = 1440;
+    public static final int CANVAS_HEIGHT = 800;
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 75;
 
@@ -260,25 +260,32 @@ public class GameEngine extends Application {
 
                 Player display_player = main_game.getPlayer();
 
+                //TODO: change the 1200 here not sure which value is correct
+                double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
+				if (offsetX<0) offsetX=0;
+                if (offsetX>1200) offsetX=1200;
+                
+                //TODO: change the 700 here not sure which value is correct
+                double offsetY = display_player.getPositionY() - (CANVAS_HEIGHT / 2);
+				if (offsetY<0) offsetY=0;
+                if (offsetY>700) offsetY=700;
+
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
-                    gc_game.drawImage(a.getFrame(0), a.getPositionX_(), a.getPositionY_());
+                    gc_game.drawImage(a.getFrame(0), a.getPositionX_() - offsetX, a.getPositionY_() - offsetY);
                 }
 
-                Image test = display_treasure.getFrame(0);
                 //draw the treasure
-                /*
-               gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
-                       display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-                */
+                gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
+                       display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 //draw the player
-                gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX(), display_player.getPositionY());
+                gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX() - offsetX, display_player.getPositionY() - offsetY);
 
                 //draw the ghosts
                 ArrayList<Ghost> display_ghosts = main_game.getAllGhost();
                 for (Ghost g: display_ghosts) {
-                    gc_game.drawImage(g.getFrame(t), g.getPositionX(), g.getPositionY());
+                    gc_game.drawImage(g.getFrame(t), g.getPositionX() - offsetX, g.getPositionY() - offsetY);
                 }
 
                 //TODO: draw the doors
