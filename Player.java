@@ -133,7 +133,7 @@ public class Player extends MovingAnimatedImage {
 
         switch (state) {
             case ALIVE :
-                /* if (the player has circa the same coordinates as a door) {
+                /* if (the player has circa the same coordinates as a door && press door key) {
                 *   this.state = PlayerState.DOOR;
                 *   this.timeStamp = System.currentTimeMillis();
                 * }
