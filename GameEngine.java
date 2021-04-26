@@ -263,14 +263,15 @@ public class GameEngine extends Application {
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
-                    gc_game.drawImage(a.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(),
-                            MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_());
+                    gc_game.drawImage(a.getFrame(0), a.getPositionX_(), a.getPositionY_());
                 }
 
+                Image test = display_treasure.getFrame(0);
                 //draw the treasure
-//                gc_game.drawImage(display_treasure.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionX_(),
-//                        MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-
+                /*
+               gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
+                       display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                */
                 //draw the player
                 gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX(), display_player.getPositionY());
 

@@ -60,7 +60,7 @@ public class Asteroid extends AnimatedImage{
 
     public Rectangle2D getBoundary() {
         //return new Rectangle2D(positionX_,positionY_,frames[0].getWidth(),frames[0].getHeight());
-        return new Rectangle2D(positionX_ * 64, positionY_ * 64, 64, 64);
+        return new Rectangle2D(positionX_ , positionY_, 64, 64);
     }
 
 }

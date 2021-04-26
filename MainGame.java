@@ -87,7 +87,7 @@ public class MainGame {
                         
                 switch(cell_int) {
                     case ROCK_CELL:
-                        asteroids.add(new Asteroid(c, i));
+                        asteroids.add(new Asteroid(c * CELL_WIDTH, i * CELL_WIDTH));
                         break;
                     case PLAYER_CELL:
                         player_ = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
@@ -105,10 +105,10 @@ public class MainGame {
                         greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c * CELL_WIDTH, i * CELL_WIDTH, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
                         break;    
                     case TREASURE_CELL:
-                        treasure_ = new Treasure(c, i);
+                        treasure_ = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
                         break;
                     case DOOR_CELL:
-                        doors.add(new Door(c, i));
+                        doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH));
                         break;
                 }
             }
@@ -138,7 +138,7 @@ public class MainGame {
         // for QWERTY keyboard
         player_.setForces(0, 0);
         if (input.contains("W")) {      // Z on AZERTY keyboard
-            player_.addForces(0, -5);   // UP
+            //player_.addForces(0, -5);   // UP
             player_.setCharacterDirection(Player.CharacterDirection.UP);
             player_.updateImages("thrust up");
         }
