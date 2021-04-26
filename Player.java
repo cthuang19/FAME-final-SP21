@@ -33,6 +33,7 @@ public class Player extends MovingAnimatedImage {
     public PlayerState getState() {return this.state;}
 
     private boolean invulnerable;
+    private boolean isGameCompleted;
 
     /* sets of frames */
     private Image fIdleLeft[] = new Image[5];
@@ -59,6 +60,7 @@ public class Player extends MovingAnimatedImage {
         //change if needed (or change when calling setDimension)
         maxX = 1080;
         maxY = 800;
+        isGameCompleted = false;
 
     }
 
@@ -78,6 +80,7 @@ public class Player extends MovingAnimatedImage {
         //change if needed (or change when calling setDimension)
         maxX = 1080;
         maxY = 800;
+        isGameCompleted = false;
     }
     /**
      * initialize the sets of frames of the player
@@ -129,7 +132,7 @@ public class Player extends MovingAnimatedImage {
      * @param time
      * @param asteroids
      */
-    public void update(double time, ArrayList<Asteroid> asteroids, ArrayList<Ghost> ghosts) {
+    public void update(double time, ArrayList<Asteroid> asteroids, ArrayList<Ghost> ghosts, Treasure treasure) {
 
         switch (state) {
             case ALIVE :
@@ -206,6 +209,11 @@ public class Player extends MovingAnimatedImage {
                             this.timeStamp = System.currentTimeMillis();
                         }
                     }
+                }
+
+                if (this.intersects(treasure)) {
+                    isGameCompleted = true;
+                    return;
                 }
 
                 break;

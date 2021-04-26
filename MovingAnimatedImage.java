@@ -142,9 +142,21 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
         return s.getBoundary().intersects(this.getBoundary());
     }
     // MovingAnimatedImage intersects Asteroid
-	public boolean intersects(Asteroid a)
+	public boolean intersects(AnimatedImage a)
 	{
-		return a.getBoundary().intersects(this.getBoundary());
+		if (a instanceof Asteroid || a instanceof Treasure || a instanceof Door) {
+			if (a instanceof Asteroid) {
+				Asteroid temp = (Asteroid)(a);
+				return temp.getBoundary().intersects(this.getBoundary());
+			} else if (a instanceof Door) {
+				Door temp = (Door)(a);
+				return temp.getBoundary().intersects(this.getBoundary());
+			} else {
+				Treasure temp = (Treasure)(a);
+				return temp.getBoundary().intersects(this.getBoundary());
+			}
+		}
+		return false;
 	}
 
 	public void setVelocity(double x, double y) {
