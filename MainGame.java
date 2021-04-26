@@ -4,7 +4,7 @@ import javafx.scene.input.KeyEvent;
 public class MainGame {
 
     /* the width of each array showing on the screen*/
-    public static final int CELL_WIDTH = 64;
+    public static final int CELL_WIDTH = 40;
 
     private static final int EMPTY_CELL = 0;
     private static final int ROCK_CELL = 1;
@@ -75,46 +75,41 @@ public class MainGame {
      */
     private void initializeArray(ArrayList<String> s) {
         for (int i = 0; i < s.size(); i++) {
-            //make sure it does not go out of bound
-            if (i < 20) {
-                for (int c = 0; c < s.get(i).length(); c++) {
-                    if (c < 36) {
-                        String cell = s.get(i).substring(c, c + 1);
-                        int cell_int = 0;
-                        try {
-                            cell_int = Integer.parseInt(cell);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Number Format Exception, using default value");
-                            cell_int = 0;
-                        }
+            for (int c = 0; c < s.get(i).length(); c++) {
+                String cell = s.get(i).substring(c, c + 1);
+                int cell_int = 0;
+                try {
+                    cell_int = Integer.parseInt(cell);
+                } catch (NumberFormatException e) {
+                    System.out.println("Number Format Exception, using default value");
+                    cell_int = 0;
+                }
                         
-                        switch(cell_int) {
-                            case ROCK_CELL:
-                                asteroids.add(new Asteroid(c, i));
-                                break;
-                            case PLAYER_CELL:
-                                player_ = new Player("player", c, i, 3, 30, Player.PlayerState.ALIVE);
-                                break;
-                            case RED_GHOST_CELL:
-                                redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c, i, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
-                                break;
-                            case BLUE_GHOST_CELL:
-                                blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, c, i, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
-                                break;
-                            case YELLOW_GHOST_CELL:
-                                yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, c, i, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
-                                break;
-                            case GREEN_GHOST_CELL:
-                                greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c, i, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
-                                break;    
-                            case TREASURE_CELL:
-                                treasure_ = new Treasure(c, i);
-                                break;
-                            case DOOR_CELL:
-                                doors.add(new Door(c, i));
-                                break;
-                        }
-                    }
+                switch(cell_int) {
+                    case ROCK_CELL:
+                        asteroids.add(new Asteroid(c, i));
+                        break;
+                    case PLAYER_CELL:
+                        player_ = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
+                        break;
+                    case RED_GHOST_CELL:
+                        redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c, i, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
+                        break;
+                    case BLUE_GHOST_CELL:
+                        blueGhosts.add(new Ghost("blue_ghost_"+c+"_"+i, c, i, Ghost.Colour.BLUE, Ghost.GhostState.PASSIVE));
+                        break;
+                    case YELLOW_GHOST_CELL:
+                        yellowGhosts.add(new Ghost("yellow_ghost_"+c+"_"+i, c, i, Ghost.Colour.YELLOW, Ghost.GhostState.PASSIVE));
+                        break;
+                    case GREEN_GHOST_CELL:
+                        greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c, i, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
+                        break;    
+                    case TREASURE_CELL:
+                        treasure_ = new Treasure(c, i);
+                        break;
+                    case DOOR_CELL:
+                        doors.add(new Door(c, i));
+                        break;
                 }
             }
         }

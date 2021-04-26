@@ -49,9 +49,9 @@ public class Player extends MovingAnimatedImage {
         lives = 3;
         fieldEnergy = currMaxEnergy;
         state = PlayerState.ALIVE;
-        initialX_ = 64 * x;
-        initialY_ = 64 * y;
-        setPosition(64 * x, 64 * y);
+        initialX_ = x;
+        initialY_ = y;
+        setPosition(x, y);
         initializeImages();
         setDuration(0.1);
 
@@ -69,9 +69,9 @@ public class Player extends MovingAnimatedImage {
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
-        initialX_ = 64 * x;
-        initialY_ = 64 * y;
-        setPosition(64 * x, 64 * y);
+        initialX_ = x;
+        initialY_ = y;
+        setPosition(x, y);
         initializeImages();
         setDuration(0.1);
         //just default value
