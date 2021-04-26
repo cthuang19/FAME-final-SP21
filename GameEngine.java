@@ -29,7 +29,7 @@ public class GameEngine extends Application {
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 75;
 
-    private static final int MAIN_GAME_DISPLAY_WIDTH = 40;
+    private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 40);
 
@@ -224,14 +224,30 @@ public class GameEngine extends Application {
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
         final long startNanoTime = System.nanoTime();
-        
+
+        ArrayList<String> input = new ArrayList<String>();
+
         scene_game.setOnKeyPressed(
-            new EventHandler<KeyEvent> () {
-                public void handle(KeyEvent e) {
-                    main_game.movePlayer(e);
-                }
-            }
-        );
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();   // configured for QWERTY keyboard
+                        if ( !input.contains(code) ){
+                            input.add( code );
+                        }
+                    }
+                });
+
+        scene_game.setOnKeyReleased(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        input.remove( code );
+                    }
+                });
 
         //getting all the fix information to draw
         ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
@@ -240,13 +256,14 @@ public class GameEngine extends Application {
         new AnimationTimer() {
             public void handle(long current_nano_time) {
                 double t = (current_nano_time- startNanoTime) / 1000000000.0;
+                main_game.movePlayer(input);
                 main_game.update_time(t);
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(), 
-                        MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                        MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_());
                 }
 
                 //draw the treasure
@@ -255,14 +272,12 @@ public class GameEngine extends Application {
                 
                 //draw the player
                 Player display_player = main_game.getPlayer();
-                gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX(), 
-                    display_player.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX(), display_player.getPositionY());
 
                 //draw the ghosts    
                 ArrayList<Ghost> display_ghosts = main_game.getAllGhost();
                 for (Ghost g: display_ghosts) {
-                    gc_game.drawImage(g.getFrame(t), g.getPositionX(),
-                        g.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                    gc_game.drawImage(g.getFrame(t), g.getPositionX(), g.getPositionY());
                 }  
 
                 //TODO: draw the doors

@@ -32,6 +32,8 @@ public class Player extends MovingAnimatedImage {
     private PlayerState state;
     public PlayerState getState() {return this.state;}
 
+    private boolean invulnerable;
+
     /* sets of frames */
     private Image fIdleLeft[] = new Image[5];
     private Image fIdleRight[] = new Image[5];
@@ -47,9 +49,9 @@ public class Player extends MovingAnimatedImage {
         lives = 3;
         fieldEnergy = currMaxEnergy;
         state = PlayerState.ALIVE;
-        initialX_ = 40 * x;
-        initialY_ = 40 * y;
-        setPosition(40 * x, 40 * y);
+        initialX_ = 64 * x;
+        initialY_ = 64 * y;
+        setPosition(64 * x, 64 * y);
         initializeImages();
         setDuration(0.1);
 
@@ -67,9 +69,9 @@ public class Player extends MovingAnimatedImage {
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
-        initialX_ = 40 * x;
-        initialY_ = 40 * y;
-        setPosition(40 * x, 40 * y);
+        initialX_ = 64 * x;
+        initialY_ = 64 * y;
+        setPosition(64 * x, 64 * y);
         initializeImages();
         setDuration(0.1);
         //just default value
@@ -135,18 +137,13 @@ public class Player extends MovingAnimatedImage {
                 *   this.state = PlayerState.DOOR;
                 *   this.timeStamp = System.currentTimeMillis();
                 * }
-                * if (the player is around an explosive ghost) {
-                *   this.state = PlayerState.HURT;
-                *   this.timeStamp = System.currentTimeMillis();
-                * } */
-                /*
+                */
+
                 accelerationX = forceX/PLAYER_MASS;
                 accelerationY = forceY/PLAYER_MASS;
-                */
-                /*
+
                 velocityX = velocityX+accelerationX;
                 velocityY = velocityY+accelerationY;
-                */
 
                 //save the original x and y
                 //just in case if the future position intersect with an asteroid
@@ -164,36 +161,50 @@ public class Player extends MovingAnimatedImage {
 
                 //if the future position intersects with an asteroid
                 //dont move the player
+                // need to keep v=-v*0.8 else it's got no effect
                 if (isIntersect) {
                     positionX = originalX;
                     positionY = originalY;
+                    // next lines are to change
+                    // if the player bounces from up or down, only change velocityY
+                    // else (from sides), only change velocityX
+                    velocityX=-velocityX*0.8;
+                    velocityY=-velocityY*0.8;
                     break;
                 }
 
                 if (positionX<0) {
                     positionX=0;
-                    //velocityX=-velocityX;
+                    velocityX=-velocityX*0.8;
                 }
                 if (positionY<0) {
                     positionY=0;
-                    //velocityY=-velocityY;
+                    velocityY=-velocityY*0.8;
                 }
                 if (positionX>maxX-PLAYER_WIDTH) {
                     positionX=maxX-PLAYER_WIDTH;
-                    //velocityX=-velocityX*0.8;
+                    velocityX=-velocityX*0.8;
 
                 }
                 if (positionY>maxY-PLAYER_HEIGHT) {
                     positionY=maxY-PLAYER_HEIGHT;
-                    //velocityY=-velocityY*0.8;
+                    velocityY=-velocityY*0.8;
                 }
+
                 // check if the player intersects with ghost 
                 // TODO: make sure it only decreases the live once
-                for (Ghost g: ghosts) {
-                    if (this.intersects(g)) {
-                        this.state = PlayerState.HURT;
-                        //System.out.println("hurt");
-                        this.timeStamp = System.currentTimeMillis();
+                if (this.invulnerable) {
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 10) {
+                        this.invulnerable = false;
+                    }
+                } else {
+                    for (Ghost g : ghosts) {
+                        if (this.intersects(g)) {
+                            this.state = PlayerState.HURT;
+                            //System.out.println("hurt");
+                            this.timeStamp = System.currentTimeMillis();
+                        }
                     }
                 }
 
@@ -204,6 +215,11 @@ public class Player extends MovingAnimatedImage {
                 setFrames(explosions);
                 if (this.lives == 0) {
                     this.state = PlayerState.DEAD;
+                    this.timeStamp = System.currentTimeMillis();
+                }
+                else {
+                    this.state = PlayerState.ALIVE;
+                    invulnerable = true;
                     this.timeStamp = System.currentTimeMillis();
                 }
                 break;

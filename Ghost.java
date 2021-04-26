@@ -31,14 +31,14 @@ public class Ghost extends MovingAnimatedImage {
     private Image fExplosion[] = new Image[7];
 
     public Ghost(String n, int x, int y) {
-        super(n, 40 * x, 40 * y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
+        super(n, 64 * x, 64 * y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = Colour.RED;
         state = GhostState.PASSIVE;
         initializeImages();
     }
 
     public Ghost(String n, int x, int y, Colour c, GhostState s) {
-        super(n, 40 * x, 40 * y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
+        super(n, 64 * x, 64 * y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
         colour = c;
         state = s;
         initializeImages();

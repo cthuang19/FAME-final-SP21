@@ -9,7 +9,8 @@ import javafx.geometry.Rectangle2D;
 
 public class Asteroid extends AnimatedImage{
     
-    private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR1.png");
+//    private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR1.png");
+    private static final Image ASTEROID_IMAGE = new Image(".//Images/tileset/tiles/tile01.png");
     private double positionX_;
     private double positionY_;
 
@@ -59,7 +60,7 @@ public class Asteroid extends AnimatedImage{
 
     public Rectangle2D getBoundary() {
         //return new Rectangle2D(positionX_,positionY_,frames[0].getWidth(),frames[0].getHeight());
-        return new Rectangle2D(positionX_ * 40, positionY_ * 40, 40, 40);
+        return new Rectangle2D(positionX_ * 64, positionY_ * 64, 64, 64);
     }
 
 }

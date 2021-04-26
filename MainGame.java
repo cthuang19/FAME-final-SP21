@@ -64,7 +64,7 @@ public class MainGame {
         dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
         dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
         */
-        initializeDimenstion();
+        initializeDimension();
     }
 
     /**
@@ -120,7 +120,7 @@ public class MainGame {
         }
     }
 
-    private void initializeDimenstion() {
+    private void initializeDimension() {
         player_.setDimension(dimensionX, dimensionY);
         for (Ghost rg: redGhosts) {
             rg.setDimension(dimensionX, dimensionY);
@@ -139,28 +139,42 @@ public class MainGame {
      * move the player according to the keycode
      * @param code the keycode that represents which key was pressed
      */
-    public void movePlayer(KeyEvent e) {
-        switch(e.getCode()) {
-            case UP:
-                player_.setVelocity(0, -10);
-                player_.setCharacterDirection(Player.CharacterDirection.UP);
-                player_.updateImages("thrust up");
-                break;
-            case DOWN:
-                player_.setVelocity(0,10);
-                player_.setCharacterDirection(Player.CharacterDirection.DOWN);
-                player_.updateImages("thrust down");
-                break;
-            case RIGHT:
-                player_.setVelocity(10, 0);
-                player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
-                player_.updateImages("thrust right");
-                break;    
-            case LEFT:   
-                player_.setVelocity(-10, 0);
-                player_.setCharacterDirection(Player.CharacterDirection.LEFT);
-                player_.updateImages("thrust left");
-                break;
+    public void movePlayer(ArrayList<String> input) {
+        // for QWERTY keyboard
+        player_.setForces(0, 0);
+        if (input.contains("W")) {      // Z on AZERTY keyboard
+            player_.addForces(0, -5);   // UP
+            player_.setCharacterDirection(Player.CharacterDirection.UP);
+            player_.updateImages("thrust up");
+        }
+        if (input.contains("D")) {
+            player_.addForces(5, 0);    // RIGHT
+            player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
+            player_.updateImages("thrust right");
+        }
+        if (input.contains("S")) {
+            player_.addForces(0, 5);    // DOWN
+            player_.setCharacterDirection(Player.CharacterDirection.DOWN);
+            player_.updateImages("thrust down");
+        }
+        if (input.contains("A")) {      // Q on AZERTY keyboard
+            player_.addForces(-5, 0);   // LEFT
+            player_.setCharacterDirection(Player.CharacterDirection.LEFT);
+            player_.updateImages("thrust left");
+        }
+        if (input.contains(null)) {
+            if (player_.getDirection() == Player.CharacterDirection.UP) {
+                player_.updateImages("idle right");
+            }
+            if (player_.getDirection() == Player.CharacterDirection.RIGHT) {
+                player_.updateImages("idle right");
+            }
+            if (player_.getDirection() == Player.CharacterDirection.DOWN) {
+                player_.updateImages("idle left");
+            }
+            if (player_.getDirection() == Player.CharacterDirection.LEFT) {
+                player_.updateImages("idle left");
+            }
         }
     }
     /**
