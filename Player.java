@@ -170,7 +170,7 @@ public class Player extends MovingAnimatedImage {
                     // else (from sides), only change velocityX
                     velocityX=-velocityX*0.5;
                     velocityY=-velocityY*0.5;
-                    break;
+                    return;
                 }
 
                 if (positionX<0) {
