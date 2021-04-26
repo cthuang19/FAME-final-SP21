@@ -64,7 +64,6 @@ public class MainGame {
         dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
         dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
         */
-        initializeDimension();
     }
 
     /**
@@ -74,6 +73,8 @@ public class MainGame {
      * @param s an arraylist of string
      */
     private void initializeArray(ArrayList<String> s) {
+        dimensionX = s.get(0).length() * CELL_WIDTH;
+        dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
             for (int c = 0; c < s.get(i).length(); c++) {
                 String cell = s.get(i).substring(c, c + 1);
@@ -113,6 +114,7 @@ public class MainGame {
                 }
             }
         }
+        initializeDimension();
     }
 
     private void initializeDimension() {
@@ -139,21 +141,25 @@ public class MainGame {
         player_.setForces(0, 0);
         if (input.contains("W")) {      // Z on AZERTY keyboard
             //player_.addForces(0, -5);   // UP
+            player_.setVelocity(0, -5);
             player_.setCharacterDirection(Player.CharacterDirection.UP);
             player_.updateImages("thrust up");
         }
         if (input.contains("D")) {
-            player_.addForces(5, 0);    // RIGHT
+            //player_.addForces(5, 0);    // RIGHT
+            player_.setVelocity(5, 0);
             player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
             player_.updateImages("thrust right");
         }
         if (input.contains("S")) {
-            player_.addForces(0, 5);    // DOWN
+            //player_.addForces(0, 5);    // DOWN
+            player_.setVelocity(0, 5);
             player_.setCharacterDirection(Player.CharacterDirection.DOWN);
             player_.updateImages("thrust down");
         }
         if (input.contains("A")) {      // Q on AZERTY keyboard
-            player_.addForces(-5, 0);   // LEFT
+            //player_.addForces(-5, 0);   // LEFT
+            player_.setVelocity(-5, 0);
             player_.setCharacterDirection(Player.CharacterDirection.LEFT);
             player_.updateImages("thrust left");
         }

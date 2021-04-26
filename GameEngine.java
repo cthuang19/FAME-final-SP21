@@ -263,12 +263,12 @@ public class GameEngine extends Application {
                 //TODO: change the 1200 here not sure which value is correct
                 double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
 				if (offsetX<0) offsetX=0;
-                if (offsetX>1200) offsetX=1200;
+                if (offsetX>860) offsetX=860;
                 
                 //TODO: change the 700 here not sure which value is correct
                 double offsetY = display_player.getPositionY() - (CANVAS_HEIGHT / 2);
 				if (offsetY<0) offsetY=0;
-                if (offsetY>700) offsetY=700;
+                if (offsetY>480) offsetY=480;
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
