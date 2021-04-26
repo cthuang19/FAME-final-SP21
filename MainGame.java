@@ -230,4 +230,8 @@ public class MainGame {
         return dimensionY;
     }
 
+    public double getPlayerLife() {
+        return player_.getLive();
+    }
+
 }

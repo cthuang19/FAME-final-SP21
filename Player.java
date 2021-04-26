@@ -12,7 +12,7 @@ public class Player extends MovingAnimatedImage {
     /* number of lives of the player, from 0 to 3 at the beginning, up to 10 at the end
     * whenever the player respawns, is set to 3 (no matter the number max of lives) */
     private double lives;
-    private double currMaxLives;
+    private double currMaxLives ;
 
     private double initialX_;
     private double initialY_;
@@ -30,8 +30,6 @@ public class Player extends MovingAnimatedImage {
 
     enum PlayerState {ALIVE, HURT, DEAD, DOOR};
     private PlayerState state;
-    public PlayerState getState() {return this.state;}
-
     private boolean invulnerable;
     private boolean isGameCompleted;
 
@@ -66,8 +64,9 @@ public class Player extends MovingAnimatedImage {
 
     public Player(String n, int x, int y, int l, int e, PlayerState s) {
         super(n, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
-        if (l <= currMaxLives) {lives = l;}
-        else {lives = currMaxLives;}
+        //if (l <= currMaxLives) {lives = l;}
+        //else {lives = currMaxLives;}
+        lives = l;
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
@@ -257,12 +256,12 @@ public class Player extends MovingAnimatedImage {
     }
 
     //getter function
-    public double getInitialX() {
-        return initialX_;
-    }
+    public double getInitialX() { return initialX_;}
 
-    public double getInitialY() {
-        return initialY_;
-    }
+    public double getInitialY() {return initialY_;}
+
+    public PlayerState getState() {return state;}
+
+    public double getLive() {return lives;}
 
 }

@@ -32,6 +32,8 @@ public class GameEngine extends Application {
 
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 40);
 
+    public static final Font FONT_SMALL = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 15);
+
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
 
     /* the page of the current scene (not sure if useful)*/
@@ -260,12 +262,10 @@ public class GameEngine extends Application {
 
                 Player display_player = main_game.getPlayer();
 
-                //TODO: change the 1200 here not sure which value is correct
                 double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
 				if (offsetX<0) offsetX=0;
                 if (offsetX>860) offsetX=860;
                 
-                //TODO: change the 700 here not sure which value is correct
                 double offsetY = display_player.getPositionY() - (CANVAS_HEIGHT / 2);
 				if (offsetY<0) offsetY=0;
                 if (offsetY>480) offsetY=480;
@@ -287,6 +287,22 @@ public class GameEngine extends Application {
                 for (Ghost g: display_ghosts) {
                     gc_game.drawImage(g.getFrame(t), g.getPositionX() - offsetX, g.getPositionY() - offsetY);
                 }
+
+                //display level of the current game
+                gc_game.setFill(Color.LIGHTSTEELBLUE);
+                gc_game.fillRect(1250, 0, 200, 50);
+                gc_game.setFill(Color.BLACK);
+                gc_game.setFont(FONT_SMALL);
+                gc_game.fillText("Level " + current_game_level_, 1255, 10);
+
+                //display lives
+                double display_live = main_game.getPlayerLife();
+                //System.out.println(display_live);
+                Image heart = new Image(".//Images/heart.png");
+                for (int i = 0; i < display_live; i++) {
+                    gc_game.drawImage(heart, 1310 + i * 30, 25, 25, 25);
+                }
+
 
                 //TODO: draw the doors
 /*                ArrayList<Door> display_door = main_game.getDoors();
