@@ -299,7 +299,7 @@ public class GameEngine extends Application {
                 gc_game.fillText("Level " + current_game_level_, 1255, 10);
 
                 //display lives
-                double display_live = main_game.getPlayerLife();
+                double display_live = main_game.getPlayerLives();
                 //System.out.println(display_live);
                 Image heart = new Image(".//Images/heart.png");
                 for (int i = 0; i < display_live; i++) {
@@ -315,93 +315,6 @@ public class GameEngine extends Application {
                 }
 */
 
-                /* offsets */
-/*
-                // offset for the rocks
-                double offsetRocksX = display_player.getPositionX() - CANVAS_WIDTH/2;
-                if (offsetRocksX < 0) offsetRocksX = 0;
-                if (offsetRocksX > main_game.getDimensionX()-CANVAS_WIDTH) offsetRocksX = main_game.getDimensionX()-CANVAS_WIDTH;
-
-                double offsetRocksY = display_player.getPositionY() - CANVAS_HEIGHT/2;
-                if (offsetRocksY < 0) offsetRocksY = 0;
-                if (offsetRocksY > main_game.getDimensionY()-CANVAS_HEIGHT) offsetRocksY = main_game.getDimensionY()-CANVAS_HEIGHT;
-
-                // offset for the background
-                double offsetBackgroundX = (display_player.getPositionX() - CANVAS_WIDTH/2)/5;
-                if (offsetBackgroundX < 0) offsetBackgroundX = 0;
-                if (offsetBackgroundX > (main_game.getDimensionX()-CANVAS_WIDTH)/5) offsetBackgroundX = (main_game.getDimensionX()-CANVAS_WIDTH)/5;
-
-                double offsetBackgroundY = (display_player.getPositionY() - CANVAS_HEIGHT/2)/5;
-                if (offsetBackgroundY < 0) offsetBackgroundY = 0;
-                if (offsetBackgroundY > (main_game.getDimensionY()-CANVAS_HEIGHT)/5) offsetBackgroundY = (main_game.getDimensionY()-CANVAS_HEIGHT)/5;
-
-                //draw background image
-                gc_game.drawImage(BACKGROUND_IMAGE,
-                        offsetBackgroundX,
-                        offsetBackgroundY,
-                        main_game.getDimensionX(),
-                        main_game.getDimensionY(),
-                        0,
-                        0,
-                        main_game.getDimensionX(),
-                        main_game.getDimensionY());
-
-                //draw rocks
-                for (Asteroid a: display_asteroid) {
-                    gc_game.drawImage(a.getFrame(0),
-                            offsetRocksX + MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(),
-                            offsetRocksY + MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_(),
-                            64,
-                            64,
-                            MAIN_GAME_DISPLAY_WIDTH * a.getPositionX_(),
-                            MAIN_GAME_DISPLAY_WIDTH * a.getPositionY_(),
-                            64,
-                            64);
-                }
-
-                //draw the treasure
-                gc_game.drawImage(display_treasure.getFrame(0),
-                        offsetRocksX + MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionX_(),
-                        offsetRocksY + MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionY_(),
-                        64,
-                        64,
-                        MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionX_(),
-                        MAIN_GAME_DISPLAY_WIDTH * display_treasure.getPositionY_(),
-                        64,
-                        64);
-
-                //draw the player
-                gc_game.drawImage(display_player.getFrame(t),
-                        display_player.getPositionX() - offsetRocksX,
-                        display_player.getPositionY() - offsetRocksY);
-
-                //draw the ghosts    
-                ArrayList<Ghost> display_ghosts = main_game.getAllGhost();
-                for (Ghost g: display_ghosts) {
-                    gc_game.drawImage(g.getFrame(t),
-                            offsetRocksX + g.getPositionX(),
-                            offsetRocksY + g.getPositionY(),
-                            32,
-                            32,
-                            g.getPositionX(),
-                            g.getPositionY(),
-                            32,
-                            32);
-                }  
-
-                //TODO: draw the doors
-                ArrayList<Door> display_door = main_game.getDoors();
-                for (Door d: display_door) {
-                    gc_game.drawImage(d.getFrame(0),
-                            offsetRocksX + MAIN_GAME_DISPLAY_WIDTH * d.getPositionX_(),
-                            offsetRocksY + MAIN_GAME_DISPLAY_WIDTH * d.getPositionY_(),
-                            32,
-                            32,
-                            MAIN_GAME_DISPLAY_WIDTH * d.getPositionX_(),
-                            MAIN_GAME_DISPLAY_WIDTH * d.getPositionY_(),
-                            32,
-                            32);
-                }*/
             }
         }.start();
         
@@ -411,7 +324,7 @@ public class GameEngine extends Application {
     
     public static void main(String args[]) {
         page_ = Page.GAME;
-        current_game_level_ = 1;
+        current_game_level_ = 4;
         launch(args);
     }
 }

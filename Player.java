@@ -32,6 +32,8 @@ public class Player extends MovingAnimatedImage {
     private PlayerState state;
     private boolean invulnerable;
     private boolean isGameCompleted;
+    private boolean shieldOn;
+    public void setShieldOn(boolean b) { shieldOn = b;}
 
     /* sets of frames */
     private Image fIdleLeft[] = new Image[5];
@@ -41,6 +43,7 @@ public class Player extends MovingAnimatedImage {
     private Image fThrustDown[] = new Image[5];
     private Image fThrustLeft[] = new Image[5];
     private Image explosions[] = new Image[5];
+    private Image shield[] = new Image[1];
 
 
     public Player(String n, int x, int y) {
@@ -92,7 +95,8 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
-        for (int i=0;i<5;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion" + i + ".png");
+        for (int i=0;i<5;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion_" + i + ".png");
+        for (int i=0;i<1;i++) shield[i] = new Image(".//Images/shield.png");
         setFrames(fIdleRight);
     }
 
@@ -101,7 +105,7 @@ public class Player extends MovingAnimatedImage {
         maxY = y;
     }
 
-    /** update which set of frames is used accordng to the key typed
+    /** update which set of frames is used according to the key typed
      * @param s a string representing the movement of the player
      */
     public void updateImages(String s) {
@@ -123,6 +127,9 @@ public class Player extends MovingAnimatedImage {
                 break;
             case "thrust left" :
                 setFrames(fThrustLeft);
+                break;
+            case "shield" :
+                setFrames(shield);
                 break;
         }
     }
@@ -194,18 +201,19 @@ public class Player extends MovingAnimatedImage {
                 }
 
                 // check if the player intersects with ghost 
-                // TODO: make sure it only decreases the live once
-                if (this.invulnerable) {
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 10) {
-                        this.invulnerable = false;
-                    }
-                } else {
-                    for (Ghost g : ghosts) {
-                        if (this.intersects(g)) {
-                            this.state = PlayerState.HURT;
-                            //System.out.println("hurt");
-                            this.timeStamp = System.currentTimeMillis();
+                if (!(this.shieldOn)) {
+                    if (this.invulnerable) {
+                        timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                        if (timePassed > 10) {
+                            this.invulnerable = false;
+                        }
+                    } else {
+                        for (Ghost g : ghosts) {
+                            if (this.intersects(g)) {
+                                this.state = PlayerState.HURT;
+                                //System.out.println("hurt");
+                                this.timeStamp = System.currentTimeMillis();
+                            }
                         }
                     }
                 }
@@ -234,7 +242,7 @@ public class Player extends MovingAnimatedImage {
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
-                if (timePassed > 10) {
+                if (timePassed > 5) {
                     this.setPosition(initialX_, initialY_);
                     this.state = PlayerState.ALIVE;
                     this.lives = 3;
@@ -262,6 +270,6 @@ public class Player extends MovingAnimatedImage {
 
     public PlayerState getState() {return state;}
 
-    public double getLive() {return lives;}
+    public double getLives() {return lives;}
 
 }

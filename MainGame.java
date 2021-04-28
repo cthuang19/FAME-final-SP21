@@ -163,6 +163,13 @@ public class MainGame {
             player_.setCharacterDirection(Player.CharacterDirection.LEFT);
             player_.updateImages("thrust left");
         }
+        if (input.contains("K")) {
+            player_.setShieldOn(true);
+            player_.updateImages("shield");
+        } else {
+            player_.setShieldOn(false);
+            player_.updateImages("idle right");
+        }
         if (input.contains(null)) {
             if (player_.getDirection() == Player.CharacterDirection.UP) {
                 player_.updateImages("idle right");
@@ -176,6 +183,7 @@ public class MainGame {
             if (player_.getDirection() == Player.CharacterDirection.LEFT) {
                 player_.updateImages("idle left");
             }
+            player_.setShieldOn(false);
         }
     }
     /**
@@ -230,8 +238,8 @@ public class MainGame {
         return dimensionY;
     }
 
-    public double getPlayerLife() {
-        return player_.getLive();
+    public double getPlayerLives() {
+        return player_.getLives();
     }
 
 }

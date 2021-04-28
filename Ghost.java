@@ -92,7 +92,7 @@ public class Ghost extends MovingAnimatedImage {
                 for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
                 break;
         }
-        for (int i=0;i<7;i++) fExplosion[i]=new Image(".//Images/explosion/test_explosion_2/explosion_"+i+".png");
+        for (int i=0;i<7;i++) fExplosion[i]=new Image(".//Images/explosion/test_explosion/explosion_"+i+".png");
         setFrames(fUp);
     }
 
