@@ -143,6 +143,12 @@ public class Ghost extends MovingAnimatedImage {
             timeStamp = System.currentTimeMillis();
         }
 
+        if (state == GhostState.EXPLOSIVE) {
+            setFrames(fExplosion);
+        } else {
+            setFrames(fUp);
+        }
+
         if (this.colour == Colour.RED) {
             switch (state) {
                 case PASSIVE:
@@ -183,6 +189,10 @@ public class Ghost extends MovingAnimatedImage {
                     velocityY=directionGhostY*2;
                     break;
                 case SUSPICIOUS :
+                    velocityX=0;
+                    velocityY=0;
+                    break;
+                case EXPLOSIVE:
                     velocityX=0;
                     velocityY=0;
                     break;

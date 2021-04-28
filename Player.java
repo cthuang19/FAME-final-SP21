@@ -250,7 +250,7 @@ public class Player extends MovingAnimatedImage {
                 
             case HURT :
                 this.lives -= 1;
-                setFrames(explosions);
+                //setFrames(explosions);
                 if (this.lives == 0) {
                     this.state = PlayerState.DEAD;
                     this.timeStamp = System.currentTimeMillis();

@@ -229,6 +229,7 @@ public class GameEngine extends Application {
 
         ArrayList<String> input = new ArrayList<String>();
 
+        //deal with the key events
         scene_game.setOnKeyPressed(
                 new EventHandler<KeyEvent>()
                 {
@@ -282,7 +283,8 @@ public class GameEngine extends Application {
                 //draw the treasure
                 gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
                        display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-                //draw the player
+                
+                       //draw the player
                 gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX() - offsetX, display_player.getPositionY() - offsetY);
 
                 //draw the ghosts
@@ -300,7 +302,6 @@ public class GameEngine extends Application {
 
                 //display lives
                 double display_live = main_game.getPlayerLives();
-                //System.out.println(display_live);
                 Image heart = new Image(".//Images/heart.png");
                 for (int i = 0; i < display_live; i++) {
                     gc_game.drawImage(heart, 1310 + i * 30, 25, 25, 25);
@@ -308,18 +309,19 @@ public class GameEngine extends Application {
 
                 // display field energy
                 double display_field_energy = main_game.getPlayerFieldEnergy();
-                //System.out.println(display_field_energy);
+
                 // TODO : display this with a prettier gauge image
                 gc_game.setFill(Color.DARKBLUE);
                 gc_game.fillRect(1250, 60, display_field_energy*5, 40);
 
                 //TODO: draw the doors
-/*                ArrayList<Door> display_door = main_game.getDoors();
+                /*
+                ArrayList<Door> display_door = main_game.getDoors();
                 for (Door d: display_door) {
                     gc_game.drawImage(d.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * d.getPositionX_(),
                             MAIN_GAME_DISPLAY_WIDTH * d.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 }
-*/
+                */
 
             }
         }.start();
