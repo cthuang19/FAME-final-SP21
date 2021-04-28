@@ -12,7 +12,7 @@ public class Player extends MovingAnimatedImage {
     /* number of lives of the player, from 0 to 3 at the beginning, up to 10 at the end
     * whenever the player respawns, is set to 3 (no matter the number max of lives) */
     private double lives;
-    private double currMaxLives ;
+    private double currMaxLives;
 
     private double initialX_;
     private double initialY_;
@@ -23,17 +23,17 @@ public class Player extends MovingAnimatedImage {
     /* level of energy for the defensive force field, from 0 to 30 at the beginning, up to 100 at the end
      * whenever the player respawns, is set to currMaxEnergy */
     private double fieldEnergy;
-    private double currMaxEnergy;
+    private double currMaxEnergy = 30;
 
     private long timeStamp;
     private double timePassed;
+    private long shieldTimeStamp;
 
     enum PlayerState {ALIVE, HURT, DEAD, DOOR};
     private PlayerState state;
     private boolean invulnerable;
     private boolean isGameCompleted;
     private boolean shieldOn;
-    public void setShieldOn(boolean b) { shieldOn = b;}
 
     /* sets of frames */
     private Image fIdleLeft[] = new Image[5];
@@ -42,7 +42,7 @@ public class Player extends MovingAnimatedImage {
     private Image fThrustRight[] = new Image[5];
     private Image fThrustDown[] = new Image[5];
     private Image fThrustLeft[] = new Image[5];
-    private Image explosions[] = new Image[5];
+    private Image explosions[] = new Image[7];
     private Image shield[] = new Image[1];
 
 
@@ -95,7 +95,7 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
-        for (int i=0;i<5;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion_" + i + ".png");
+        for (int i=0;i<7;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion_" + i + ".png");
         for (int i=0;i<1;i++) shield[i] = new Image(".//Images/shield.png");
         setFrames(fIdleRight);
     }
@@ -128,9 +128,34 @@ public class Player extends MovingAnimatedImage {
             case "thrust left" :
                 setFrames(fThrustLeft);
                 break;
+            // TODO : create frames with shield superposed to all the already existing frames
             case "shield" :
                 setFrames(shield);
                 break;
+        }
+    }
+
+    public void setShieldOn(boolean b) {
+        if (fieldEnergy > 0) {
+            shieldOn = b;
+            if (shieldOn) {
+                if (System.currentTimeMillis()-shieldTimeStamp > 2) {
+                    shieldTimeStamp = System.currentTimeMillis();
+                }
+            }
+        } else {
+            shieldOn = false;
+        }
+    }
+
+    public boolean getShieldOn() {return shieldOn;}
+
+    public void updateFieldEnergy() {
+        if (fieldEnergy > 0) {
+            if (shieldOn) {
+                fieldEnergy -= 1;
+                shieldTimeStamp = System.currentTimeMillis();
+            }
         }
     }
 
@@ -140,6 +165,8 @@ public class Player extends MovingAnimatedImage {
      */
     public void update(double time, ArrayList<Asteroid> asteroids, ArrayList<Ghost> ghosts, Treasure treasure) {
 
+        /*if ((System.currentTimeMillis() - shieldTimeStamp) / 1000 > 1)*/
+        updateFieldEnergy();
         switch (state) {
             case ALIVE :
                 /* if (the player has circa the same coordinates as a door && press door key) {
@@ -168,15 +195,11 @@ public class Player extends MovingAnimatedImage {
                     }
                 }
 
-                //if the future position intersects with an asteroid
-                //dont move the player
-                // need to keep v=-v*0.8 else it's got no effect
+                // if the future position intersects with an asteroid
+                // don't move the player
                 if (isIntersect) {
                     positionX = originalX;
                     positionY = originalY;
-                    // next lines are to change
-                    // if the player bounces from up or down, only change velocityY
-                    // else (from sides), only change velocityX
                     velocityX=-velocityX*0.5;
                     velocityY=-velocityY*0.5;
                     return;
@@ -204,7 +227,7 @@ public class Player extends MovingAnimatedImage {
                 if (!(this.shieldOn)) {
                     if (this.invulnerable) {
                         timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                        if (timePassed > 10) {
+                        if (timePassed > 5) {
                             this.invulnerable = false;
                         }
                     } else {
@@ -242,7 +265,7 @@ public class Player extends MovingAnimatedImage {
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
                 // sets velocity of zero
                 this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
-                if (timePassed > 5) {
+                if (timePassed > 3) {
                     this.setPosition(initialX_, initialY_);
                     this.state = PlayerState.ALIVE;
                     this.lives = 3;
@@ -272,4 +295,5 @@ public class Player extends MovingAnimatedImage {
 
     public double getLives() {return lives;}
 
+    public double getFieldEnergy() {return fieldEnergy;}
 }

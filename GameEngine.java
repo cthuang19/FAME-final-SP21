@@ -306,6 +306,10 @@ public class GameEngine extends Application {
                     gc_game.drawImage(heart, 1310 + i * 30, 25, 25, 25);
                 }
 
+                // display field energy
+                double display_field_energy = main_game.getPlayerFieldEnergy();
+                System.out.println(display_field_energy);
+                // TODO : display this with a gauge image
 
                 //TODO: draw the doors
 /*                ArrayList<Door> display_door = main_game.getDoors();
