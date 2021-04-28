@@ -85,7 +85,9 @@ public class MainGame {
                     System.out.println("Number Format Exception, using default value");
                     cell_int = 0;
                 }
-                        
+                
+
+                //initialize each array according to the document
                 switch(cell_int) {
                     case ROCK_CELL:
                         asteroids.add(new Asteroid(c * CELL_WIDTH, i * CELL_WIDTH));
@@ -137,8 +139,7 @@ public class MainGame {
      * @param code the keycode that represents which key was pressed
      */
     public void movePlayer(ArrayList<String> input) {
-        // for QWERTY keyboard
-        player_.setForces(0, 0);
+        // basic movement of the player
         if (input.contains("W")) {      // Z on AZERTY keyboard
             //player_.addForces(0, -5);   // UP
             player_.setVelocity(0, -5);
@@ -164,6 +165,7 @@ public class MainGame {
             player_.updateImages("thrust left");
         }
 
+        //add or remove shield to the player
         if (input.contains("K")) {
             player_.setShieldOn(true);
             if (player_.getShieldOn()) {
@@ -212,17 +214,12 @@ public class MainGame {
         }
     }
 
-    public ArrayList<Asteroid> getAsteroids() {
-        return asteroids;
-    }
+    //getter function
+    public ArrayList<Asteroid> getAsteroids() { return asteroids;}
     
-    public Player getPlayer() {
-        return player_;
-    }
+    public Player getPlayer() { return player_;}
     
-    public Treasure getTreasure() {
-        return treasure_;
-    }
+    public Treasure getTreasure() { return treasure_;}
 
     public ArrayList<Ghost> getAllGhost() {
         ArrayList<Ghost> all_ghosts = redGhosts;
@@ -232,24 +229,14 @@ public class MainGame {
         return all_ghosts;
     }
     
-    public ArrayList<Door> getDoors() {
-        return doors;
-    }
+    public ArrayList<Door> getDoors() { return doors;}
 
-    public double getDimensionX() {
-        return dimensionX;
-    }
+    public double getDimensionX() {return dimensionX;}
 
-    public double getDimensionY() {
-        return dimensionY;
-    }
+    public double getDimensionY() {return dimensionY;}
 
-    public double getPlayerLives() {
-        return player_.getLives();
-    }
+    public double getPlayerLives() {return player_.getLives();}
 
-    public double getPlayerFieldEnergy() {
-        return player_.getFieldEnergy();
-    }
+    public double getPlayerFieldEnergy() {return player_.getFieldEnergy();}
 
 }

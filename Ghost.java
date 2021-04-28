@@ -12,6 +12,8 @@ public class Ghost extends MovingAnimatedImage {
 
     private static final double RED_SIGHT = 320;
     private static final double BLUE_SIGHT = 64;
+    private static final double YELLOW_SIGHT = 512;
+    private static final double GREEN_SIGHT = 256;
 
     /* the colour of the ghost determines its behaviour */
     enum Colour {RED, BLUE, YELLOW, GREEN};
@@ -329,20 +331,6 @@ public class Ghost extends MovingAnimatedImage {
         return true;
     }
 
-    /* public boolean canSeePlayer(Player player, ArrayList<Asteroid> asteroids) {
-        Rectangle2D analysis = new Rectangle2D(	Math.min(player.getPositionX(), positionX),
-                Math.min(player.getPositionY(), positionY),
-                Math.abs(positionX-player.getPositionX()),
-                Math.abs(positionY-player.getPositionY()));
-
-        for (Asteroid a : asteroids) {
-            if (analysis.intersects(a.getBoundary())) {
-                return false;
-            }
-        }
-        return true;
-    } */
-
     /**
      * updates the value of seesPlayer according to the colour of the ghost
      * @param player
@@ -358,43 +346,7 @@ public class Ghost extends MovingAnimatedImage {
                         seesPlayer = false;
                     }
                     break;
-                    /*
-                    if ((Math.abs(positionX - player.getPositionX()) < 512) ||
-                        (Math.abs(positionY - player.getPositionY()) < 512)) {
-                        switch(this.direction_) {
-                            case UP :
-                                if (positionY > player.getPositionY()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            case RIGHT :
-                                if (positionX < player.getPositionX()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            case DOWN :
-                                if (positionY < player.getPositionY()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            case LEFT :
-                                if (positionX > player.getPositionX()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            default :
-                                seesPlayer = false;
-                        }
-                    } else {
-                        seesPlayer = false;
-                    }
-                    break;
-                    */
                 case BLUE:      // can see the player only when he's less than a cell around him
-                    /*
-                    if ((Math.abs(positionX - player.getPositionX()) < 64) ||
-                        (Math.abs(positionY - player.getPositionY()) < 64)) {
-                        seesPlayer = true;
-                    } else {
-                        seesPlayer = false;
-                    }
-                    */
                     if (calculateDistance(player.getPositionX(), player.getPositionY()) < BLUE_SIGHT) {
                         seesPlayer = true;
                     } else {
@@ -402,6 +354,7 @@ public class Ghost extends MovingAnimatedImage {
                     }
                     break;
                 case YELLOW:    // can see the player up to 8 cells ahead of him
+                    /*
                     if ((Math.abs(positionX - player.getPositionX()) < 512) ||
                         (Math.abs(positionY - player.getPositionY()) < 512)) {
                         switch(this.direction_) {
@@ -427,10 +380,15 @@ public class Ghost extends MovingAnimatedImage {
                     } else {
                         seesPlayer = false;
                     }
+                    */
+                    if (calculateDistance(player.getPositionX(), player.getPositionY()) < YELLOW_SIGHT) {
+                        seesPlayer = true;
+                    } else {
+                        seesPlayer = false;
+                    }
                     break;
                 case GREEN:     // knows the player is here when he's less than 4 cells away, even if hidden
-                    if ((Math.abs(positionX - player.getPositionX()) < 256) ||
-                        (Math.abs(positionY - player.getPositionY()) < 256)) {
+                    if (calculateDistance(player.getPositionX(), player.getPositionY()) < GREEN_SIGHT) {
                         seesPlayer = true;
                     } else {
                         seesPlayer = false;

@@ -50,17 +50,14 @@ public class Asteroid extends AnimatedImage{
         setDuration(0.1);
     }
 
-    public double getPositionX_() {
-        return positionX_;
-    }
-
-    public double getPositionY_() {
-        return positionY_;
-    }
-
     public Rectangle2D getBoundary() {
         //return new Rectangle2D(positionX_,positionY_,frames[0].getWidth(),frames[0].getHeight());
         return new Rectangle2D(positionX_ , positionY_, 64, 64);
     }
+
+    //getter functions
+    public double getPositionX_() {return positionX_;}
+
+    public double getPositionY_() {return positionY_;}
 
 }
