@@ -38,7 +38,7 @@ public class MainGame {
 
     public MainGame() {
         level_ = 1;
-        FileReader fr = new FileReader(".//game_environment_files/game_level_" + "1" + ".txt");
+        FileReader fr = new FileReader(".//game_environment_files/game_level_1.txt");
         initializeArray(fr.allLines());
         
         //change this if needed
