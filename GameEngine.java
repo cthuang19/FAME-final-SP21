@@ -23,7 +23,7 @@ import java.lang.Math;
 
 public class GameEngine extends Application {
 
-    public static final int CANVAS_WIDTH = 1440;
+    public static final int CANVAS_WIDTH = 1600;
     public static final int CANVAS_HEIGHT = 800;
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 75;
@@ -224,6 +224,7 @@ public class GameEngine extends Application {
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
+        //MainGame main_game = new MainGame(4);
         final long startNanoTime = System.nanoTime();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -261,14 +262,16 @@ public class GameEngine extends Application {
                 main_game.update_time(t);
 
                 Player display_player = main_game.getPlayer();
+                //System.out.println(display_player.getPositionX() + " " +display_player.getPositionY());
 
+                //TODO: edit the position here
                 double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
 				if (offsetX<0) offsetX=0;
-                if (offsetX>860) offsetX=860;
+                if (offsetX>main_game.getDimensionX() - (CANVAS_WIDTH)/2) offsetX=main_game.getDimensionX() - (CANVAS_WIDTH)/2;
                 
                 double offsetY = display_player.getPositionY() - (CANVAS_HEIGHT / 2);
 				if (offsetY<0) offsetY=0;
-                if (offsetY>480) offsetY=480;
+                if (offsetY>main_game.getDimensionY() - (CANVAS_HEIGHT)/2) offsetY=main_game.getDimensionY() - (CANVAS_HEIGHT)/2;
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
