@@ -149,7 +149,6 @@ public class Ghost extends MovingAnimatedImage {
                     if (seesPlayer) {
                         state = GhostState.ACTIVE;
                     }
-                    // patrols in its area
                     break;
                 case SUSPICIOUS:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
@@ -165,37 +164,32 @@ public class Ghost extends MovingAnimatedImage {
                         state = GhostState.SUSPICIOUS;
                         timeStamp = System.currentTimeMillis();
                     }
-                    // chase player in its patrolling area
                     break;
                 case EXPLOSIVE:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 4) {   // leave time for the explosion animation
+                    if (timePassed > 3) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                     }
                     break;
-            }        
-                /*    
-                default:
-                    state = GhostState.PASSIVE;
-                */
+            }
             switch (state) {
                 case PASSIVE :
-			        velocityX=(positionX-startingPoint>100)?-2:velocityX;
-			        velocityX=(positionX-startingPoint<0)?2:velocityX;
-			        velocityY=0;
-			        break;
+                    velocityX=(positionX-startingPoint>100)?-2:velocityX;
+                    velocityX=(positionX-startingPoint<0)?2:velocityX;
+                    velocityY=0;
+                    break;
                 case ACTIVE :
-                	velocityX=directionGhostX*2;
-				    velocityY=directionGhostY*2;
-				    break;
+                    velocityX=directionGhostX*2;
+                    velocityY=directionGhostY*2;
+                    break;
                 case SUSPICIOUS :
-				    velocityX=0;
-				    velocityY=0;
-				    break;
+                    velocityX=0;
+                    velocityY=0;
+                    break;
             }
             positionX += velocityX ;
             positionY += velocityY ;
-            return;
+            return;      
         }
 
         if (this.colour == Colour.BLUE) {
@@ -205,8 +199,6 @@ public class Ghost extends MovingAnimatedImage {
                         state = GhostState.ACTIVE;
                     }
                     break;
-                // case SUSPICIOUS:       // blue doesn't go in this state
-                //    break;
                 case ACTIVE:
                     if (!seesPlayer) {
                         state = GhostState.PASSIVE;
@@ -223,9 +215,16 @@ public class Ghost extends MovingAnimatedImage {
                         state = GhostState.PASSIVE;
                     }
                     break;
-                default:
-                    state = GhostState.PASSIVE;
             }
+            if (state == GhostState.ACTIVE) {
+                velocityX=directionGhostX*2;
+                velocityY=directionGhostY*2;
+            } else {
+                return;
+            }
+            positionX += velocityX ;
+            positionY += velocityY ;
+            return;
         }
 
         if (this.colour == Colour.YELLOW) {
