@@ -1,4 +1,5 @@
 import javafx.geometry.Rectangle2D;
+import java.lang.*;
 
 public class MovingAnimatedImage extends AnimatedImage implements java.io.Serializable{
 	enum CharacterDirection {LEFT, RIGHT, UP, DOWN};
@@ -159,6 +160,19 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		return false;
 	}
 
+	/**
+     * calculate the distance between this object and a given x and y
+     * @param x2 the x coordinate of the other position
+     * @param y2 the y coordinate of the other position
+     * @return the distance between the 2 objects
+     */
+    public double calculateDistance(double x2, double y2) {
+		double result = 0;
+		result = Math.pow(this.positionX - x2, 2) + Math.pow(this.positionY - y2, 2); // result = x^2 + y^2
+		result = Math.sqrt(result);
+        return result;
+    }
+	//setter functions
 	public void setVelocity(double x, double y) {
 		velocityX = x;
 		velocityY = y;

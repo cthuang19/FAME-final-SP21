@@ -199,16 +199,16 @@ public class MainGame {
     public void update_time(double t) {
         player_.update(t, asteroids, getAllGhost(), treasure_);
         for (Ghost rg: redGhosts) {
-            rg.update(t, player_);
+            rg.update(t, player_, asteroids);
         }
         for (Ghost bg: blueGhosts) {
-            bg.update(t, player_);
+            bg.update(t, player_, asteroids);
         }
         for (Ghost yg: yellowGhosts) {
-            yg.update(t, player_);
+            yg.update(t, player_, asteroids);
         }
         for (Ghost gg: greenGhosts) {
-            gg.update(t, player_);
+            gg.update(t, player_, asteroids);
         }
     }
 
