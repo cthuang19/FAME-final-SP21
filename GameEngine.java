@@ -293,7 +293,7 @@ public class GameEngine extends Application {
 
                 //display level of the current game
                 gc_game.setFill(Color.LIGHTSTEELBLUE);
-                gc_game.fillRect(1250, 0, 200, 50);
+                gc_game.fillRect(1250, 0, 200, 100);
                 gc_game.setFill(Color.BLACK);
                 gc_game.setFont(FONT_SMALL);
                 gc_game.fillText("Level " + current_game_level_, 1255, 10);
@@ -308,8 +308,10 @@ public class GameEngine extends Application {
 
                 // display field energy
                 double display_field_energy = main_game.getPlayerFieldEnergy();
-                System.out.println(display_field_energy);
-                // TODO : display this with a gauge image
+                //System.out.println(display_field_energy);
+                // TODO : display this with a prettier gauge image
+                gc_game.setFill(Color.DARKBLUE);
+                gc_game.fillRect(1250, 60, display_field_energy*5, 40);
 
                 //TODO: draw the doors
 /*                ArrayList<Door> display_door = main_game.getDoors();
