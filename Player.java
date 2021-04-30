@@ -148,8 +148,6 @@ public class Player extends MovingAnimatedImage {
         }
     }
 
-    public boolean getShieldOn() {return shieldOn;}
-
     public void updateFieldEnergy() {
         if (fieldEnergy > 0) {
             if (shieldOn) {
@@ -296,4 +294,7 @@ public class Player extends MovingAnimatedImage {
     public double getLives() {return lives;}
 
     public double getFieldEnergy() {return fieldEnergy;}
+
+    public boolean getShieldOn() {return shieldOn;}
+
 }

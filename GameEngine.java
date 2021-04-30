@@ -69,10 +69,9 @@ public class GameEngine extends Application {
             case GAME:
                 scene = getGameScene();
                 break;
-            /* 
             case PUZZLE:
+                scene = getPuzzleScene();
                 break;
-            */    
             default:
                 Group group_default = new Group();
                 scene = new Scene(group_default);
@@ -281,10 +280,10 @@ public class GameEngine extends Application {
                 }
 
                 //draw the treasure
-                gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
-                       display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                //gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
+                  //     display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 
-                       //draw the player
+                //draw the player
                 gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX() - offsetX, display_player.getPositionY() - offsetY);
 
                 //draw the ghosts
@@ -329,10 +328,93 @@ public class GameEngine extends Application {
         root_game.getChildren().add(canvas_game);
         return scene_game;
     }
+
+    public Scene getPuzzleScene() {
+        Group root_puzzle = new Group();
+        Scene scene_puzzle = new Scene(root_puzzle);
+        Canvas canvas_puzzle = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_puzzle = canvas_puzzle.getGraphicsContext2D();
+        Puzzle puzzle = new Puzzle(current_game_level_);
+        final long startNanoTime = System.nanoTime();
+
+        ArrayList<String> input = new ArrayList<String>();
+
+        //deal with the key events
+        scene_puzzle.setOnKeyPressed(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();   // configured for QWERTY keyboard
+                        if ( !input.contains(code) ){
+                            input.add( code );
+                        }
+                    }
+                });
+
+        scene_puzzle.setOnKeyReleased(
+                new EventHandler<KeyEvent>()
+                {
+                    public void handle(KeyEvent e)
+                    {
+                        String code = e.getCode().toString();
+                        input.remove( code );
+                    }
+                });
+
+        //getting all the fix information to draw
+        ArrayList<Asteroid> display_asteroid = puzzle.getAsteroids();
+        Treasure display_treasure = puzzle.getTreasure();
+
+        new AnimationTimer() {
+            public void handle(long current_nano_time) {
+                double t = (current_nano_time - startNanoTime) / 1000000000.0;
+                puzzle.movePlayer(input);
+                puzzle.update_time(t);
+
+                Player display_player = puzzle.getPlayer();
+
+                //draw background image
+                gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
+                for (Asteroid a: display_asteroid) {
+                    gc_puzzle.drawImage(a.getFrame(0), a.getPositionX_(), a.getPositionY_());
+                }
+
+                //draw the treasure only if the level in completed
+                if (puzzle.getIsCompleted()) {
+                    //gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
+                    //     display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                }
+
+                //draw the player
+                gc_puzzle.drawImage(display_player.getFrame(t), display_player.getPositionX(), display_player.getPositionY());
+
+                //display lives
+                gc_puzzle.setFill(Color.LIGHTSTEELBLUE);
+                gc_puzzle.fillRect(1250, 0, 200, 100);
+                double display_live = puzzle.getPlayerLives();
+                Image heart = new Image(".//Images/heart.png");
+                for (int i = 0; i < display_live; i++) {
+                    gc_puzzle.drawImage(heart, 1310 + i * 30, 25, 25, 25);
+                }
+
+                // display field energy
+                double display_field_energy = puzzle.getPlayerFieldEnergy();
+
+                // TODO : display this with a prettier gauge image
+                gc_puzzle.setFill(Color.DARKBLUE);
+                gc_puzzle.fillRect(1250, 60, display_field_energy*5, 40);
+
+            }
+        }.start();
+
+        root_puzzle.getChildren().add(canvas_puzzle);
+        return scene_puzzle;
+    }
     
     public static void main(String args[]) {
-        page_ = Page.GAME;
-        current_game_level_ = 4;
+        page_ = Page.PUZZLE;
+        current_game_level_ = 1;
         launch(args);
     }
 }

@@ -214,7 +214,6 @@ public class Ghost extends MovingAnimatedImage {
                 case ACTIVE:
                     if (!seesPlayer) {
                         state = GhostState.PASSIVE;
-                        timeStamp = System.currentTimeMillis();
                     }
                     if (this.intersects(player)) {
                         state = GhostState.EXPLOSIVE;
