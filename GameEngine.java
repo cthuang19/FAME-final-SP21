@@ -334,7 +334,7 @@ public class GameEngine extends Application {
         Scene scene_puzzle = new Scene(root_puzzle);
         Canvas canvas_puzzle = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_puzzle = canvas_puzzle.getGraphicsContext2D();
-        Puzzle puzzle = new Puzzle(current_game_level_);
+        PuzzleType1 puzzle = new PuzzleType1(current_game_level_);
         final long startNanoTime = System.nanoTime();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -371,6 +371,7 @@ public class GameEngine extends Application {
                 double t = (current_nano_time - startNanoTime) / 1000000000.0;
                 puzzle.movePlayer(input);
                 puzzle.update_time(t);
+                puzzle.updateFSM(input);
 
                 Player display_player = puzzle.getPlayer();
 
@@ -404,6 +405,10 @@ public class GameEngine extends Application {
                 // TODO : display this with a prettier gauge image
                 gc_puzzle.setFill(Color.DARKBLUE);
                 gc_puzzle.fillRect(1250, 60, display_field_energy*5, 40);
+
+                gc_puzzle.setFill(Color.RED);
+                gc_puzzle.setFont(FONT_SMALL);
+                gc_puzzle.fillText(String.valueOf(puzzle.getIsCompleted()), 400, 10);
 
             }
         }.start();

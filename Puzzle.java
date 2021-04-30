@@ -6,36 +6,40 @@ public class Puzzle {
     /* the width of each array showing on the screen*/
     public static final int CELL_WIDTH = 64;
 
-    private static final int EMPTY_CELL = 0;
-    private static final int ROCK_CELL = 1;
-    private static final int PLAYER_CELL = 2;
-    private static final int TREASURE_CELL = 7;
+    protected static final int EMPTY_CELL = 0;
+    protected static final int ROCK_CELL = 1;
+    protected static final int PLAYER_CELL = 2;
+    protected static final int TREASURE_CELL = 7;
 
-    /* the level of the current game */
-    private int level_;
-    private double dimensionX;
-    private double dimensionY;
+    /* the type and "level" of the current puzzle */
+    protected int type;
+    protected int level;
+    protected double dimensionX;
+    protected double dimensionY;
 
-    private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-    private ArrayList<Door> doors = new ArrayList<Door>();
+    protected ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 
-    private Player player_;
-    private Treasure treasure_;
+    protected Player player_;
+    protected Treasure treasure_;
 
-    private boolean isCompleted;
+    protected boolean isCompleted;
 
     public Puzzle() {
-        level_ = 1;
-        FileReader fr = new FileReader(".//game_environment_files/puzzle_level_1.txt");
+        type = 1;
+        level = 1;
+        FileReader fr = new FileReader(".//game_environment_files/puzzle_level_1_1.txt");
         initializeArray(fr.allLines());
+        isCompleted = false;
         dimensionX = 1430;
         dimensionY = 800;
     }
 
-    public Puzzle(int level) {
-        level_ = level;
-        FileReader fr = new FileReader(".//game_environment_files/puzzle_level_"+level_+".txt");
+    public Puzzle(int tp, int lvl) {
+        type = tp;
+        level = lvl;
+        FileReader fr = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+".txt");
         initializeArray(fr.allLines());
+        isCompleted = false;
         dimensionX = 1430;
         dimensionY = 800;
     }
@@ -164,5 +168,6 @@ public class Puzzle {
 
     public boolean getIsCompleted() {return isCompleted;}
 
+    public int getType() {return type;}
 
 }
