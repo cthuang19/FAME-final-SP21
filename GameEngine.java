@@ -1,3 +1,4 @@
+
 import javafx.application.Application;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -30,7 +31,7 @@ public class GameEngine extends Application {
 
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
-    public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 40);
+    public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 30);
 
     public static final Font FONT_SMALL = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 15);
 
@@ -46,20 +47,21 @@ public class GameEngine extends Application {
     private Stage stage_;
 
     private static Page page_;
-    private static Language language_;
+    private static Language language_ = Language.ENGLISH;
 
     /* the current game level */
     private static int current_game_level_;
+
+    /* number of the last unlocked level */
+    private static int max_unlocked_level;
     
     @Override
     public void start(Stage theStage) {
         stage_ = theStage;
         switch (page_) {
             case LANGUAGE:
-                //scene = getLanguageScene();
                 scene = getLanguageScene();
                 break;
-            
             case INITIAL:
                 scene = getInitialScene(Language.ENGLISH);
                 break;
@@ -94,7 +96,7 @@ public class GameEngine extends Application {
         Canvas canvas_language = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
         Button english_button = new Button("English (US)");
-        Button french_button = new Button("Français (fr)");
+        Button french_button = new Button("Français (Fr)");
         english_button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         french_button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
@@ -192,16 +194,15 @@ public class GameEngine extends Application {
         FileReader fr = new FileReader(".//text_files/" + fileName);
         ArrayList<String> all = fr.allLines();
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
+        // drawing a rectangle background
         gc_initial.setFill(Color.MIDNIGHTBLUE);
-        gc_initial.fillRect(50, 50, 1200, 700);
-        gc_initial.fillRect(0, 0, 40, 40);
-        //Drawing a Rectangle
+        gc_initial.fillRect(50, 50, 1300, 700);
+        // drawing the text
         gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_initial.fillText(all.get(i), 120, 150 + 80 * i);
+            gc_initial.fillText(all.get(i), 100, 150 + 80 * i);
         }
-        
         return initial;
     }
 
@@ -212,7 +213,42 @@ public class GameEngine extends Application {
         GraphicsContext gc_main = canvas_main.getGraphicsContext2D();
 
         gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
+        String level_label = "";
+        ArrayList<Button> level_buttons = new ArrayList<Button>();
+        for (int i=0; i<max_unlocked_level; i++) {
+            switch (language_) {
+                case ENGLISH:
+                    level_label = "Level " + (i+1);
+                    break;
+                case FRENCH:
+                    level_label = "Niveau " + (i+1);
+                    break;
+                default:
+                    level_label = "Level " + (i+1);
+            }
+            level_buttons.add(new Button(level_label));
+            level_buttons.get(i).setMinSize(100, 100);
+            level_buttons.get(i).setLayoutX(100 + 200 * i);
+            level_buttons.get(i).setLayoutY(300);
+
+            final int j=i+1;
+            level_buttons.get(i).setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent e) {
+                    page_ = Page.GAME;
+                    current_game_level_ = j;
+                    scene = getGameScene();
+                    stage_.setScene(scene);
+                    stage_.show();
+                }
+            });
+        }
+
         root_main.getChildren().add(canvas_main);
+        for (int i=0; i<max_unlocked_level; i++) {
+            root_main.getChildren().add(level_buttons.get(i));
+        }
+
         Player p = new Player("player test", 0, 0);
         return scene_main;
     }
@@ -418,8 +454,9 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page_ = Page.PUZZLE;
-        current_game_level_ = 1;
+        page_ = Page.LANGUAGE;
+        //current_game_level_ = 1;
+        max_unlocked_level = 4;
         launch(args);
     }
 }

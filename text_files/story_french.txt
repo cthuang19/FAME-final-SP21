@@ -1,15 +1,8 @@
-Vous êtes un astronaute. Vous avez eu un 
-accident dont vous n'avez aucune mémoire. 
-Votre vaisseau peut vous maintenir en vie 
-mais il est trop endommagé pour vous ramener 
-chez vous. Vous êtes dans une ceinture 
-d'astéroïdes qui semble avoir été habitée. 
-Votre objectif est de trouver toutes les 
-pièces dont vous avez besoin pour réparer 
-votre vaisseau et rentrer chez vous. 
-Peut-être même que vous découvrirez également 
-ce qui vous est arrivé et ce qui est arrivé 
-aux personnes qui ont autrefois habité ces 
-astéroïdes. Mais attention, les astéroïdes 
-ne sont peut-être pas aussi morts qu'ils 
+Vous êtes un astronaute. Vous avez eu un accident dont vous n'avez aucune mémoire. 
+Votre vaisseau peut vous maintenir en vie mais il est trop endommagé pour vous ramener 
+chez vous. Vous êtes dans une ceinture d'astéroïdes qui semble avoir été habitée. 
+Votre objectif est de trouver toutes les pièces dont vous avez besoin pour réparer 
+votre vaisseau et rentrer chez vous. Peut-être même que vous découvrirez également 
+ce qui vous est arrivé et ce qui est arrivé aux personnes qui ont autrefois habité ces 
+astéroïdes. Mais attention, les astéroïdes ne sont peut-être pas aussi morts qu'ils 
 semblent l'être...
