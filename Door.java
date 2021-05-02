@@ -10,7 +10,7 @@ import javafx.geometry.Rectangle2D;
 public class Door extends AnimatedImage {
 
     //TODO: change this to a image of an door
-    private static final Image DOOR_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR4.png");
+    private static final Image DOOR_IMAGE = new Image(".//Images/test_door.png");
     private double positionX_;
     private double positionY_;
 
@@ -44,7 +44,7 @@ public class Door extends AnimatedImage {
     }
 
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX_,positionY_,frames[0].getWidth(),frames[0].getHeight());
+        return new Rectangle2D(positionX_ , positionY_, 64, 64);
     }
 
     //getter functions

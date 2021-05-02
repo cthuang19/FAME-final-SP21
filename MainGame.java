@@ -178,6 +178,13 @@ public class MainGame {
             player_.updateImages("idle right");
         }
 
+        if (input.contains("L")) {
+            player_.setBeforeDoor(doors);
+            if (player_.getBeforeDoor()) {
+                player_.setVelocity(0,0);
+            }
+        }
+
         if (input.contains(null)) {
             if (player_.getDirection() == Player.CharacterDirection.UP) {
                 player_.updateImages("idle right");

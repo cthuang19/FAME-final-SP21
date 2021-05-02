@@ -34,6 +34,7 @@ public class Player extends MovingAnimatedImage {
     private boolean invulnerable;
     private boolean isGameCompleted;
     private boolean shieldOn;
+    private boolean beforeDoor;
 
     /* sets of frames */
     private Image fIdleLeft[] = new Image[5];
@@ -296,5 +297,18 @@ public class Player extends MovingAnimatedImage {
     public double getFieldEnergy() {return fieldEnergy;}
 
     public boolean getShieldOn() {return shieldOn;}
+
+    public boolean getBeforeDoor() {return beforeDoor;}
+
+    public void setBeforeDoor(ArrayList<Door> doors) {
+        for (Door d : doors) {
+            if (this.intersects(d)) {
+                beforeDoor = true;
+                return;
+            } else {
+                beforeDoor = false;
+            }
+        }
+    }
 
 }

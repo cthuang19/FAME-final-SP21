@@ -300,6 +300,14 @@ public class GameEngine extends Application {
                 Player display_player = main_game.getPlayer();
                 //System.out.println(display_player.getPositionX() + " " +display_player.getPositionY());
 
+/* DON'T DECOMMENT for now (made my laptop bug but i have no time rn)
+                if (display_player.getBeforeDoor()) {
+                    page_=Page.PUZZLE;
+                    scene = getPuzzleScene();
+                    stage_.setScene(scene);
+                    stage_.show();
+                }
+*/
                 //TODO: edit the position here
                 double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
 				if (offsetX<0) offsetX=0;
@@ -318,7 +326,13 @@ public class GameEngine extends Application {
                 //draw the treasure
                 //gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
                   //     display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-                
+
+                // draw the doors
+                ArrayList<Door> display_door = main_game.getDoors();
+                for (Door d: display_door) {
+                    gc_game.drawImage(d.getFrame(0), d.getPositionX_()-offsetX, d.getPositionY_()-offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                }
+
                 //draw the player
                 gc_game.drawImage(display_player.getFrame(t), display_player.getPositionX() - offsetX, display_player.getPositionY() - offsetY);
 
@@ -348,15 +362,6 @@ public class GameEngine extends Application {
                 // TODO : display this with a prettier gauge image
                 gc_game.setFill(Color.DARKBLUE);
                 gc_game.fillRect(1250, 60, display_field_energy*5, 40);
-
-                //TODO: draw the doors
-                /*
-                ArrayList<Door> display_door = main_game.getDoors();
-                for (Door d: display_door) {
-                    gc_game.drawImage(d.getFrame(0), MAIN_GAME_DISPLAY_WIDTH * d.getPositionX_(),
-                            MAIN_GAME_DISPLAY_WIDTH * d.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-                }
-                */
 
             }
         }.start();
@@ -454,8 +459,8 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page_ = Page.LANGUAGE;
-        //current_game_level_ = 1;
+        page_ = Page.GAME;
+        current_game_level_ = 1;
         max_unlocked_level = 4;
         launch(args);
     }
