@@ -36,60 +36,54 @@ public class PuzzleType1 extends Puzzle {
                 if (input.contains("W")) {      // Z on AZERTY keyboard
                     this.state = 1;
                     timeStamp = System.currentTimeMillis();
-                }
-                if (input.contains("D")) {
+                } else {
                     this.state = 0;
                 }
-                if (input.contains("S")) {
-                    this.state = 0;
-                }
-                if (input.contains("A")) {      // Q on AZERTY keyboard
-                    this.state = 0;
-                }
-                else {this.state = 0;}
                 break;
             case 1 :
-                if ((System.currentTimeMillis()-timeStamp)/1000 > 1) {
+                // if UP, stay here + new timeStamp
+                // else if RIGHT, go to 2 + new timeStamp
+                //      else if nothing, stay here
+                //           else (if every key else) go back to 0
+                if ((System.currentTimeMillis()-timeStamp)/1000 < 1) {
                     if (input.contains("W")) {      // Z on AZERTY keyboard
                         this.state = 1;
                         timeStamp = System.currentTimeMillis();
-                    }
-                    if (input.contains("D")) {
-                        this.state = 2;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    if (input.contains("S")) {
-                        this.state = 0;
-                    }
-                    if (input.contains("A")) {      // Q on AZERTY keyboard
-                        this.state = 0;
                     } else {
-                        this.state = 0;
+                        if (input.contains("D")) {
+                            this.state = 2;
+                            timeStamp = System.currentTimeMillis();
+                        } else {
+                            if (input.contains(null)) {
+                                this.state = 1;
+                            } else {
+                                //this.state = 0;
+                            }
+                        }
                     }
                 } else {
-                    this.state = 1;
+                    this.state = 0;
                 }
                 break;
             case 2 :
-                if ((System.currentTimeMillis()-timeStamp)/1000 > 1) {
+                if ((System.currentTimeMillis()-timeStamp)/1000 < 1) {
                     if (input.contains("W")) {      // Z on AZERTY keyboard
                         this.state = 1;
                         timeStamp = System.currentTimeMillis();
-                    }
-                    if (input.contains("D")) {
-                        this.state = 0;
-                    }
-                    if (input.contains("S")) {
-                        this.state = 0;
-                    }
-                    if (input.contains("A")) {      // Q on AZERTY keyboard
-                        this.state = 3;
-                        timeStamp = System.currentTimeMillis();
                     } else {
-                        this.state = 0;
+                        if (input.contains("A")) {  // Q on AZERTY keyboard
+                            this.state = 3;
+                            timeStamp = System.currentTimeMillis();
+                        } else {
+                            if (input.contains(null)) {
+                                this.state = 2;
+                            } else {
+                                //this.state = 0;
+                            }
+                        }
                     }
                 } else {
-                    this.state = 2;
+                    this.state = 0;
                 }
                 break;
             case 3 :

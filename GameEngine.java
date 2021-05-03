@@ -503,11 +503,11 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page_ = Page.GAME;
+        page_ = Page.PUZZLE;
         current_game_level_ = 1;
         max_unlocked_level = 4;
-        //current_puzzle_type = 1;
-        //current_puzzle_level = 1;
+        current_puzzle_type = 1;
+        current_puzzle_level = 1;
         launch(args);
     }
 }
