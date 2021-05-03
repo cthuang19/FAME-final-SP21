@@ -36,6 +36,9 @@ public class Player extends MovingAnimatedImage {
     private boolean shieldOn;
     private boolean beforeDoor;
 
+    /* the door before which the player was last */
+    private Door currentDoor;
+
     /* sets of frames */
     private Image fIdleLeft[] = new Image[5];
     private Image fIdleRight[] = new Image[5];
@@ -168,11 +171,10 @@ public class Player extends MovingAnimatedImage {
         updateFieldEnergy();
         switch (state) {
             case ALIVE :
-                /* if (the player has circa the same coordinates as a door && press door key) {
-                *   this.state = PlayerState.DOOR;
-                *   this.timeStamp = System.currentTimeMillis();
-                * }
-                */
+                if (beforeDoor) {
+                    this.state = PlayerState.DOOR;
+                    this.timeStamp = System.currentTimeMillis();
+                }
 
                 accelerationX = forceX/PLAYER_MASS;
                 accelerationY = forceY/PLAYER_MASS;
@@ -195,7 +197,7 @@ public class Player extends MovingAnimatedImage {
                 }
 
                 // if the future position intersects with an asteroid
-                // don't move the player
+                // the player bounces
                 if (isIntersect) {
                     positionX = originalX;
                     positionY = originalY;
@@ -262,23 +264,20 @@ public class Player extends MovingAnimatedImage {
                 break;
             case DEAD : // wait for some time before respawning at the beginning of the level
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
-                // sets velocity of zero
-                this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
+                this.setVelocity(0, 0);
                 if (timePassed > 3) {
                     this.setPosition(initialX_, initialY_);
                     this.state = PlayerState.ALIVE;
                     this.lives = 3;
                 }
                 break;
-            case DOOR : // wait for the time of the animation of going through the door
+/*            case DOOR : // wait for the time of the animation of going through the door
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
-                // sets velocity of zero
-                this.addVelocity(-this.getVelocityX(), -this.getVelocityY());
-                if (timePassed > 10) {
-                    // this.setPosition(PuzzleLevel.getStartingX(), PuzzleLevel.getStartingY());
+                this.setVelocity(0, 0);
+                if (timePassed > 3) {
                     this.state = PlayerState.ALIVE;
                 }
-                break;
+                break;*/
             default:
                 state = PlayerState.ALIVE;
                 break;
@@ -304,6 +303,7 @@ public class Player extends MovingAnimatedImage {
         for (Door d : doors) {
             if (this.intersects(d)) {
                 beforeDoor = true;
+                this.currentDoor = d;
                 return;
             } else {
                 beforeDoor = false;
@@ -311,4 +311,5 @@ public class Player extends MovingAnimatedImage {
         }
     }
 
+    public Door getCurrentDoor() {return currentDoor;}
 }

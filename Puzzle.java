@@ -44,6 +44,8 @@ public class Puzzle {
         dimensionY = 800;
     }
 
+    public void setLevel(int lvl) {level = lvl;}
+
     /**
      * helper function
      * help initialize the game_array with the according
@@ -142,10 +144,10 @@ public class Puzzle {
         }
     }
     /**
-     * update each moving element in the game
+     * update the player and the puzzle
      * @param t the time
      */
-    public void update_time(double t) {
+    public void update_time(double t, ArrayList<String> input) {
         // empty list to use for the update
         ArrayList<Ghost> empty_ghosts = new ArrayList<Ghost>();
         player_.update(t, asteroids, empty_ghosts, treasure_);

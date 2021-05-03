@@ -54,7 +54,12 @@ public class GameEngine extends Application {
 
     /* number of the last unlocked level */
     private static int max_unlocked_level;
-    
+
+    /* the current (or last) puzzle level */
+    private static int current_puzzle_level;
+    private static int current_puzzle_type;
+    private boolean goToPuzzle = false;
+
     @Override
     public void start(Stage theStage) {
         stage_ = theStage;
@@ -259,7 +264,6 @@ public class GameEngine extends Application {
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
         MainGame main_game = new MainGame(current_game_level_);
-        //MainGame main_game = new MainGame(4);
         final long startNanoTime = System.nanoTime();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -291,23 +295,33 @@ public class GameEngine extends Application {
         ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
         Treasure display_treasure = main_game.getTreasure();
 
+        // TODO : find where to place this to get a puzzle page
+        // (it's not in the AnimationTimer)
+        if (goToPuzzle) {
+            page_ = Page.PUZZLE;
+            scene = getPuzzleScene();
+            stage_.setScene(scene);
+            stage_.show();
+        }
+
         new AnimationTimer() {
             public void handle(long current_nano_time) {
-                double t = (current_nano_time- startNanoTime) / 1000000000.0;
+                double t = (current_nano_time - startNanoTime) / 1000000000.0;
                 main_game.movePlayer(input);
                 main_game.update_time(t);
 
                 Player display_player = main_game.getPlayer();
                 //System.out.println(display_player.getPositionX() + " " +display_player.getPositionY());
 
-/* DON'T DECOMMENT for now (made my laptop bug but i have no time rn)
                 if (display_player.getBeforeDoor()) {
-                    page_=Page.PUZZLE;
-                    scene = getPuzzleScene();
-                    stage_.setScene(scene);
-                    stage_.show();
+                    goToPuzzle = true;
+                    current_puzzle_type = display_player.getCurrentDoor().getPuzzleType();
+                    current_puzzle_level = display_player.getCurrentDoor().getPuzzleLevel();
+                    page_ = Page.PUZZLE;
+                } else {
+                    goToPuzzle = false;
                 }
-*/
+
                 //TODO: edit the position here
                 double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
 				if (offsetX<0) offsetX=0;
@@ -324,8 +338,8 @@ public class GameEngine extends Application {
                 }
 
                 //draw the treasure
-                //gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
-                  //     display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
+                       display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
 
                 // draw the doors
                 ArrayList<Door> display_door = main_game.getDoors();
@@ -347,7 +361,17 @@ public class GameEngine extends Application {
                 gc_game.fillRect(1250, 0, 200, 100);
                 gc_game.setFill(Color.BLACK);
                 gc_game.setFont(FONT_SMALL);
-                gc_game.fillText("Level " + current_game_level_, 1255, 10);
+                switch (language_) {
+                    case ENGLISH:
+                        gc_game.fillText("Level " + current_game_level_, 1255, 20);
+                        break;
+                    case FRENCH:
+                        gc_game.fillText("Niveau " + current_game_level_, 1255, 20);
+                        break;
+                    default:
+                        gc_game.fillText("Level " + current_game_level_, 1255, 20);
+                        break;
+                }
 
                 //display lives
                 double display_live = main_game.getPlayerLives();
@@ -363,6 +387,11 @@ public class GameEngine extends Application {
                 gc_game.setFill(Color.DARKBLUE);
                 gc_game.fillRect(1250, 60, display_field_energy*5, 40);
 
+                // display goToPuzzle
+                gc_game.setFill(Color.WHITE);
+                gc_game.setFont(FONT_SMALL);
+                gc_game.fillText(String.valueOf(goToPuzzle),300, 100);
+
             }
         }.start();
         
@@ -375,7 +404,16 @@ public class GameEngine extends Application {
         Scene scene_puzzle = new Scene(root_puzzle);
         Canvas canvas_puzzle = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_puzzle = canvas_puzzle.getGraphicsContext2D();
-        PuzzleType1 puzzle = new PuzzleType1(current_game_level_);
+        // initialize puzzle
+        PuzzleType1 puzzle = new PuzzleType1();
+        switch (current_puzzle_type) {
+            case 1 :
+                puzzle.setLevel(current_puzzle_level);
+                break;
+            default :
+                puzzle.setLevel(current_puzzle_level);
+                break;
+        }
         final long startNanoTime = System.nanoTime();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -411,8 +449,14 @@ public class GameEngine extends Application {
             public void handle(long current_nano_time) {
                 double t = (current_nano_time - startNanoTime) / 1000000000.0;
                 puzzle.movePlayer(input);
-                puzzle.update_time(t);
-                puzzle.updateFSM(input);
+                puzzle.update_time(t, input);
+                switch (current_puzzle_type) {
+                    case 1 :
+                        puzzle.updateFSM(input);
+                        break;
+                    default :
+                        break;
+                }
 
                 Player display_player = puzzle.getPlayer();
 
@@ -424,8 +468,8 @@ public class GameEngine extends Application {
 
                 //draw the treasure only if the level in completed
                 if (puzzle.getIsCompleted()) {
-                    //gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
-                    //     display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                    gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
+                            display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 }
 
                 //draw the player
@@ -462,6 +506,8 @@ public class GameEngine extends Application {
         page_ = Page.GAME;
         current_game_level_ = 1;
         max_unlocked_level = 4;
+        //current_puzzle_type = 1;
+        //current_puzzle_level = 1;
         launch(args);
     }
 }

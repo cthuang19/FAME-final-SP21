@@ -17,12 +17,18 @@ public class Door extends AnimatedImage {
     /* variable that checks if the puzzle in this door has been completed*/
     private boolean isComplete;
 
+    /* defines the puzzle accessed from this door*/
+    private int puzzleType;
+    private int puzzleLevel;
+
     public Door () {
         super();
         positionX_ = 0;
         positionY_ = 0;
         Image[] f = new Image[] {DOOR_IMAGE};
         isComplete = false;
+        puzzleType = 1;
+        puzzleLevel = 1;
     }
 
     public Door(Image image) {
@@ -43,6 +49,17 @@ public class Door extends AnimatedImage {
         isComplete = false;
     }
 
+    public Door(double x, double y, int pt, int pl) {
+        super();
+        positionX_ = x;
+        positionY_ = y;
+        Image[] f = new Image[] {DOOR_IMAGE};
+        setFrames(f);
+        isComplete = false;
+        puzzleType = pt;
+        puzzleLevel = pl;
+    }
+
     public Rectangle2D getBoundary() {
         return new Rectangle2D(positionX_ , positionY_, 64, 64);
     }
@@ -53,5 +70,9 @@ public class Door extends AnimatedImage {
     public double getPositionX_() {return positionX_;}
 
     public double getPositionY_() {return positionY_;}
+
+    public int getPuzzleType() {return puzzleType;}
+
+    public int getPuzzleLevel() {return puzzleLevel;}
 
 }
