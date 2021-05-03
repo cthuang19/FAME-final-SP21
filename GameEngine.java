@@ -467,9 +467,11 @@ public class GameEngine extends Application {
                 }
 
                 //draw the treasure only if the level in completed
+                //and set door.isCompleted to true
                 if (puzzle.getIsCompleted()) {
                     gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
                             display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                    display_player.getCurrentDoor().setIsCompleted(true);
                 }
 
                 //draw the player
@@ -493,7 +495,7 @@ public class GameEngine extends Application {
 
                 gc_puzzle.setFill(Color.RED);
                 gc_puzzle.setFont(FONT_SMALL);
-                gc_puzzle.fillText(String.valueOf(puzzle.getIsCompleted()), 400, 10);
+                gc_puzzle.fillText(String.valueOf(puzzle.getIsCompleted()), 300, 30);
 
             }
         }.start();

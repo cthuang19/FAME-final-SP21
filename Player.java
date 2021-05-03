@@ -301,7 +301,7 @@ public class Player extends MovingAnimatedImage {
 
     public void setBeforeDoor(ArrayList<Door> doors) {
         for (Door d : doors) {
-            if (this.intersects(d)) {
+            if (this.intersects(d) && !(d.getIsCompleted())) {
                 beforeDoor = true;
                 this.currentDoor = d;
                 return;

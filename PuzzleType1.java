@@ -54,7 +54,7 @@ public class PuzzleType1 extends Puzzle {
                             this.state = 2;
                             timeStamp = System.currentTimeMillis();
                         } else {
-                            if (input.contains(null)) {
+                            if (input.isEmpty()) {
                                 this.state = 1;
                             } else {
                                 //this.state = 0;
@@ -75,7 +75,7 @@ public class PuzzleType1 extends Puzzle {
                             this.state = 3;
                             timeStamp = System.currentTimeMillis();
                         } else {
-                            if (input.contains(null)) {
+                            if (input.isEmpty()) {
                                 this.state = 2;
                             } else {
                                 //this.state = 0;

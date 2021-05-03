@@ -15,7 +15,8 @@ public class Door extends AnimatedImage {
     private double positionY_;
 
     /* variable that checks if the puzzle in this door has been completed*/
-    private boolean isComplete;
+    private boolean isCompleted;
+    public void setIsCompleted(boolean b) {isCompleted = b;}
 
     /* defines the puzzle accessed from this door*/
     private int puzzleType;
@@ -26,7 +27,7 @@ public class Door extends AnimatedImage {
         positionX_ = 0;
         positionY_ = 0;
         Image[] f = new Image[] {DOOR_IMAGE};
-        isComplete = false;
+        isCompleted = false;
         puzzleType = 1;
         puzzleLevel = 1;
     }
@@ -37,7 +38,7 @@ public class Door extends AnimatedImage {
         positionY_ = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
-        isComplete = false;
+        isCompleted = false;
     }
 
     public Door(double x, double y) {
@@ -46,7 +47,7 @@ public class Door extends AnimatedImage {
         positionY_ = y;
         Image[] f = new Image[] {DOOR_IMAGE};
         setFrames(f);
-        isComplete = false;
+        isCompleted = false;
     }
 
     public Door(double x, double y, int pt, int pl) {
@@ -55,7 +56,7 @@ public class Door extends AnimatedImage {
         positionY_ = y;
         Image[] f = new Image[] {DOOR_IMAGE};
         setFrames(f);
-        isComplete = false;
+        isCompleted = false;
         puzzleType = pt;
         puzzleLevel = pl;
     }
@@ -65,7 +66,7 @@ public class Door extends AnimatedImage {
     }
 
     //getter functions
-    public boolean getIsComplete() {return isComplete;}
+    public boolean getIsCompleted() {return isCompleted;}
 
     public double getPositionX_() {return positionX_;}
 
