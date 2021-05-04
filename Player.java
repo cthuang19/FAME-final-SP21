@@ -224,6 +224,7 @@ public class Player extends MovingAnimatedImage {
                     velocityY=-velocityY*0.5;
                 }
 
+                // TODO: split in several functions
                 // check if the player intersects with ghost 
                 if (!(this.shieldOn)) {
                     if (this.invulnerable) {

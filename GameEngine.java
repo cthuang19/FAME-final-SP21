@@ -274,7 +274,8 @@ public class GameEngine extends Application {
                 {
                     public void handle(KeyEvent e)
                     {
-                        String code = e.getCode().toString();   // configured for QWERTY keyboard
+                        String code = e.getCode().toString();
+                        //TODO: configured for QWERTY keyboard
                         if ( !input.contains(code) ){
                             input.add( code );
                         }

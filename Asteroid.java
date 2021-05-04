@@ -15,12 +15,14 @@ public class Asteroid extends AnimatedImage{
     private double positionY_;
 
     public Asteroid () {
-        super();
+        this(ASTEROID_IMAGE);
+
+/*        super();
         positionX_ = 0;
         positionY_ = 0;
         Image[] f = new Image[] {ASTEROID_IMAGE};
         setFrames(f);
-        setDuration(0.1);
+        setDuration(0.1);*/
     }
 
     public Asteroid(Image image) {
