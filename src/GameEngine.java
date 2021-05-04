@@ -153,6 +153,8 @@ public class GameEngine extends Application {
         Canvas canvas_initial = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
         String next_label = "";
+        next_label = Util.convertLanguage(lang, "next");
+        /*
         switch (lang) {
             case ENGLISH:
                 next_label = "next";
@@ -163,6 +165,7 @@ public class GameEngine extends Application {
             default:
                 next_label = "next";    
         }
+        */
 
         Button next_button = new Button(next_label);
         next_button.setMinSize(100, 100);
@@ -221,6 +224,8 @@ public class GameEngine extends Application {
         String level_label = "";
         ArrayList<Button> level_buttons = new ArrayList<Button>();
         for (int i=0; i<max_unlocked_level; i++) {
+            level_label = Util.convertLanguage(language_, "Level ") + (i + 1);
+            /*
             switch (language_) {
                 case ENGLISH:
                     level_label = "Level " + (i+1);
@@ -231,6 +236,7 @@ public class GameEngine extends Application {
                 default:
                     level_label = "Level " + (i+1);
             }
+            */
             level_buttons.add(new Button(level_label));
             level_buttons.get(i).setMinSize(100, 100);
             level_buttons.get(i).setLayoutX(100 + 200 * i);
@@ -362,6 +368,8 @@ public class GameEngine extends Application {
                 gc_game.fillRect(1250, 0, 200, 100);
                 gc_game.setFill(Color.BLACK);
                 gc_game.setFont(FONT_SMALL);
+                gc_game.fillText(Util.convertLanguage(language_, "Level ") + current_game_level_, 1255, 20);
+                /*
                 switch (language_) {
                     case ENGLISH:
                         gc_game.fillText("Level " + current_game_level_, 1255, 20);
@@ -373,6 +381,7 @@ public class GameEngine extends Application {
                         gc_game.fillText("Level " + current_game_level_, 1255, 20);
                         break;
                 }
+                */
 
                 //display lives
                 double display_live = main_game.getPlayerLives();
@@ -506,7 +515,7 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page_ = Page.GAME;
+        page_ = Page.LANGUAGE;
         current_game_level_ = 1;
         max_unlocked_level = 4;
         current_puzzle_type = 1;
