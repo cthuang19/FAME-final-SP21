@@ -14,8 +14,8 @@ public class Player extends MovingAnimatedImage {
     private double lives;
     private double currMaxLives;
 
-    private double initialX_;
-    private double initialY_;
+    private double initialX;
+    private double initialY;
 
     private double maxX;
     private double maxY;
@@ -40,14 +40,14 @@ public class Player extends MovingAnimatedImage {
     private Door currentDoor;
 
     /* sets of frames */
-    private Image fIdleLeft[] = new Image[5];
-    private Image fIdleRight[] = new Image[5];
-    private Image fThrustUp[] = new Image[5];
-    private Image fThrustRight[] = new Image[5];
-    private Image fThrustDown[] = new Image[5];
-    private Image fThrustLeft[] = new Image[5];
-    private Image explosions[] = new Image[7];
-    private Image shield[] = new Image[1];
+    private final Image[] fIdleLeft = new Image[5];
+    private final Image[] fIdleRight = new Image[5];
+    private final Image[] fThrustUp = new Image[5];
+    private final Image[] fThrustRight = new Image[5];
+    private final Image[] fThrustDown = new Image[5];
+    private final Image[] fThrustLeft = new Image[5];
+    private final Image[] explosions = new Image[7];
+    private final Image[] shield = new Image[1];
 
 
     public Player(String n, int x, int y) {
@@ -55,8 +55,8 @@ public class Player extends MovingAnimatedImage {
         lives = 3;
         fieldEnergy = currMaxEnergy;
         state = PlayerState.ALIVE;
-        initialX_ = x;
-        initialY_ = y;
+        initialX = x;
+        initialY = y;
         setPosition(x, y);
         initializeImages();
         setDuration(0.1);
@@ -77,8 +77,8 @@ public class Player extends MovingAnimatedImage {
         if (e <= currMaxEnergy) {fieldEnergy = e;}
         else {fieldEnergy = currMaxEnergy;}
         state = s;
-        initialX_ = x;
-        initialY_ = y;
+        initialX = x;
+        initialY = y;
         setPosition(x, y);
         initializeImages();
         setDuration(0.1);
@@ -114,28 +114,15 @@ public class Player extends MovingAnimatedImage {
      */
     public void updateImages(String s) {
         switch (s) {
-            case "idle right" :
-                setFrames(fIdleRight);
-                break;
-            case "idle left" :
-                setFrames(fIdleLeft);
-                break;
-            case "thrust up" :
-                setFrames(fThrustUp);
-                break;
-            case "thrust right" :
-                setFrames(fThrustRight);
-                break;
-            case "thrust down" :
-                setFrames(fThrustDown);
-                break;
-            case "thrust left" :
-                setFrames(fThrustLeft);
-                break;
+            case "idle right" -> setFrames(fIdleRight);
+            case "idle left" -> setFrames(fIdleLeft);
+            case "thrust up" -> setFrames(fThrustUp);
+            case "thrust right" -> setFrames(fThrustRight);
+            case "thrust down" -> setFrames(fThrustDown);
+            case "thrust left" -> setFrames(fThrustLeft);
+
             // TODO : create frames with shield superposed to all the already existing frames
-            case "shield" :
-                setFrames(shield);
-                break;
+            case "shield" -> setFrames(shield);
         }
     }
 
@@ -163,7 +150,9 @@ public class Player extends MovingAnimatedImage {
 
     /** updates the state of the player
      * @param time
-     * @param asteroids
+     * @param asteroids the obstacles of the level
+     * @param ghosts the ghosts of the level
+     * @param treasure the treasure of the level
      */
     public void update(double time, ArrayList<Asteroid> asteroids, ArrayList<Ghost> ghosts, Treasure treasure) {
 
@@ -225,7 +214,7 @@ public class Player extends MovingAnimatedImage {
                 }
 
                 // TODO: split in several functions
-                // check if the player intersects with ghost 
+                // check if the player intersects with ghost
                 if (!(this.shieldOn)) {
                     if (this.invulnerable) {
                         timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
@@ -249,7 +238,7 @@ public class Player extends MovingAnimatedImage {
                 }
 
                 break;
-                
+
             case HURT :
                 this.lives -= 1;
                 //setFrames(explosions);
@@ -267,7 +256,7 @@ public class Player extends MovingAnimatedImage {
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
                 this.setVelocity(0, 0);
                 if (timePassed > 3) {
-                    this.setPosition(initialX_, initialY_);
+                    this.setPosition(initialX, initialY);
                     this.state = PlayerState.ALIVE;
                     this.lives = 3;
                 }
@@ -282,13 +271,13 @@ public class Player extends MovingAnimatedImage {
             default:
                 state = PlayerState.ALIVE;
                 break;
-        }        
+        }
     }
 
     //getter function
-    public double getInitialX() { return initialX_;}
+    public double getInitialX() { return initialX;}
 
-    public double getInitialY() {return initialY_;}
+    public double getInitialY() {return initialY;}
 
     public PlayerState getState() {return state;}
 

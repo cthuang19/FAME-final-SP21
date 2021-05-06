@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /** a puzzle type 1 is a pattern printed on the background
  * that the player must decipher in order to do with the
- * directional keys the reight pattern
+ * directional keys the right pattern
  * **/
 
 

@@ -9,18 +9,11 @@ import javafx.scene.image.*;
 import javafx.animation.*;
 import javafx.scene.input.KeyEvent;
 import javafx.event.*;
-import javafx.scene.paint.*;
 import javafx.scene.control.Button;
-import javafx.scene.shape.Rectangle;
 
-import java.util.*;
-import java.io.*;
-import java.applet.AudioClip;
 import javafx.event.EventHandler;
-import java.beans.XMLEncoder;
 
 import java.util.ArrayList;
-import java.lang.Math;
 
 public class GameEngine extends Application {
 
@@ -44,13 +37,13 @@ public class GameEngine extends Application {
     enum Language {ENGLISH, FRENCH};
 
     private Scene scene;
-    private Stage stage_;
+    private Stage stage;
 
-    private static Page page_;
-    private static Language language_ = Language.ENGLISH;
+    private static Page page;
+    private static Language language = Language.ENGLISH;
 
     /* the current game level */
-    private static int current_game_level_;
+    private static int current_game_level;
 
     /* number of the last unlocked level */
     private static int max_unlocked_level;
@@ -62,32 +55,21 @@ public class GameEngine extends Application {
 
     @Override
     public void start(Stage theStage) {
-        stage_ = theStage;
-        switch (page_) {
-            case LANGUAGE:
-                scene = getLanguageScene();
-                break;
-            case INITIAL:
-                scene = getInitialScene(Language.ENGLISH);
-                break;
-            case MAIN:
-                scene = getMainScene();
-                break;
-            case GAME:
-                scene = getGameScene();
-                break;
-            case PUZZLE:
-                scene = getPuzzleScene();
-                break;
-            default:
+        stage = theStage;
+        switch (page) {
+            case LANGUAGE -> scene = getLanguageScene();
+            case INITIAL -> scene = getInitialScene();
+            case MAIN -> scene = getMainScene();
+            case GAME -> scene = getGameScene();
+            case PUZZLE -> scene = getPuzzleScene();
+            default -> {
                 Group group_default = new Group();
                 scene = new Scene(group_default);
-                break;
-
+            }
         }
 
-        stage_.setScene(scene);
-        stage_.show();
+        stage.setScene(scene);
+        stage.show();
     }
     /**
      * create the language scene and return it
@@ -113,21 +95,21 @@ public class GameEngine extends Application {
         //set the button handler and switch to a different scene
         english_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                page_ = Page.INITIAL;
-                language_ = Language.ENGLISH;
-                scene = getInitialScene(language_);
-                stage_.setScene(scene);
-                stage_.show();
+                page = Page.INITIAL;
+                language = Language.ENGLISH;
+                scene = getInitialScene();
+                stage.setScene(scene);
+                stage.show();
             }
         });
 
         french_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                page_ = Page.INITIAL;
-                language_ = Language.FRENCH;
-                scene = getInitialScene(language_);
-                stage_.setScene(scene);
-                stage_.show();
+                page = Page.INITIAL;
+                language = Language.FRENCH;
+                scene = getInitialScene();
+                stage.setScene(scene);
+                stage.show();
             }
         });
         
@@ -143,29 +125,16 @@ public class GameEngine extends Application {
 
     /**
      * create the initial scene according to the langauge produced
-     * @param lang the language that the game is in
      * @return the initial scene
      */
-    private Scene getInitialScene(Language lang) {
+    private Scene getInitialScene() {
         //set the basic element of the initial scene
         Group root_initial = new Group();
         Scene initial = new Scene(root_initial);
         Canvas canvas_initial = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 
         String next_label = "";
-        next_label = Util.convertLanguage(lang, "next");
-        /*
-        switch (lang) {
-            case ENGLISH:
-                next_label = "next";
-                break;
-            case FRENCH:
-                next_label = "suivant";
-                break;
-            default:
-                next_label = "next";    
-        }
-        */
+        next_label = Util.convertLanguage(language, "next");
 
         Button next_button = new Button(next_label);
         next_button.setMinSize(100, 100);
@@ -173,10 +142,10 @@ public class GameEngine extends Application {
         next_button.setLayoutY(712);
         next_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                page_ = Page.MAIN;
+                page = Page.MAIN;
                 scene = getMainScene();
-                stage_.setScene(scene);
-                stage_.show();
+                stage.setScene(scene);
+                stage.show();
             }
         });
 
@@ -188,16 +157,7 @@ public class GameEngine extends Application {
         //depends on the language of the game
         //the initial scene will load different file
         String fileName = "";
-        switch (lang) {
-            case ENGLISH:
-                fileName = "story_english.txt";
-                break;
-            case FRENCH:
-                fileName = "story_french.txt";
-                break;
-            default:
-                fileName = "story_english.txt";    
-        }
+        fileName = Util.convertLanguage(language, "story_english.txt");
         
         FileReader fr = new FileReader(".//text_files/" + fileName);
         ArrayList<String> all = fr.allLines();
@@ -224,19 +184,7 @@ public class GameEngine extends Application {
         String level_label = "";
         ArrayList<Button> level_buttons = new ArrayList<Button>();
         for (int i=0; i<max_unlocked_level; i++) {
-            level_label = Util.convertLanguage(language_, "Level ") + (i + 1);
-            /*
-            switch (language_) {
-                case ENGLISH:
-                    level_label = "Level " + (i+1);
-                    break;
-                case FRENCH:
-                    level_label = "Niveau " + (i+1);
-                    break;
-                default:
-                    level_label = "Level " + (i+1);
-            }
-            */
+            level_label = Util.convertLanguage(language, "Level ") + (i + 1);
             level_buttons.add(new Button(level_label));
             level_buttons.get(i).setMinSize(100, 100);
             level_buttons.get(i).setLayoutX(100 + 200 * i);
@@ -246,11 +194,11 @@ public class GameEngine extends Application {
             level_buttons.get(i).setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent e) {
-                    page_ = Page.GAME;
-                    current_game_level_ = j;
+                    page = Page.GAME;
+                    current_game_level = j;
                     scene = getGameScene();
-                    stage_.setScene(scene);
-                    stage_.show();
+                    stage.setScene(scene);
+                    stage.show();
                 }
             });
         }
@@ -269,7 +217,7 @@ public class GameEngine extends Application {
         Scene scene_game = new Scene(root_game);
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_game = canvas_game.getGraphicsContext2D();
-        MainGame main_game = new MainGame(current_game_level_);
+        MainGame main_game = new MainGame(current_game_level);
         final long startNanoTime = System.nanoTime();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -305,10 +253,10 @@ public class GameEngine extends Application {
         // TODO : find where to place this to get a puzzle page
         // (it's not in the AnimationTimer)
         if (goToPuzzle) {
-            page_ = Page.PUZZLE;
+            page = Page.PUZZLE;
             scene = getPuzzleScene();
-            stage_.setScene(scene);
-            stage_.show();
+            stage.setScene(scene);
+            stage.show();
         }
 
         new AnimationTimer() {
@@ -324,24 +272,24 @@ public class GameEngine extends Application {
                     goToPuzzle = true;
                     current_puzzle_type = display_player.getCurrentDoor().getPuzzleType();
                     current_puzzle_level = display_player.getCurrentDoor().getPuzzleLevel();
-                    page_ = Page.PUZZLE;
+                    page = Page.PUZZLE;
                 } else {
                     goToPuzzle = false;
                 }
 
                 //TODO: edit the position here
-                double offsetX = display_player.getPositionX() - (CANVAS_WIDTH / 2);
+                double offsetX = display_player.getPositionX() - CANVAS_WIDTH/2;
 				if (offsetX<0) offsetX=0;
-                if (offsetX>main_game.getDimensionX() - (CANVAS_WIDTH)/2) offsetX=main_game.getDimensionX() - (CANVAS_WIDTH)/2;
+                if (offsetX>main_game.getDimensionX() - CANVAS_WIDTH/2) offsetX=main_game.getDimensionX() - CANVAS_WIDTH/2;
                 
-                double offsetY = display_player.getPositionY() - (CANVAS_HEIGHT / 2);
+                double offsetY = display_player.getPositionY() - CANVAS_HEIGHT/2;
 				if (offsetY<0) offsetY=0;
-                if (offsetY>main_game.getDimensionY() - (CANVAS_HEIGHT)/2) offsetY=main_game.getDimensionY() - (CANVAS_HEIGHT)/2;
+                if (offsetY>main_game.getDimensionY() - CANVAS_HEIGHT/2) offsetY=main_game.getDimensionY() - CANVAS_HEIGHT/2;
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
-                    gc_game.drawImage(a.getFrame(0), a.getPositionX_() - offsetX, a.getPositionY_() - offsetY);
+                    gc_game.drawImage(a.getFrame(0), a.getPositionX() - offsetX, a.getPositionY() - offsetY);
                 }
 
                 //draw the treasure
@@ -351,7 +299,7 @@ public class GameEngine extends Application {
                 // draw the doors
                 ArrayList<Door> display_door = main_game.getDoors();
                 for (Door d: display_door) {
-                    gc_game.drawImage(d.getFrame(0), d.getPositionX_()-offsetX, d.getPositionY_()-offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                    gc_game.drawImage(d.getFrame(0), d.getPositionX()-offsetX, d.getPositionY()-offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                 }
 
                 //draw the player
@@ -368,20 +316,7 @@ public class GameEngine extends Application {
                 gc_game.fillRect(1250, 0, 200, 100);
                 gc_game.setFill(Color.BLACK);
                 gc_game.setFont(FONT_SMALL);
-                gc_game.fillText(Util.convertLanguage(language_, "Level ") + current_game_level_, 1255, 20);
-                /*
-                switch (language_) {
-                    case ENGLISH:
-                        gc_game.fillText("Level " + current_game_level_, 1255, 20);
-                        break;
-                    case FRENCH:
-                        gc_game.fillText("Niveau " + current_game_level_, 1255, 20);
-                        break;
-                    default:
-                        gc_game.fillText("Level " + current_game_level_, 1255, 20);
-                        break;
-                }
-                */
+                gc_game.fillText(Util.convertLanguage(language, "Level ") + current_game_level, 1255, 20);
 
                 //display lives
                 double display_live = main_game.getPlayerLives();
@@ -473,7 +408,7 @@ public class GameEngine extends Application {
                 //draw background image
                 gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
                 for (Asteroid a: display_asteroid) {
-                    gc_puzzle.drawImage(a.getFrame(0), a.getPositionX_(), a.getPositionY_());
+                    gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
                 }
 
                 //draw the treasure only if the level in completed
@@ -515,8 +450,8 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page_ = Page.LANGUAGE;
-        current_game_level_ = 1;
+        page = Page.LANGUAGE;
+        current_game_level = 1;
         max_unlocked_level = 4;
         current_puzzle_type = 1;
         current_puzzle_level = 1;

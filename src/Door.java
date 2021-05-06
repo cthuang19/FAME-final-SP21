@@ -11,8 +11,8 @@ public class Door extends AnimatedImage {
 
     //TODO: change this to a image of an door
     private static final Image DOOR_IMAGE = new Image(".//Images/test_door.png");
-    private double positionX_;
-    private double positionY_;
+    private double positionX;
+    private double positionY;
 
     /* variable that checks if the puzzle in this door has been completed*/
     private boolean isCompleted;
@@ -24,8 +24,8 @@ public class Door extends AnimatedImage {
 
     public Door () {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[] {DOOR_IMAGE};
         isCompleted = false;
         puzzleType = 1;
@@ -34,8 +34,8 @@ public class Door extends AnimatedImage {
 
     public Door(Image image) {
         super();
-        positionX_ = 0;
-        positionY_ = 0;
+        positionX = 0;
+        positionY = 0;
         Image[] f = new Image[]{image};
         setFrames(f);
         isCompleted = false;
@@ -43,8 +43,8 @@ public class Door extends AnimatedImage {
 
     public Door(double x, double y) {
         super();
-        positionX_ = x;
-        positionY_ = y;
+        positionX = x;
+        positionY = y;
         Image[] f = new Image[] {DOOR_IMAGE};
         setFrames(f);
         isCompleted = false;
@@ -52,8 +52,8 @@ public class Door extends AnimatedImage {
 
     public Door(double x, double y, int pt, int pl) {
         super();
-        positionX_ = x;
-        positionY_ = y;
+        positionX = x;
+        positionY = y;
         Image[] f = new Image[] {DOOR_IMAGE};
         setFrames(f);
         isCompleted = false;
@@ -62,15 +62,15 @@ public class Door extends AnimatedImage {
     }
 
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX_ , positionY_, 64, 64);
+        return new Rectangle2D(positionX, positionY, 64, 64);
     }
 
     //getter functions
     public boolean getIsCompleted() {return isCompleted;}
 
-    public double getPositionX_() {return positionX_;}
+    public double getPositionX() {return positionX;}
 
-    public double getPositionY_() {return positionY_;}
+    public double getPositionY() {return positionY;}
 
     public int getPuzzleType() {return puzzleType;}
 

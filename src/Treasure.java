@@ -14,30 +14,15 @@ public class Treasure extends AnimatedImage{
     private double positionY_;
 
     public Treasure () {
-        super();
-        positionX_ = 0;
-        positionY_ = 0;
-        Image[] f = new Image[] {TREASURE_IMAGE};
-        setFrames(f);
-        setDuration(0.1);
+        this(TREASURE_IMAGE,0,0);
     }
 
     public Treasure(Image image) {
-        super();
-        positionX_ = 0;
-        positionY_ = 0;
-        Image[] f = new Image[]{image};
-        setFrames(f);
-        setDuration(0.1);
+        this(image,0,0);
     }
 
     public Treasure(double x, double y) {
-        super();
-        positionX_ = x;
-        positionY_ = y;
-        Image[] f = new Image[] {TREASURE_IMAGE};
-        setFrames(f);
-        setDuration(0.1);
+        this(TREASURE_IMAGE,x,y);
     }
 
     public Treasure(Image image, double x, double y) {

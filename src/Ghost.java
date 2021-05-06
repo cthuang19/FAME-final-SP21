@@ -34,19 +34,14 @@ public class Ghost extends MovingAnimatedImage {
     private double startingPoint;
 
     /* sets of frames */
-    private Image fUp[] = new Image[3];
-    private Image fRight[] = new Image[3];
-    private Image fDown[] = new Image[3];
-    private Image fLeft[] = new Image[3];
-    private Image fExplosion[] = new Image[7];
+    private final Image[] fUp = new Image[3];
+    private final Image[] fRight = new Image[3];
+    private final Image[] fDown = new Image[3];
+    private final Image[] fLeft = new Image[3];
+    private final Image[] fExplosion = new Image[7];
 
     public Ghost(String n, int x, int y) {
-        super(n, x, y, GHOST_WIDTH, GHOST_HEIGHT, GHOST_MASS);
-        colour = Colour.RED;
-        state = GhostState.PASSIVE;
-        initializeImages();
-        seesPlayer = false;
-        startingPoint=x;
+        this(n,x,y,Colour.RED,GhostState.PASSIVE);
     }
 
     public Ghost(String n, int x, int y, Colour c, GhostState s) {
@@ -112,28 +107,18 @@ public class Ghost extends MovingAnimatedImage {
 
     public void updateImages(String s) {
         switch (s) {
-            case "up" :
-                setFrames(fUp);
-                break;
-            case "right" :
-                setFrames(fRight);
-                break;
-            case "down" :
-                setFrames(fDown);
-                break;
-            case "left" :
-                setFrames(fLeft);
-                break;
-            case "explosion" :
-                setFrames(fExplosion);
-                break;
+            case "up" -> setFrames(fUp);
+            case "right" -> setFrames(fRight);
+            case "down" -> setFrames(fDown);
+            case "left" -> setFrames(fLeft);
+            case "explosion" -> setFrames(fExplosion);
         }
     }
 
     /**
      * updates the state of the ghost
-     * @param time
-     * @param player
+     * @param time the time
+     * @param player the player
      */
     //@Override
     public void update(double time, Player player, ArrayList<Asteroid> asteroids) {
@@ -312,7 +297,7 @@ public class Ghost extends MovingAnimatedImage {
     /**
      * determines if the player is in the line of sight of the ghost
      * will be used in setSeesPlayer
-     * @param player
+     * @param player the player
      * @param obstacles all the walls/asteorids that could hide the player to the ghosts
      * @return true if the ghost can see the player else false
      */
@@ -332,25 +317,17 @@ public class Ghost extends MovingAnimatedImage {
 
     /**
      * updates the value of seesPlayer according to the colour of the ghost
-     * @param player
+     * @param player the player
      * @param obstacles all the walls/asteorids that could hide the player to the ghosts
      */
     public void setSeesPlayer(Player player, ArrayList<Asteroid> obstacles) {
         if (canSeePlayer(player, obstacles)) {
             switch (colour) {
                 case RED:       // can see the player up to 8 cells ahead of him
-                    if (calculateDistance(player.getPositionX(), player.getPositionY()) < RED_SIGHT) {
-                       seesPlayer = true;
-                    } else {
-                        seesPlayer = false;
-                    }
+                    seesPlayer = calculateDistance(player.getPositionX(), player.getPositionY()) < RED_SIGHT;
                     break;
                 case BLUE:      // can see the player only when he's less than a cell around him
-                    if (calculateDistance(player.getPositionX(), player.getPositionY()) < BLUE_SIGHT) {
-                        seesPlayer = true;
-                    } else {
-                        seesPlayer = false;
-                    }
+                    seesPlayer = calculateDistance(player.getPositionX(), player.getPositionY()) < BLUE_SIGHT;
                     break;
                 case YELLOW:    // can see the player up to 8 cells ahead of him
                     /*
@@ -380,18 +357,10 @@ public class Ghost extends MovingAnimatedImage {
                         seesPlayer = false;
                     }
                     */
-                    if (calculateDistance(player.getPositionX(), player.getPositionY()) < YELLOW_SIGHT) {
-                        seesPlayer = true;
-                    } else {
-                        seesPlayer = false;
-                    }
+                    seesPlayer = calculateDistance(player.getPositionX(), player.getPositionY()) < YELLOW_SIGHT;
                     break;
                 case GREEN:     // knows the player is here when he's less than 4 cells away, even if hidden
-                    if (calculateDistance(player.getPositionX(), player.getPositionY()) < GREEN_SIGHT) {
-                        seesPlayer = true;
-                    } else {
-                        seesPlayer = false;
-                    }
+                    seesPlayer = calculateDistance(player.getPositionX(), player.getPositionY()) < GREEN_SIGHT;
                     break;
                 default:
                     seesPlayer = false;

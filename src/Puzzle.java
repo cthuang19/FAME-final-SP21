@@ -25,13 +25,7 @@ public class Puzzle {
     protected boolean isCompleted;
 
     public Puzzle() {
-        type = 1;
-        level = 1;
-        FileReader fr = new FileReader(".//game_environment_files/puzzle_level_1_1.txt");
-        initializeArray(fr.allLines());
-        isCompleted = false;
-        dimensionX = 1430;
-        dimensionY = 800;
+        this(1,1);
     }
 
     public Puzzle(int tp, int lvl) {
@@ -85,7 +79,7 @@ public class Puzzle {
 
     /**
      * move the player according to the keycode
-     * @param code the keycode that represents which key was pressed
+     * @param input the keycode that represents which key was pressed
      */
     public void movePlayer(ArrayList<String> input) {
         // basic movement of the player

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import javafx.scene.input.KeyEvent;
 
 public class MainGame {
 
@@ -16,12 +15,12 @@ public class MainGame {
     private static final int TREASURE_CELL = 7;
     private static final int DOOR_CELL = 8;
 
-    /* the dimenstion for the easiest levels, change this if needed*/
+    /* the dimension for the easiest levels, change this if needed*/
     private static final double BASIC_DIMENSIONX = 300;
     private static final double BASIC_DIMENSIONY = 150;
 
     /* the level of the current game */
-    private int level_;
+    private int level;
     private double dimensionX;
     private double dimensionY;
 
@@ -33,11 +32,11 @@ public class MainGame {
     private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
     private ArrayList<Door> doors = new ArrayList<Door>();
 
-    private Player player_;
-    private Treasure treasure_;
+    private Player player;
+    private Treasure treasure;
 
     public MainGame() {
-        level_ = 1;
+        level = 1;
         FileReader fr = new FileReader(".//game_environment_files/game_level_1.txt");
         initializeArray(fr.allLines());
         
@@ -46,14 +45,14 @@ public class MainGame {
         dimensionY = 800;
         //change it to somethin like this according to the level
         /*
-        dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
-        dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
+        dimensionX = BASIC_DIMENSIONX * (level/3 + 1);
+        dimensionY = BASIC_DIMENSIONY * (level/3 + 1);
         */
     }
 
     public MainGame(int level) {
-        level_ = level;
-        FileReader fr = new FileReader(".//game_environment_files/game_level_"+level_+".txt");
+        this.level = level;
+        FileReader fr = new FileReader(".//game_environment_files/game_level_"+ this.level +".txt");
         initializeArray(fr.allLines());
 
         //change this if needed
@@ -61,8 +60,8 @@ public class MainGame {
         dimensionY = 800;
         //change it to somethin like this according to the level
         /*
-        dimensionX = BASIC_DIMENSIONX * (level_/3 + 1);
-        dimensionY = BASIC_DIMENSIONY * (level_/3 + 1);
+        dimensionX = BASIC_DIMENSIONX * (level/3 + 1);
+        dimensionY = BASIC_DIMENSIONY * (level/3 + 1);
         */
     }
 
@@ -93,7 +92,7 @@ public class MainGame {
                         asteroids.add(new Asteroid(c * CELL_WIDTH, i * CELL_WIDTH));
                         break;
                     case PLAYER_CELL:
-                        player_ = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
+                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
                         break;
                     case RED_GHOST_CELL:
                         redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c * CELL_WIDTH, i * CELL_WIDTH, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
@@ -108,7 +107,7 @@ public class MainGame {
                         greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c * CELL_WIDTH, i * CELL_WIDTH, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
                         break;    
                     case TREASURE_CELL:
-                        treasure_ = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
+                        treasure = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
                         break;
                     case DOOR_CELL:
                         doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH));
@@ -120,7 +119,7 @@ public class MainGame {
     }
 
     private void initializeDimension() {
-        player_.setDimension(dimensionX, dimensionY);
+        player.setDimension(dimensionX, dimensionY);
         for (Ghost rg: redGhosts) {
             rg.setDimension(dimensionX, dimensionY);
         }
@@ -136,69 +135,69 @@ public class MainGame {
     }
     /**
      * move the player according to the keycode
-     * @param code the keycode that represents which key was pressed
+     * @param input the keycode that represents which key was pressed
      */
     public void movePlayer(ArrayList<String> input) {
         // basic movement of the player
         if (input.contains("W")) {      // Z on AZERTY keyboard
-            //player_.addForces(0, -5);   // UP
-            player_.setVelocity(0, -5);
-            player_.setCharacterDirection(Player.CharacterDirection.UP);
-            player_.updateImages("thrust up");
+            //player.addForces(0, -5);   // UP
+            player.setVelocity(0, -5);
+            player.setCharacterDirection(Player.CharacterDirection.UP);
+            player.updateImages("thrust up");
         }
         if (input.contains("D")) {
-            //player_.addForces(5, 0);    // RIGHT
-            player_.setVelocity(5, 0);
-            player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
-            player_.updateImages("thrust right");
+            //player.addForces(5, 0);    // RIGHT
+            player.setVelocity(5, 0);
+            player.setCharacterDirection(Player.CharacterDirection.RIGHT);
+            player.updateImages("thrust right");
         }
         if (input.contains("S")) {
-            //player_.addForces(0, 5);    // DOWN
-            player_.setVelocity(0, 5);
-            player_.setCharacterDirection(Player.CharacterDirection.DOWN);
-            player_.updateImages("thrust down");
+            //player.addForces(0, 5);    // DOWN
+            player.setVelocity(0, 5);
+            player.setCharacterDirection(Player.CharacterDirection.DOWN);
+            player.updateImages("thrust down");
         }
         if (input.contains("A")) {      // Q on AZERTY keyboard
-            //player_.addForces(-5, 0);   // LEFT
-            player_.setVelocity(-5, 0);
-            player_.setCharacterDirection(Player.CharacterDirection.LEFT);
-            player_.updateImages("thrust left");
+            //player.addForces(-5, 0);   // LEFT
+            player.setVelocity(-5, 0);
+            player.setCharacterDirection(Player.CharacterDirection.LEFT);
+            player.updateImages("thrust left");
         }
 
         //add or remove shield to the player
         if (input.contains("K")) {
-            player_.setShieldOn(true);
-            if (player_.getShieldOn()) {
-                player_.updateImages("shield");
+            player.setShieldOn(true);
+            if (player.getShieldOn()) {
+                player.updateImages("shield");
             } else {
-                player_.updateImages("idle right");
+                player.updateImages("idle right");
             }
         } else {
-            player_.setShieldOn(false);
-            player_.updateImages("idle right");
+            player.setShieldOn(false);
+            player.updateImages("idle right");
         }
 
         if (input.contains("L")) {
-            player_.setBeforeDoor(doors);
-            if (player_.getBeforeDoor()) {
-                player_.setVelocity(0,0);
+            player.setBeforeDoor(doors);
+            if (player.getBeforeDoor()) {
+                player.setVelocity(0,0);
             }
         }
 
         if (input.contains(null)) {
-            if (player_.getDirection() == Player.CharacterDirection.UP) {
-                player_.updateImages("idle right");
+            if (player.getDirection() == Player.CharacterDirection.UP) {
+                player.updateImages("idle right");
             }
-            if (player_.getDirection() == Player.CharacterDirection.RIGHT) {
-                player_.updateImages("idle right");
+            if (player.getDirection() == Player.CharacterDirection.RIGHT) {
+                player.updateImages("idle right");
             }
-            if (player_.getDirection() == Player.CharacterDirection.DOWN) {
-                player_.updateImages("idle left");
+            if (player.getDirection() == Player.CharacterDirection.DOWN) {
+                player.updateImages("idle left");
             }
-            if (player_.getDirection() == Player.CharacterDirection.LEFT) {
-                player_.updateImages("idle left");
+            if (player.getDirection() == Player.CharacterDirection.LEFT) {
+                player.updateImages("idle left");
             }
-            player_.setShieldOn(false);
+            player.setShieldOn(false);
         }
     }
     /**
@@ -206,27 +205,27 @@ public class MainGame {
      * @param t the time
      */
     public void update_time(double t) {
-        player_.update(t, asteroids, getAllGhost(), treasure_);
+        player.update(t, asteroids, getAllGhost(), treasure);
         for (Ghost rg: redGhosts) {
-            rg.update(t, player_, asteroids);
+            rg.update(t, player, asteroids);
         }
         for (Ghost bg: blueGhosts) {
-            bg.update(t, player_, asteroids);
+            bg.update(t, player, asteroids);
         }
         for (Ghost yg: yellowGhosts) {
-            yg.update(t, player_, asteroids);
+            yg.update(t, player, asteroids);
         }
         for (Ghost gg: greenGhosts) {
-            gg.update(t, player_, asteroids);
+            gg.update(t, player, asteroids);
         }
     }
 
     //getter function
     public ArrayList<Asteroid> getAsteroids() { return asteroids;}
     
-    public Player getPlayer() { return player_;}
+    public Player getPlayer() { return player;}
     
-    public Treasure getTreasure() { return treasure_;}
+    public Treasure getTreasure() { return treasure;}
 
     public ArrayList<Ghost> getAllGhost() {
         ArrayList<Ghost> all_ghosts = redGhosts;
@@ -242,8 +241,8 @@ public class MainGame {
 
     public double getDimensionY() {return dimensionY;}
 
-    public double getPlayerLives() {return player_.getLives();}
+    public double getPlayerLives() {return player.getLives();}
 
-    public double getPlayerFieldEnergy() {return player_.getFieldEnergy();}
+    public double getPlayerFieldEnergy() {return player.getFieldEnergy();}
 
 }
