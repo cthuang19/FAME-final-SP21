@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import javafx.scene.input.KeyEvent;
 
 public class Puzzle {
 
@@ -19,8 +18,8 @@ public class Puzzle {
 
     protected ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
 
-    protected Player player_;
-    protected Treasure treasure_;
+    protected Player player;
+    protected Treasure treasure;
 
     protected boolean isCompleted;
 
@@ -66,15 +65,15 @@ public class Puzzle {
                         asteroids.add(new Asteroid(c * CELL_WIDTH, i * CELL_WIDTH));
                         break;
                     case PLAYER_CELL:
-                        player_ = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
+                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
                         break;
                     case TREASURE_CELL:
-                        treasure_ = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
+                        treasure = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
                         break;
                 }
             }
         }
-        player_.setDimension(dimensionX, dimensionY);
+        player.setDimension(dimensionX, dimensionY);
     }
 
     /**
@@ -84,57 +83,57 @@ public class Puzzle {
     public void movePlayer(ArrayList<String> input) {
         // basic movement of the player
         if (input.contains("W")) {      // Z on AZERTY keyboard
-            //player_.addForces(0, -5);   // UP
-            player_.setVelocity(0, -5);
-            player_.setCharacterDirection(Player.CharacterDirection.UP);
-            player_.updateImages("thrust up");
+            //player.addForces(0, -5);   // UP
+            player.setVelocity(0, -5);
+            player.setDirection(Player.CharacterDirection.UP);
+            player.updateImages("thrust up");
         }
         if (input.contains("D")) {
-            //player_.addForces(5, 0);    // RIGHT
-            player_.setVelocity(5, 0);
-            player_.setCharacterDirection(Player.CharacterDirection.RIGHT);
-            player_.updateImages("thrust right");
+            //player.addForces(5, 0);    // RIGHT
+            player.setVelocity(5, 0);
+            player.setDirection(Player.CharacterDirection.RIGHT);
+            player.updateImages("thrust right");
         }
         if (input.contains("S")) {
-            //player_.addForces(0, 5);    // DOWN
-            player_.setVelocity(0, 5);
-            player_.setCharacterDirection(Player.CharacterDirection.DOWN);
-            player_.updateImages("thrust down");
+            //player.addForces(0, 5);    // DOWN
+            player.setVelocity(0, 5);
+            player.setDirection(Player.CharacterDirection.DOWN);
+            player.updateImages("thrust down");
         }
         if (input.contains("A")) {      // Q on AZERTY keyboard
-            //player_.addForces(-5, 0);   // LEFT
-            player_.setVelocity(-5, 0);
-            player_.setCharacterDirection(Player.CharacterDirection.LEFT);
-            player_.updateImages("thrust left");
+            //player.addForces(-5, 0);   // LEFT
+            player.setVelocity(-5, 0);
+            player.setDirection(Player.CharacterDirection.LEFT);
+            player.updateImages("thrust left");
         }
 
         //add or remove shield to the player
         if (input.contains("K")) {
-            player_.setShieldOn(true);
-            if (player_.getShieldOn()) {
-                player_.updateImages("shield");
+            player.setShieldOn(true);
+            if (player.getShieldOn()) {
+                player.updateImages("shield");
             } else {
-                player_.updateImages("idle right");
+                player.updateImages("idle right");
             }
         } else {
-            player_.setShieldOn(false);
-            player_.updateImages("idle right");
+            player.setShieldOn(false);
+            player.updateImages("idle right");
         }
 
         if (input.contains(null)) {
-            if (player_.getDirection() == Player.CharacterDirection.UP) {
-                player_.updateImages("idle right");
+            if (player.getDirection() == Player.CharacterDirection.UP) {
+                player.updateImages("idle right");
             }
-            if (player_.getDirection() == Player.CharacterDirection.RIGHT) {
-                player_.updateImages("idle right");
+            if (player.getDirection() == Player.CharacterDirection.RIGHT) {
+                player.updateImages("idle right");
             }
-            if (player_.getDirection() == Player.CharacterDirection.DOWN) {
-                player_.updateImages("idle left");
+            if (player.getDirection() == Player.CharacterDirection.DOWN) {
+                player.updateImages("idle left");
             }
-            if (player_.getDirection() == Player.CharacterDirection.LEFT) {
-                player_.updateImages("idle left");
+            if (player.getDirection() == Player.CharacterDirection.LEFT) {
+                player.updateImages("idle left");
             }
-            player_.setShieldOn(false);
+            player.setShieldOn(false);
         }
     }
     /**
@@ -144,23 +143,23 @@ public class Puzzle {
     public void update_time(double t, ArrayList<String> input) {
         // empty list to use for the update
         ArrayList<Ghost> empty_ghosts = new ArrayList<Ghost>();
-        player_.update(t, asteroids, empty_ghosts, treasure_);
+        player.update(t, asteroids, empty_ghosts, treasure);
     }
 
     //getter function
     public ArrayList<Asteroid> getAsteroids() { return asteroids;}
 
-    public Player getPlayer() { return player_;}
+    public Player getPlayer() { return player;}
 
-    public Treasure getTreasure() { return treasure_;}
+    public Treasure getTreasure() { return treasure;}
 
     public double getDimensionX() {return dimensionX;}
 
     public double getDimensionY() {return dimensionY;}
 
-    public double getPlayerLives() {return player_.getLives();}
+    public double getPlayerLives() {return player.getLives();}
 
-    public double getPlayerFieldEnergy() {return player_.getFieldEnergy();}
+    public double getPlayerFieldEnergy() {return player.getFieldEnergy();}
 
     public boolean getIsCompleted() {return isCompleted;}
 

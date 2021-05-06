@@ -13,6 +13,9 @@ public class Treasure extends AnimatedImage{
     private double positionX_;
     private double positionY_;
 
+    /* indicates if the player already took the treasure or not */
+    private boolean recovered;
+
     public Treasure () {
         this(TREASURE_IMAGE,0,0);
     }
@@ -42,5 +45,8 @@ public class Treasure extends AnimatedImage{
     public double getPositionX_() {return positionX_;}
 
     public double getPositionY_() {return positionY_;}
+
+    public boolean getRecovered() {return recovered;}
+    public void setRecovered(boolean b) {recovered = b;}
 
 }

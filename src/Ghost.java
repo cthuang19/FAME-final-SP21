@@ -333,7 +333,7 @@ public class Ghost extends MovingAnimatedImage {
                     /*
                     if ((Math.abs(positionX - player.getPositionX()) < 512) ||
                         (Math.abs(positionY - player.getPositionY()) < 512)) {
-                        switch(this.direction_) {
+                        switch(this.direction) {
                             case UP :
                                 if (positionY > player.getPositionY()) {seesPlayer = true;}
                                 else {seesPlayer = false;}

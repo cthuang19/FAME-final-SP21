@@ -114,13 +114,30 @@ public class Player extends MovingAnimatedImage {
      */
     public void updateImages(String s) {
         switch (s) {
-            case "idle right" -> setFrames(fIdleRight);
-            case "idle left" -> setFrames(fIdleLeft);
-            case "thrust up" -> setFrames(fThrustUp);
-            case "thrust right" -> setFrames(fThrustRight);
-            case "thrust down" -> setFrames(fThrustDown);
-            case "thrust left" -> setFrames(fThrustLeft);
-
+            case "idle right" -> {
+                setFrames(fIdleRight);
+                //System.out.println("fIdleRight");
+            }
+            case "idle left" -> {
+                setFrames(fIdleLeft);
+                //System.out.println("fIdleLeft");
+            }
+            case "thrust up" -> {
+                setFrames(fThrustUp);
+                //System.out.println("fThrustUp");
+            }
+            case "thrust right" -> {
+                setFrames(fThrustRight);
+                //System.out.println("fThrustRight");
+            }
+            case "thrust down" -> {
+                setFrames(fThrustDown);
+                //System.out.println("fThrustDown");
+            }
+            case "thrust left" -> {
+                setFrames(fThrustLeft);
+                //System.out.println("fThrustLeft");
+            }
             // TODO : create frames with shield superposed to all the already existing frames
             case "shield" -> setFrames(shield);
         }
@@ -149,7 +166,7 @@ public class Player extends MovingAnimatedImage {
     }
 
     /** updates the state of the player
-     * @param time
+     * @param time the time
      * @param asteroids the obstacles of the level
      * @param ghosts the ghosts of the level
      * @param treasure the treasure of the level

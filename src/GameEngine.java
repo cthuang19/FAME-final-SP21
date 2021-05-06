@@ -124,7 +124,7 @@ public class GameEngine extends Application {
     }
 
     /**
-     * create the initial scene according to the langauge produced
+     * create the initial scene according to the language produced
      * @return the initial scene
      */
     private Scene getInitialScene() {
@@ -413,10 +413,23 @@ public class GameEngine extends Application {
 
                 //draw the treasure only if the level in completed
                 //and set door.isCompleted to true
-                if (puzzle.getIsCompleted()) {
+                if (puzzle.getIsCompleted()&&(!display_treasure.getRecovered())) {
                     gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
                             display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
-                    display_player.getCurrentDoor().setIsCompleted(true);
+                    //display_player.getCurrentDoor().setIsCompleted(true);
+                }
+
+                if (!display_treasure.getRecovered()) {
+                    if (display_player.intersects(display_treasure)) {
+                        //stop displaying treasure : repaint background and asteroids over
+                        gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
+                        for (Asteroid a : display_asteroid) {
+                            gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
+                        }
+                        display_treasure.setRecovered(true);
+                    } else {
+                        display_treasure.setRecovered(false);
+                    }
                 }
 
                 //draw the player
@@ -450,7 +463,7 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page = Page.LANGUAGE;
+        page = Page.PUZZLE;
         current_game_level = 1;
         max_unlocked_level = 4;
         current_puzzle_type = 1;

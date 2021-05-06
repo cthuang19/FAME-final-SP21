@@ -36,18 +36,7 @@ public class MainGame {
     private Treasure treasure;
 
     public MainGame() {
-        level = 1;
-        FileReader fr = new FileReader(".//game_environment_files/game_level_1.txt");
-        initializeArray(fr.allLines());
-        
-        //change this if needed
-        dimensionX = 1430;
-        dimensionY = 800;
-        //change it to somethin like this according to the level
-        /*
-        dimensionX = BASIC_DIMENSIONX * (level/3 + 1);
-        dimensionY = BASIC_DIMENSIONY * (level/3 + 1);
-        */
+        this(1);
     }
 
     public MainGame(int level) {
@@ -58,7 +47,7 @@ public class MainGame {
         //change this if needed
         dimensionX = 1430;
         dimensionY = 800;
-        //change it to somethin like this according to the level
+        //change it to something like this according to the level
         /*
         dimensionX = BASIC_DIMENSIONX * (level/3 + 1);
         dimensionY = BASIC_DIMENSIONY * (level/3 + 1);
@@ -137,31 +126,36 @@ public class MainGame {
      * move the player according to the keycode
      * @param input the keycode that represents which key was pressed
      */
+    // TODO : figure out why the frames aren't updating
     public void movePlayer(ArrayList<String> input) {
         // basic movement of the player
         if (input.contains("W")) {      // Z on AZERTY keyboard
             //player.addForces(0, -5);   // UP
             player.setVelocity(0, -5);
-            player.setCharacterDirection(Player.CharacterDirection.UP);
+            player.setDirection(Player.CharacterDirection.UP);
             player.updateImages("thrust up");
+            System.out.println("fThrustUp");
         }
         if (input.contains("D")) {
             //player.addForces(5, 0);    // RIGHT
             player.setVelocity(5, 0);
-            player.setCharacterDirection(Player.CharacterDirection.RIGHT);
+            player.setDirection(Player.CharacterDirection.RIGHT);
             player.updateImages("thrust right");
+            System.out.println("fThrustRight");
         }
         if (input.contains("S")) {
             //player.addForces(0, 5);    // DOWN
             player.setVelocity(0, 5);
-            player.setCharacterDirection(Player.CharacterDirection.DOWN);
+            player.setDirection(Player.CharacterDirection.DOWN);
             player.updateImages("thrust down");
+            System.out.println("fThrustDown");
         }
         if (input.contains("A")) {      // Q on AZERTY keyboard
             //player.addForces(-5, 0);   // LEFT
             player.setVelocity(-5, 0);
-            player.setCharacterDirection(Player.CharacterDirection.LEFT);
+            player.setDirection(Player.CharacterDirection.LEFT);
             player.updateImages("thrust left");
+            System.out.println("fThrustLeft");
         }
 
         //add or remove shield to the player
