@@ -52,6 +52,7 @@ public class GameEngine extends Application {
     private static int current_puzzle_level;
     private static int current_puzzle_type;
     private boolean goToPuzzle = false;
+    private boolean endMainGame = false;
 
     @Override
     public void start(Stage theStage) {
@@ -258,6 +259,14 @@ public class GameEngine extends Application {
             stage.setScene(scene);
             stage.show();
         }
+        // TODO : find where to place this to get back to the main page
+        // (it's not in the AnimationTimer)
+        if (endMainGame) {
+            page = Page.MAIN;
+            scene = getMainScene();
+            stage.setScene(scene);
+            stage.show();
+        }
 
         new AnimationTimer() {
             public void handle(long current_nano_time) {
@@ -311,28 +320,14 @@ public class GameEngine extends Application {
                     gc_game.drawImage(g.getFrame(t), g.getPositionX() - offsetX, g.getPositionY() - offsetY);
                 }
 
-                //display level of the current game
-                gc_game.setFill(Color.LIGHTSTEELBLUE);
-                gc_game.fillRect(1250, 0, 200, 100);
-                gc_game.setFill(Color.BLACK);
-                gc_game.setFont(FONT_SMALL);
-                gc_game.fillText(Util.convertLanguage(language, "Level ") + current_game_level, 1255, 20);
+                drawPlayerStatus(gc_game, main_game.getPlayerLives(), main_game.getPlayerFieldEnergy(),"main");
 
-                //display lives
-                double display_live = main_game.getPlayerLives();
-                Image heart = new Image(".//Images/heart.png");
-                for (int i = 0; i < display_live; i++) {
-                    gc_game.drawImage(heart, 1310 + i * 30, 25, 25, 25);
+                if (display_player.intersects(display_treasure)) {
+                    display_treasure.setRecovered(true);
+                    endMainGame = main_game.endGame(max_unlocked_level);
                 }
 
-                // display field energy
-                double display_field_energy = main_game.getPlayerFieldEnergy();
-
-                // TODO : display this with a prettier gauge image
-                gc_game.setFill(Color.DARKBLUE);
-                gc_game.fillRect(1250, 60, display_field_energy*5, 40);
-
-                // display goToPuzzle
+                // display goToPuzzle (testing purpose)
                 gc_game.setFill(Color.WHITE);
                 gc_game.setFont(FONT_SMALL);
                 gc_game.fillText(String.valueOf(goToPuzzle),300, 100);
@@ -411,17 +406,18 @@ public class GameEngine extends Application {
                     gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
                 }
 
-                //draw the treasure only if the level in completed
-                //and set door.isCompleted to true
+                // draw the treasure only if the level in completed
+                // and set door.isCompleted to true
                 if (puzzle.getIsCompleted()&&(!display_treasure.getRecovered())) {
                     gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
                             display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                     //display_player.getCurrentDoor().setIsCompleted(true);
                 }
 
+                // stops displaying treasure if recovered
                 if (!display_treasure.getRecovered()) {
                     if (display_player.intersects(display_treasure)) {
-                        //stop displaying treasure : repaint background and asteroids over
+                        // stop displaying treasure : repaint background and asteroids over
                         gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
                         for (Asteroid a : display_asteroid) {
                             gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
@@ -432,25 +428,12 @@ public class GameEngine extends Application {
                     }
                 }
 
-                //draw the player
+                // draw the player
                 gc_puzzle.drawImage(display_player.getFrame(t), display_player.getPositionX(), display_player.getPositionY());
 
-                //display lives
-                gc_puzzle.setFill(Color.LIGHTSTEELBLUE);
-                gc_puzzle.fillRect(1250, 0, 200, 100);
-                double display_live = puzzle.getPlayerLives();
-                Image heart = new Image(".//Images/heart.png");
-                for (int i = 0; i < display_live; i++) {
-                    gc_puzzle.drawImage(heart, 1310 + i * 30, 25, 25, 25);
-                }
+                drawPlayerStatus(gc_puzzle, puzzle.getPlayerLives(), puzzle.getPlayerFieldEnergy(),"puzzle" );
 
-                // display field energy
-                double display_field_energy = puzzle.getPlayerFieldEnergy();
-
-                // TODO : display this with a prettier gauge image
-                gc_puzzle.setFill(Color.DARKBLUE);
-                gc_puzzle.fillRect(1250, 60, display_field_energy*5, 40);
-
+                // for FSM test
                 gc_puzzle.setFill(Color.RED);
                 gc_puzzle.setFont(FONT_SMALL);
                 gc_puzzle.fillText(String.valueOf(puzzle.getIsCompleted()), 300, 30);
@@ -461,9 +444,46 @@ public class GameEngine extends Application {
         root_puzzle.getChildren().add(canvas_puzzle);
         return scene_puzzle;
     }
+
+    /**
+     * draw the important information for the game at the top of the screen
+     * level, lives, field energy
+     * @param gc the gc of the level
+     * @param player_lives the current lives of the player
+     * @param player_field_energy the current field energy of the player
+     * @param type_of_game if the game is a main level or a puzzle
+     */
+
+    public void drawPlayerStatus(GraphicsContext gc, double player_lives, double player_field_energy, String type_of_game) {
+        // display background of the box
+        gc.setFill(Color.LIGHTSTEELBLUE);
+        gc.fillRect(1250, 0, 200, 100);
+
+        // display level of the current game/puzzle
+        gc.setFill(Color.LIGHTSTEELBLUE);
+        gc.fillRect(1250, 0, 200, 100);
+        gc.setFill(Color.BLACK);
+        gc.setFont(FONT_SMALL);
+        if (type_of_game == "main") {
+            gc.fillText(Util.convertLanguage(language, "Level ") + current_game_level, 1255, 20);
+        }
+        if (type_of_game == "puzzle") {
+            gc.fillText("Puzzle", 1255, 20);
+        }
+
+        // display lives
+        Image heart = new Image(".//Images/heart.png");
+        for (int i = 0; i < player_lives; i++) {
+            gc.drawImage(heart, 1310 + i * 30, 25, 25, 25);
+        }
+        // display field energy
+        // TODO : display this with a prettier gauge image
+        gc.setFill(Color.DARKBLUE);
+        gc.fillRect(1250, 60, player_field_energy*5, 40);
+    }
     
     public static void main(String args[]) {
-        page = Page.PUZZLE;
+        page = Page.GAME;
         current_game_level = 1;
         max_unlocked_level = 4;
         current_puzzle_type = 1;

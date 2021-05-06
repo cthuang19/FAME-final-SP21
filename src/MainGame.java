@@ -35,6 +35,8 @@ public class MainGame {
     private Player player;
     private Treasure treasure;
 
+    private boolean isCompleted;
+
     public MainGame() {
         this(1);
     }
@@ -52,6 +54,7 @@ public class MainGame {
         dimensionX = BASIC_DIMENSIONX * (level/3 + 1);
         dimensionY = BASIC_DIMENSIONY * (level/3 + 1);
         */
+        isCompleted = false;
     }
 
     /**
@@ -212,6 +215,18 @@ public class MainGame {
         for (Ghost gg: greenGhosts) {
             gg.update(t, player, asteroids);
         }
+    }
+
+    /**
+     * to invoke when a game is finished (the treasure is recovered)
+     * @param max_unlocked_level the maximum unlocked level, to be incremented
+     * @return true (the game is finished)
+     */
+    public boolean endGame(int max_unlocked_level) {
+        player.setVelocity(0,0);
+        max_unlocked_level++;
+        isCompleted = true;
+        return true;
     }
 
     //getter function

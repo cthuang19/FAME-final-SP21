@@ -35,6 +35,7 @@ public class Treasure extends AnimatedImage{
         Image[] f = new Image[]{image};
         setFrames(f);
         setDuration(0.1);
+        recovered = false;
     }
 
     public Rectangle2D getBoundary() {
