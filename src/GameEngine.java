@@ -57,6 +57,7 @@ public class GameEngine extends Application {
     @Override
     public void start(Stage theStage) {
         stage = theStage;
+        /*
         switch (page) {
             case LANGUAGE -> scene = getLanguageScene();
             case INITIAL -> scene = getInitialScene();
@@ -67,6 +68,27 @@ public class GameEngine extends Application {
                 Group group_default = new Group();
                 scene = new Scene(group_default);
             }
+        }
+        */
+        switch (page) {
+            case LANGUAGE:
+                scene = getLanguageScene();
+                break;
+            case INITIAL:
+                scene = getInitialScene();
+                break;
+            case MAIN:
+                scene = getMainScene();
+                break;
+            case GAME:
+                scene = getGameScene();
+                break;
+            case PUZZLE:
+                scene = getPuzzleScene();
+                break;
+            default:
+                Group group_default = new Group();
+                scene = new Scene(group_default);
         }
 
         stage.setScene(scene);

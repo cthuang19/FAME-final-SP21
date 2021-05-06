@@ -114,6 +114,7 @@ public class Player extends MovingAnimatedImage {
      */
     public void updateImages(String s) {
         switch (s) {
+            /*
             case "idle right" -> {
                 setFrames(fIdleRight);
                 //System.out.println("fIdleRight");
@@ -140,6 +141,7 @@ public class Player extends MovingAnimatedImage {
             }
             // TODO : create frames with shield superposed to all the already existing frames
             case "shield" -> setFrames(shield);
+            */
         }
     }
 

@@ -137,28 +137,28 @@ public class MainGame {
             player.setVelocity(0, -5);
             player.setDirection(Player.CharacterDirection.UP);
             player.updateImages("thrust up");
-            System.out.println("fThrustUp");
+            //System.out.println("fThrustUp");
         }
         if (input.contains("D")) {
             //player.addForces(5, 0);    // RIGHT
             player.setVelocity(5, 0);
             player.setDirection(Player.CharacterDirection.RIGHT);
             player.updateImages("thrust right");
-            System.out.println("fThrustRight");
+            //System.out.println("fThrustRight");
         }
         if (input.contains("S")) {
             //player.addForces(0, 5);    // DOWN
             player.setVelocity(0, 5);
             player.setDirection(Player.CharacterDirection.DOWN);
             player.updateImages("thrust down");
-            System.out.println("fThrustDown");
+            //System.out.println("fThrustDown");
         }
         if (input.contains("A")) {      // Q on AZERTY keyboard
             //player.addForces(-5, 0);   // LEFT
             player.setVelocity(-5, 0);
             player.setDirection(Player.CharacterDirection.LEFT);
             player.updateImages("thrust left");
-            System.out.println("fThrustLeft");
+            //System.out.println("fThrustLeft");
         }
 
         //add or remove shield to the player
@@ -216,6 +216,7 @@ public class MainGame {
             gg.update(t, player, asteroids);
         }
     }
+    
 
     /**
      * to invoke when a game is finished (the treasure is recovered)

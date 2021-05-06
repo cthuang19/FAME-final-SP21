@@ -107,11 +107,30 @@ public class Ghost extends MovingAnimatedImage {
 
     public void updateImages(String s) {
         switch (s) {
+            
             case "up" -> setFrames(fUp);
             case "right" -> setFrames(fRight);
             case "down" -> setFrames(fDown);
             case "left" -> setFrames(fLeft);
             case "explosion" -> setFrames(fExplosion);
+            
+            /*
+            case "up":
+                setFrames(fUp);
+                break;
+            case "right":
+                setFrames(fRight);
+                break;
+            case "down":
+                setFrames(fDown);
+                break;    
+            case "left":
+                setFrames(fLeft);
+                break;
+            case "explosion":
+                setFrames(fExplosion);    
+                break;
+            */
         }
     }
 
@@ -184,8 +203,7 @@ public class Ghost extends MovingAnimatedImage {
                     velocityY=0;
                     break;
             }
-            positionX += velocityX ;
-            positionY += velocityY ;
+            moveGhost(asteroids);
             return;      
         }
 
@@ -220,9 +238,10 @@ public class Ghost extends MovingAnimatedImage {
             }
             positionX += velocityX ;
             positionY += velocityY ;
+            System.out.println("blue");
             return;
         }
-
+        
         if (this.colour == Colour.YELLOW) {
             switch (state) {
                 case PASSIVE:
@@ -240,6 +259,8 @@ public class Ghost extends MovingAnimatedImage {
                     break;
                 case ACTIVE:
                     if (!seesPlayer) {
+                        startingPoint = positionX;
+                        velocityX = 0.002;
                         state = GhostState.PASSIVE;
                         timeStamp = System.currentTimeMillis();
                     }
@@ -247,17 +268,40 @@ public class Ghost extends MovingAnimatedImage {
                         state = GhostState.EXPLOSIVE;
                         timeStamp = System.currentTimeMillis();
                     }
-                    // chases player in an area thrice the size of the patrolling area
                     break;
                 case EXPLOSIVE:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
                     if (timePassed > 4) {   // leave time for the explosion animation
+                        startingPoint = positionX;
+                        velocityX = 0.002;
                         state = GhostState.PASSIVE;
                     }
                     break;
                 default:
                     state = GhostState.PASSIVE;
             }
+            switch (state) {
+                case PASSIVE :
+                    velocityX=(positionX-startingPoint>100)?-0.002:velocityX;
+                    velocityX=(positionX-startingPoint<0)?0.002:velocityX;
+                    velocityY=0;
+                    break;
+                case ACTIVE :
+                    velocityX=directionGhostX * 0.001;
+                    velocityY=directionGhostY * 0.001;
+                    // chases player in an area thrice the size of the patrolling area
+                    break;
+                case SUSPICIOUS :
+                    velocityX=0;
+                    velocityY=0;
+                    break;
+                case EXPLOSIVE:
+                    velocityX=0;
+                    velocityY=0;
+                    break;
+            }
+            moveGhost(asteroids);
+            return;    
         }
 
         if (this.colour == Colour.GREEN) {
@@ -330,33 +374,6 @@ public class Ghost extends MovingAnimatedImage {
                     seesPlayer = calculateDistance(player.getPositionX(), player.getPositionY()) < BLUE_SIGHT;
                     break;
                 case YELLOW:    // can see the player up to 8 cells ahead of him
-                    /*
-                    if ((Math.abs(positionX - player.getPositionX()) < 512) ||
-                        (Math.abs(positionY - player.getPositionY()) < 512)) {
-                        switch(this.direction) {
-                            case UP :
-                                if (positionY > player.getPositionY()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            case RIGHT :
-                                if (positionX < player.getPositionX()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            case DOWN :
-                                if (positionY < player.getPositionY()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            case LEFT :
-                                if (positionX > player.getPositionX()) {seesPlayer = true;}
-                                else {seesPlayer = false;}
-                                break;
-                            default :
-                                seesPlayer = false;
-                        }
-                    } else {
-                        seesPlayer = false;
-                    }
-                    */
                     seesPlayer = calculateDistance(player.getPositionX(), player.getPositionY()) < YELLOW_SIGHT;
                     break;
                 case GREEN:     // knows the player is here when he's less than 4 cells away, even if hidden
@@ -367,25 +384,57 @@ public class Ghost extends MovingAnimatedImage {
             }
         } else {
             seesPlayer = false;
-
-            //set the direction of the ghost to the direction to the player
-            //if it can see the player
-            /*
-            if (this.colour == Colour.GREEN) {
-                // same block as in the switch case
-                // maybe find a prettier way to put it
-                if ((Math.abs(positionX - player.getPositionX()) < 256) ||
-                    (Math.abs(positionY - player.getPositionY()) < 256)) {
-                    seesPlayer = true;
-                } else {
-                    seesPlayer = false;
-                }
-            }
-            */
         }
         if (seesPlayer) {
             directionGhostX=(player.getPositionX()-positionX>0)?1:-1;
             directionGhostY=(player.getPositionY()-positionY>0)?1:-1;
+        }
+    }
+
+    /**
+     * move the ghost and prevent it from
+     * moving on the top of asteroid
+     * @param asteroids the arraylist of asteroids
+     */
+    private void moveGhost(ArrayList<Asteroid> asteroids) {
+        double originalX = positionX;
+        double originalY = positionY;
+        positionX += velocityX ;
+        positionY += velocityY ;
+        boolean isIntersect = false;
+        for (Asteroid a : asteroids) {
+            if (this.intersects(a)) {
+                isIntersect = true;
+            }
+        }
+
+        // if the future position intersects with an asteroid
+        // the player bounces
+        //TODO: probably move this to MovingAnimatedImage since it is the same
+        // as in player
+        if (isIntersect) {
+            positionX = originalX;
+            positionY = originalY;
+            velocityX=-velocityX*0.5;
+            velocityY=-velocityY*0.5;
+            return;
+        }
+
+        if (positionX<0) {
+            positionX=0;
+            velocityX=-velocityX*0.5;
+        }
+        if (positionY<0) {
+            positionY=0;
+            velocityY=-velocityY*0.5;
+        }
+        if (positionX>maxX-GHOST_WIDTH) {
+            positionX=maxX-GHOST_WIDTH;
+            velocityX=-velocityX*0.5;
+        }
+        if (positionY>maxY-GHOST_HEIGHT){
+            positionY=maxY-GHOST_HEIGHT;
+            velocityY=-velocityY*0.5;
         }
     }
 
