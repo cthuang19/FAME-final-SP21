@@ -57,19 +57,6 @@ public class GameEngine extends Application {
     @Override
     public void start(Stage theStage) {
         stage = theStage;
-        /*
-        switch (page) {
-            case LANGUAGE -> scene = getLanguageScene();
-            case INITIAL -> scene = getInitialScene();
-            case MAIN -> scene = getMainScene();
-            case GAME -> scene = getGameScene();
-            case PUZZLE -> scene = getPuzzleScene();
-            default -> {
-                Group group_default = new Group();
-                scene = new Scene(group_default);
-            }
-        }
-        */
         switch (page) {
             case LANGUAGE:
                 scene = getLanguageScene();
@@ -319,6 +306,8 @@ public class GameEngine extends Application {
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
+
+                //draw the asteroids
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), a.getPositionX() - offsetX, a.getPositionY() - offsetY);
                 }

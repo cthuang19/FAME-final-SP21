@@ -1,4 +1,7 @@
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainGame {
 
@@ -14,6 +17,8 @@ public class MainGame {
     private static final int GREEN_GHOST_CELL = 6;
     private static final int TREASURE_CELL = 7;
     private static final int DOOR_CELL = 8;
+
+    private static final ArrayList<String> alphabet = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"));
 
     /* the dimension for the easiest levels, change this if needed*/
     private static final double BASIC_DIMENSIONX = 300;
@@ -44,7 +49,8 @@ public class MainGame {
     public MainGame(int level) {
         this.level = level;
         FileReader fr = new FileReader(".//game_environment_files/game_level_"+ this.level +".txt");
-        initializeArray(fr.allLines());
+        FileReader fr_rock = new FileReader(".//game_environment_files/game_level_"+ this.level +"_tiles.txt");
+        initializeArray(fr.allLines(), fr_rock.allLines());
 
         //change this if needed
         dimensionX = 1430;
@@ -63,7 +69,7 @@ public class MainGame {
      * arraylist of string that was read in the file
      * @param s an arraylist of string
      */
-    private void initializeArray(ArrayList<String> s) {
+    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file) {
         dimensionX = s.get(0).length() * CELL_WIDTH;
         dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
@@ -81,7 +87,7 @@ public class MainGame {
                 //initialize each array according to the document
                 switch(cell_int) {
                     case ROCK_CELL:
-                        asteroids.add(new Asteroid(c * CELL_WIDTH, i * CELL_WIDTH));
+                        initializeRock(rock_file, c, i);
                         break;
                     case PLAYER_CELL:
                         player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
@@ -108,6 +114,13 @@ public class MainGame {
             }
         }
         initializeDimension();
+    }
+
+    private void initializeRock(ArrayList<String> rock_file, int c, int i) {
+        String letter = rock_file.get(i).substring(c, c + 1);
+        if (alphabet.contains(letter)) {
+            asteroids.add(new Asteroid(letter, c * CELL_WIDTH, i * CELL_WIDTH));
+        }
     }
 
     private void initializeDimension() {
