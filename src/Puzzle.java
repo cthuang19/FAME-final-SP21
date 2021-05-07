@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Puzzle {
 
@@ -9,6 +10,8 @@ public class Puzzle {
     protected static final int ROCK_CELL = 1;
     protected static final int PLAYER_CELL = 2;
     protected static final int TREASURE_CELL = 7;
+
+    private static final ArrayList<String> alphabet = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"));
 
     /* the type and "level" of the current puzzle */
     protected int type;
@@ -31,7 +34,8 @@ public class Puzzle {
         type = tp;
         level = lvl;
         FileReader fr = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+".txt");
-        initializeArray(fr.allLines());
+        FileReader fr_rock = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+"_tiles.txt");
+        initializeArray(fr.allLines(), fr_rock.allLines());
         isCompleted = false;
         dimensionX = 1430;
         dimensionY = 800;
@@ -45,7 +49,7 @@ public class Puzzle {
      * arraylist of string that was read in the file
      * @param s an arraylist of string
      */
-    private void initializeArray(ArrayList<String> s) {
+    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file) {
         dimensionX = s.get(0).length() * CELL_WIDTH;
         dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
@@ -62,7 +66,7 @@ public class Puzzle {
                 //initialize each array according to the document
                 switch(cell_int) {
                     case ROCK_CELL:
-                        asteroids.add(new Asteroid(c * CELL_WIDTH, i * CELL_WIDTH));
+                        initializeRock(rock_file, c, i);
                         break;
                     case PLAYER_CELL:
                         player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
@@ -74,6 +78,13 @@ public class Puzzle {
             }
         }
         player.setDimension(dimensionX, dimensionY);
+    }
+
+    private void initializeRock(ArrayList<String> rock_file, int c, int i) {
+        String letter = rock_file.get(i).substring(c, c + 1);
+        if (alphabet.contains(letter)) {
+            asteroids.add(new Asteroid(letter, c * CELL_WIDTH, i * CELL_WIDTH));
+        }
     }
 
     /**
