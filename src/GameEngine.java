@@ -224,7 +224,6 @@ public class GameEngine extends Application {
     }
 
     public Scene getGameScene() {
-        endMainGame = false;
         Group root_game = new Group();
         Scene scene_game = new Scene(root_game);
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -350,16 +349,11 @@ public class GameEngine extends Application {
                     }
                     main_game.endGame();
                     endMainGame = true;
-                    //this.stop();
+                    this.stop();
                     page = Page.MAIN;
+                    return;
                     //return getInitialScene();
                 }
-                /*
-                if (display_player.intersects(display_treasure)) {
-                    display_treasure.setRecovered(true);
-                    endMainGame = main_game.endGame(max_unlocked_level);
-                }
-                */
 
                 // display goToPuzzle (testing purpose)
                 gc_game.setFill(Color.WHITE);
@@ -368,13 +362,13 @@ public class GameEngine extends Application {
 
             }
         };
-        System.out.println("370 " + endMainGame);
         
         if (!endMainGame) {
             timer.start();
         } else {
+            System.out.println("39");
             timer.stop();
-            scene = getMainScene();
+            scene = updateScene(page);
             stage.setScene(scene);
             stage.show();
         }
@@ -528,6 +522,31 @@ public class GameEngine extends Application {
         Image blue_bar = new Image(".//Images/bars/blue_bar.png");
         gc.drawImage(empty_bar,1230, 70, 150+38, 40 );
         gc.drawImage(blue_bar,1230+20, 70+8, player_field_energy*5/10, 23 );
+    }
+
+    private Scene updateScene(Page p) {
+        Scene temp;
+        switch (p) {
+            case LANGUAGE:
+                temp = getLanguageScene();
+                break;
+            case INITIAL:
+                temp = getInitialScene();
+                break;
+            case MAIN:
+                temp = getMainScene();
+                break;
+            case GAME:
+                temp = getGameScene();
+                break;
+            case PUZZLE:
+                temp = getPuzzleScene();
+                break;
+            default:
+                Group group_default = new Group();
+                temp = new Scene(group_default);
+        }
+        return temp;
     }
     
     public static void main(String args[]) {
