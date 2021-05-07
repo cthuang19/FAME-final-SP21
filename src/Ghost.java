@@ -107,14 +107,14 @@ public class Ghost extends MovingAnimatedImage {
 
     public void updateImages(String s) {
         switch (s) {
-            
+            /*
             case "up" -> setFrames(fUp);
             case "right" -> setFrames(fRight);
             case "down" -> setFrames(fDown);
             case "left" -> setFrames(fLeft);
             case "explosion" -> setFrames(fExplosion);
+            */
             
-            /*
             case "up":
                 setFrames(fUp);
                 break;
@@ -130,7 +130,7 @@ public class Ghost extends MovingAnimatedImage {
             case "explosion":
                 setFrames(fExplosion);    
                 break;
-            */
+            
         }
     }
 
@@ -238,7 +238,6 @@ public class Ghost extends MovingAnimatedImage {
             }
             positionX += velocityX ;
             positionY += velocityY ;
-            System.out.println("blue");
             return;
         }
         

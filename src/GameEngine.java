@@ -185,6 +185,7 @@ public class GameEngine extends Application {
     }
 
     public Scene getMainScene() {
+        endMainGame = false;
         Group root_main = new Group();
         Scene scene_main = new Scene(root_main);
         Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -223,6 +224,7 @@ public class GameEngine extends Application {
     }
 
     public Scene getGameScene() {
+        endMainGame = false;
         Group root_game = new Group();
         Scene scene_game = new Scene(root_game);
         Canvas canvas_game = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -271,14 +273,16 @@ public class GameEngine extends Application {
         }
         // TODO : find where to place this to get back to the main page
         // (it's not in the AnimationTimer)
+        /*
         if (endMainGame) {
             page = Page.MAIN;
             scene = getMainScene();
             stage.setScene(scene);
             stage.show();
         }
+        */
 
-        new AnimationTimer() {
+        AnimationTimer timer = new AnimationTimer() {
             public void handle(long current_nano_time) {
                 double t = (current_nano_time - startNanoTime) / 1000000000.0;
                 main_game.movePlayer(input);
@@ -339,10 +343,23 @@ public class GameEngine extends Application {
 
                 drawPlayerStatus(gc_game, main_game.getPlayerLives(), main_game.getPlayerFieldEnergy(),"main");
 
+                if (main_game.isGameEnd()) {
+                    System.out.println("end");
+                    if (main_game.isGameComplete()) {
+                        max_unlocked_level++;
+                    }
+                    main_game.endGame();
+                    endMainGame = true;
+                    //this.stop();
+                    page = Page.MAIN;
+                    //return getInitialScene();
+                }
+                /*
                 if (display_player.intersects(display_treasure)) {
                     display_treasure.setRecovered(true);
                     endMainGame = main_game.endGame(max_unlocked_level);
                 }
+                */
 
                 // display goToPuzzle (testing purpose)
                 gc_game.setFill(Color.WHITE);
@@ -350,7 +367,18 @@ public class GameEngine extends Application {
                 gc_game.fillText(String.valueOf(goToPuzzle),300, 100);
 
             }
-        }.start();
+        };
+        System.out.println("370 " + endMainGame);
+        
+        if (!endMainGame) {
+            timer.start();
+        } else {
+            timer.stop();
+            scene = getMainScene();
+            stage.setScene(scene);
+            stage.show();
+        }
+        
         
         root_game.getChildren().add(canvas_game);
         return scene_game;

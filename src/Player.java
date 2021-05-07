@@ -319,4 +319,6 @@ public class Player extends MovingAnimatedImage {
     }
 
     public Door getCurrentDoor() {return currentDoor;}
+
+    public boolean getIsGameCompleted() {return isGameCompleted;}
 }

@@ -238,18 +238,32 @@ public class MainGame {
         }
     }
     
+    /**
+    * end the game and recover the treasure
+    */
+    public void endGame() {
+        player.setVelocity(0,0);
+        treasure.setRecovered(true);
+    }
 
     /**
-     * to invoke when a game is finished (the treasure is recovered)
-     * @param max_unlocked_level the maximum unlocked level, to be incremented
-     * @return true (the game is finished)
+     * to check if the player has complete the game
+     * @return true if the player completes the game
      */
-    public boolean endGame(int max_unlocked_level) {
-        player.setVelocity(0,0);
-        max_unlocked_level++;
-        isCompleted = true;
-        return true;
+    public boolean isGameComplete() {
+        return player.getIsGameCompleted();
     }
+
+    /**
+     * check if the game has ended
+     * either the player has collected the treasure
+     * or if the player loses all lives
+     * @return true if the game has ended
+     */
+    public boolean isGameEnd() {
+        return player.getIsGameCompleted() || player.getLives() == 0;
+    }
+
 
     //getter function
     public ArrayList<Asteroid> getAsteroids() { return asteroids;}
