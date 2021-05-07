@@ -259,6 +259,7 @@ public class GameEngine extends Application {
         //getting all the fix information to draw
         ArrayList<Asteroid> display_asteroid = main_game.getAsteroids();       
         Treasure display_treasure = main_game.getTreasure();
+        ArrayList<BackTile> display_backtiles = main_game.getBacktiles();
 
         // TODO : find where to place this to get a puzzle page
         // (it's not in the AnimationTimer)
@@ -306,6 +307,11 @@ public class GameEngine extends Application {
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
+
+                //draw the backtiles
+                for (BackTile b: display_backtiles) {
+                    gc_game.drawImage(b.getFrame(0), b.getPositionX() - offsetX, b.getPositionY() - offsetY);
+                }
 
                 //draw the asteroids
                 for (Asteroid a: display_asteroid) {
@@ -395,6 +401,7 @@ public class GameEngine extends Application {
         //getting all the fix information to draw
         ArrayList<Asteroid> display_asteroid = puzzle.getAsteroids();
         Treasure display_treasure = puzzle.getTreasure();
+        ArrayList<BackTile> display_backtiles = puzzle.getBacktiles();
 
         new AnimationTimer() {
             public void handle(long current_nano_time) {
@@ -413,6 +420,9 @@ public class GameEngine extends Application {
 
                 //draw background image
                 gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
+                for (BackTile b: display_backtiles) {
+                    gc_puzzle.drawImage(b.getFrame(0), b.getPositionX(), b.getPositionY());
+                }
                 for (Asteroid a: display_asteroid) {
                     gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
                 }
@@ -494,7 +504,7 @@ public class GameEngine extends Application {
     }
     
     public static void main(String args[]) {
-        page = Page.PUZZLE;
+        page = Page.GAME;
         current_game_level = 1;
         max_unlocked_level = 4;
         current_puzzle_type = 1;

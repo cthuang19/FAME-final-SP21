@@ -1,5 +1,3 @@
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,7 +16,8 @@ public class MainGame {
     private static final int TREASURE_CELL = 7;
     private static final int DOOR_CELL = 8;
 
-    private static final ArrayList<String> alphabet = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"));
+    private static final ArrayList<String> alphabetRocks = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"));
+    private static final ArrayList<String> alphabetBackTiles = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L"));
 
     /* the dimension for the easiest levels, change this if needed*/
     private static final double BASIC_DIMENSIONX = 300;
@@ -36,6 +35,7 @@ public class MainGame {
     private ArrayList<Ghost> greenGhosts = new ArrayList<Ghost>();
     private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
     private ArrayList<Door> doors = new ArrayList<Door>();
+    private ArrayList<BackTile> backtiles = new ArrayList<>();
 
     private Player player;
     private Treasure treasure;
@@ -50,7 +50,8 @@ public class MainGame {
         this.level = level;
         FileReader fr = new FileReader(".//game_environment_files/game_level_"+ this.level +".txt");
         FileReader fr_rock = new FileReader(".//game_environment_files/game_level_"+ this.level +"_tiles.txt");
-        initializeArray(fr.allLines(), fr_rock.allLines());
+        FileReader fr_back_tiles = new FileReader(".//game_environment_files/game_level_"+ this.level +"_backtiles.txt");
+        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines());
 
         //change this if needed
         dimensionX = 1430;
@@ -69,7 +70,7 @@ public class MainGame {
      * arraylist of string that was read in the file
      * @param s an arraylist of string
      */
-    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file) {
+    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file, ArrayList<String> back_tile_file) {
         dimensionX = s.get(0).length() * CELL_WIDTH;
         dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
@@ -82,9 +83,9 @@ public class MainGame {
                     System.out.println("Number Format Exception, using default value");
                     cell_int = 0;
                 }
-                
 
                 //initialize each array according to the document
+                initializeBackTiles(back_tile_file,c,i);
                 switch(cell_int) {
                     case ROCK_CELL:
                         initializeRock(rock_file, c, i);
@@ -118,8 +119,15 @@ public class MainGame {
 
     private void initializeRock(ArrayList<String> rock_file, int c, int i) {
         String letter = rock_file.get(i).substring(c, c + 1);
-        if (alphabet.contains(letter)) {
+        if (alphabetRocks.contains(letter)) {
             asteroids.add(new Asteroid(letter, c * CELL_WIDTH, i * CELL_WIDTH));
+        }
+    }
+
+    private void initializeBackTiles(ArrayList<String> back_tile_file, int c, int i) {
+        String letter = back_tile_file.get(i).substring(c, c + 1);
+        if (alphabetBackTiles.contains(letter)) {
+            backtiles.add(new BackTile(letter, c * CELL_WIDTH, i * CELL_WIDTH));
         }
     }
 
@@ -259,6 +267,8 @@ public class MainGame {
     }
     
     public ArrayList<Door> getDoors() { return doors;}
+
+    public ArrayList<BackTile> getBacktiles() { return backtiles;}
 
     public double getDimensionX() {return dimensionX;}
 

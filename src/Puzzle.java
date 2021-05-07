@@ -11,7 +11,8 @@ public class Puzzle {
     protected static final int PLAYER_CELL = 2;
     protected static final int TREASURE_CELL = 7;
 
-    private static final ArrayList<String> alphabet = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"));
+    private static final ArrayList<String> alphabetRocks = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"));
+    private static final ArrayList<String> alphabetBackTiles = new ArrayList<>(Arrays.asList("A","B","C","D","E","F","G","H","I","J","K","L"));
 
     /* the type and "level" of the current puzzle */
     protected int type;
@@ -20,6 +21,7 @@ public class Puzzle {
     protected double dimensionY;
 
     protected ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+    protected ArrayList<BackTile> backtiles = new ArrayList<>();
 
     protected Player player;
     protected Treasure treasure;
@@ -35,7 +37,8 @@ public class Puzzle {
         level = lvl;
         FileReader fr = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+".txt");
         FileReader fr_rock = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+"_tiles.txt");
-        initializeArray(fr.allLines(), fr_rock.allLines());
+        FileReader fr_back_tiles = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+"_backtiles.txt");
+        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines());
         isCompleted = false;
         dimensionX = 1430;
         dimensionY = 800;
@@ -49,7 +52,7 @@ public class Puzzle {
      * arraylist of string that was read in the file
      * @param s an arraylist of string
      */
-    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file) {
+    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file, ArrayList<String> back_tile_file) {
         dimensionX = s.get(0).length() * CELL_WIDTH;
         dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
@@ -64,6 +67,7 @@ public class Puzzle {
                 }
 
                 //initialize each array according to the document
+                initializeBackTiles(back_tile_file,c,i);
                 switch(cell_int) {
                     case ROCK_CELL:
                         initializeRock(rock_file, c, i);
@@ -82,8 +86,15 @@ public class Puzzle {
 
     private void initializeRock(ArrayList<String> rock_file, int c, int i) {
         String letter = rock_file.get(i).substring(c, c + 1);
-        if (alphabet.contains(letter)) {
+        if (alphabetRocks.contains(letter)) {
             asteroids.add(new Asteroid(letter, c * CELL_WIDTH, i * CELL_WIDTH));
+        }
+    }
+
+    private void initializeBackTiles(ArrayList<String> back_tile_file, int c, int i) {
+        String letter = back_tile_file.get(i).substring(c, c + 1);
+        if (alphabetBackTiles.contains(letter)) {
+            backtiles.add(new BackTile(letter, c * CELL_WIDTH, i * CELL_WIDTH));
         }
     }
 
@@ -163,6 +174,8 @@ public class Puzzle {
     public Player getPlayer() { return player;}
 
     public Treasure getTreasure() { return treasure;}
+
+    public ArrayList<BackTile> getBacktiles() { return backtiles;}
 
     public double getDimensionX() {return dimensionX;}
 
