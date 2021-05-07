@@ -278,16 +278,6 @@ public class GameEngine extends Application {
             stage.setScene(scene);
             stage.show();
         }
-        // TODO : find where to place this to get back to the main page
-        // (it's not in the AnimationTimer)
-        /*
-        if (endMainGame) {
-            page = Page.MAIN;
-            scene = getMainScene();
-            stage.setScene(scene);
-            stage.show();
-        }
-        */
 
         new AnimationTimer() {
             public void handle(long current_nano_time) {
@@ -353,13 +343,14 @@ public class GameEngine extends Application {
                 drawPlayerStatus(gc_game, main_game.getPlayerLives(), main_game.getPlayerFieldEnergy(),"main");
 
                 if (main_game.isGameEnd()) {
-                    System.out.println("end");
-                    if (main_game.isGameComplete()) {
+                    if (main_game.isGameComplete() && current_game_level == max_unlocked_level) {
                         max_unlocked_level++;
                     }
                     main_game.endGame();
                     endMainGame = true;
                     page = Page.MAIN;
+
+                    //TODO: probably add a delay here for ending message
                     updateScene(page);
                     this.stop();
                 }
@@ -371,7 +362,6 @@ public class GameEngine extends Application {
 
             }
         }.start();
-        
         
         root_game.getChildren().add(canvas_game);
         return scene_game;
@@ -523,6 +513,12 @@ public class GameEngine extends Application {
         gc.drawImage(blue_bar,1230+20, 70+8, player_field_energy*5/10, 23 );
     }
 
+    /**
+     * update the scene show on stage
+     * according to the page variable
+     * @param p the page variable represents
+     * which page the game is on
+     */
     private void updateScene(Page p) {
         Scene temp;
         switch (p) {
@@ -551,9 +547,9 @@ public class GameEngine extends Application {
     
     public static void main(String args[]) {
         endMainGame = false;
-        page = Page.LANGUAGE;
+        page = Page.MAIN;
         current_game_level = 1;
-        max_unlocked_level = 4;
+        max_unlocked_level = 1;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
