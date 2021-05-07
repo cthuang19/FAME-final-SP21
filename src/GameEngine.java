@@ -48,11 +48,13 @@ public class GameEngine extends Application {
     /* number of the last unlocked level */
     private static int max_unlocked_level;
 
+    /* check if the game has ended*/
+    private static boolean endMainGame;
+
     /* the current (or last) puzzle level */
     private static int current_puzzle_level;
     private static int current_puzzle_type;
     private boolean goToPuzzle = false;
-    private boolean endMainGame = false;
 
     @Override
     public void start(Stage theStage) {
@@ -107,9 +109,12 @@ public class GameEngine extends Application {
             @Override public void handle(ActionEvent e) {
                 page = Page.INITIAL;
                 language = Language.ENGLISH;
+                /*
                 scene = getInitialScene();
                 stage.setScene(scene);
                 stage.show();
+                */
+                updateScene(page);
             }
         });
 
@@ -117,9 +122,12 @@ public class GameEngine extends Application {
             @Override public void handle(ActionEvent e) {
                 page = Page.INITIAL;
                 language = Language.FRENCH;
+                /*
                 scene = getInitialScene();
                 stage.setScene(scene);
                 stage.show();
+                */
+                updateScene(page);
             }
         });
         
@@ -281,14 +289,16 @@ public class GameEngine extends Application {
         }
         */
 
-        AnimationTimer timer = new AnimationTimer() {
+        new AnimationTimer() {
             public void handle(long current_nano_time) {
+                if (endMainGame){
+                    stop();
+                }
                 double t = (current_nano_time - startNanoTime) / 1000000000.0;
                 main_game.movePlayer(input);
                 main_game.update_time(t);
 
                 Player display_player = main_game.getPlayer();
-                //System.out.println(display_player.getPositionX() + " " +display_player.getPositionY());
 
                 if (display_player.getBeforeDoor()) {
                     goToPuzzle = true;
@@ -349,10 +359,9 @@ public class GameEngine extends Application {
                     }
                     main_game.endGame();
                     endMainGame = true;
-                    this.stop();
                     page = Page.MAIN;
-                    return;
-                    //return getInitialScene();
+                    updateScene(page);
+                    this.stop();
                 }
 
                 // display goToPuzzle (testing purpose)
@@ -361,17 +370,7 @@ public class GameEngine extends Application {
                 gc_game.fillText(String.valueOf(goToPuzzle),300, 100);
 
             }
-        };
-        
-        if (!endMainGame) {
-            timer.start();
-        } else {
-            System.out.println("39");
-            timer.stop();
-            scene = updateScene(page);
-            stage.setScene(scene);
-            stage.show();
-        }
+        }.start();
         
         
         root_game.getChildren().add(canvas_game);
@@ -524,7 +523,7 @@ public class GameEngine extends Application {
         gc.drawImage(blue_bar,1230+20, 70+8, player_field_energy*5/10, 23 );
     }
 
-    private Scene updateScene(Page p) {
+    private void updateScene(Page p) {
         Scene temp;
         switch (p) {
             case LANGUAGE:
@@ -546,11 +545,13 @@ public class GameEngine extends Application {
                 Group group_default = new Group();
                 temp = new Scene(group_default);
         }
-        return temp;
+        scene = temp;
+        stage.setScene(temp);
     }
     
     public static void main(String args[]) {
-        page = Page.GAME;
+        endMainGame = false;
+        page = Page.LANGUAGE;
         current_game_level = 1;
         max_unlocked_level = 4;
         current_puzzle_type = 1;
