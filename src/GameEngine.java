@@ -477,19 +477,17 @@ public class GameEngine extends Application {
 
     public void drawPlayerStatus(GraphicsContext gc, double player_lives, double player_field_energy, String type_of_game) {
         // display background of the box
-        gc.setFill(Color.LIGHTSTEELBLUE);
-        gc.fillRect(1250, 0, 200, 100);
+        Image box = new Image(".//Images/gui/cyan/panel-1.png");
+        gc.drawImage(box, 1200, 0, 250, 150);
 
         // display level of the current game/puzzle
-        gc.setFill(Color.LIGHTSTEELBLUE);
-        gc.fillRect(1250, 0, 200, 100);
-        gc.setFill(Color.BLACK);
+        gc.setFill(Color.WHITE);
         gc.setFont(FONT_SMALL);
         if (type_of_game == "main") {
-            gc.fillText(Util.convertLanguage(language, "Level ") + current_game_level, 1255, 20);
+            gc.fillText(Util.convertLanguage(language, "Level ") + current_game_level, 1230, 40);
         }
         if (type_of_game == "puzzle") {
-            gc.fillText("Puzzle", 1255, 20);
+            gc.fillText("Puzzle", 1230, 40);
         }
 
         // display lives
@@ -497,10 +495,11 @@ public class GameEngine extends Application {
         for (int i = 0; i < player_lives; i++) {
             gc.drawImage(heart, 1310 + i * 30, 25, 25, 25);
         }
-        // display field energy
-        // TODO : display this with a prettier gauge image
-        gc.setFill(Color.DARKBLUE);
-        gc.fillRect(1250, 60, player_field_energy*5, 40);
+        // display field energy 
+        Image empty_bar = new Image(".//Images/bars/empty_bar.png");
+        Image blue_bar = new Image(".//Images/bars/blue_bar.png");
+        gc.drawImage(empty_bar,1230, 70, 150+38, 40 );
+        gc.drawImage(blue_bar,1230+20, 70+8, player_field_energy*5, 23 );
     }
     
     public static void main(String args[]) {

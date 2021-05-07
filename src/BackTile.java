@@ -1,4 +1,3 @@
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 /**
@@ -20,8 +19,8 @@ public class BackTile extends AnimatedImage {
         super();
         positionX = x;
         positionY = y;
-        Image rock_image = new Image(".//Images/tileset/backtiles_test/backtile"+letter+".png");
-        Image[] f = new Image[]{rock_image};
+        Image back_tile_image = new Image(".//Images/tileset/backtiles_test/backtile"+letter+".png");
+        Image[] f = new Image[]{back_tile_image};
         setFrames(f);
         setDuration(0.1);
         letterType = letter;
