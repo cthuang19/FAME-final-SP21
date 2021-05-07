@@ -91,7 +91,7 @@ public class MainGame {
                         initializeRock(rock_file, c, i);
                         break;
                     case PLAYER_CELL:
-                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
+                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 300, Player.PlayerState.ALIVE);
                         break;
                     case RED_GHOST_CELL:
                         redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c * CELL_WIDTH, i * CELL_WIDTH, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));
@@ -203,7 +203,7 @@ public class MainGame {
         }
 
         if (input.contains(null)) {
-            if (player.getDirection() == Player.CharacterDirection.UP) {
+            /*if (player.getDirection() == Player.CharacterDirection.UP) {
                 player.updateImages("idle right");
             }
             if (player.getDirection() == Player.CharacterDirection.RIGHT) {
@@ -214,7 +214,7 @@ public class MainGame {
             }
             if (player.getDirection() == Player.CharacterDirection.LEFT) {
                 player.updateImages("idle left");
-            }
+            }*/
             player.setShieldOn(false);
         }
     }

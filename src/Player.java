@@ -23,7 +23,7 @@ public class Player extends MovingAnimatedImage {
     /* level of energy for the defensive force field, from 0 to 30 at the beginning, up to 100 at the end
      * whenever the player respawns, is set to currMaxEnergy */
     private double fieldEnergy;
-    private double currMaxEnergy = 30;
+    private double currMaxEnergy = 300;
 
     private long timeStamp;
     private double timePassed;
@@ -114,45 +114,43 @@ public class Player extends MovingAnimatedImage {
      */
     public void updateImages(String s) {
         switch (s) {
-            /*
-            case "idle right" -> {
+            case "idle right" :
                 setFrames(fIdleRight);
                 //System.out.println("fIdleRight");
-            }
-            case "idle left" -> {
+                break;
+            case "idle left" :
                 setFrames(fIdleLeft);
                 //System.out.println("fIdleLeft");
-            }
-            case "thrust up" -> {
+                break;
+            case "thrust up" :
                 setFrames(fThrustUp);
                 //System.out.println("fThrustUp");
-            }
-            case "thrust right" -> {
+                break;
+            case "thrust right" :
                 setFrames(fThrustRight);
                 //System.out.println("fThrustRight");
-            }
-            case "thrust down" -> {
+                break;
+            case "thrust down" :
                 setFrames(fThrustDown);
                 //System.out.println("fThrustDown");
-            }
-            case "thrust left" -> {
+                break;
+            case "thrust left" :
                 setFrames(fThrustLeft);
                 //System.out.println("fThrustLeft");
-            }
+                break;
             // TODO : create frames with shield superposed to all the already existing frames
-            case "shield" -> setFrames(shield);
-            */
+            case "shield" :
+                setFrames(shield);
+                break;
+            default :
+                setFrames(fIdleRight);
+                break;
         }
     }
 
     public void setShieldOn(boolean b) {
         if (fieldEnergy > 0) {
             shieldOn = b;
-            if (shieldOn) {
-                if (System.currentTimeMillis()-shieldTimeStamp > 2) {
-                    shieldTimeStamp = System.currentTimeMillis();
-                }
-            }
         } else {
             shieldOn = false;
         }
@@ -162,7 +160,7 @@ public class Player extends MovingAnimatedImage {
         if (fieldEnergy > 0) {
             if (shieldOn) {
                 fieldEnergy -= 1;
-                shieldTimeStamp = System.currentTimeMillis();
+                //shieldTimeStamp = System.currentTimeMillis();
             }
         }
     }

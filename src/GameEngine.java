@@ -495,11 +495,11 @@ public class GameEngine extends Application {
         for (int i = 0; i < player_lives; i++) {
             gc.drawImage(heart, 1310 + i * 30, 25, 25, 25);
         }
-        // display field energy 
+        // display field energy
         Image empty_bar = new Image(".//Images/bars/empty_bar.png");
         Image blue_bar = new Image(".//Images/bars/blue_bar.png");
         gc.drawImage(empty_bar,1230, 70, 150+38, 40 );
-        gc.drawImage(blue_bar,1230+20, 70+8, player_field_energy*5, 23 );
+        gc.drawImage(blue_bar,1230+20, 70+8, player_field_energy*5/10, 23 );
     }
     
     public static void main(String args[]) {
