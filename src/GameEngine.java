@@ -201,12 +201,18 @@ public class GameEngine extends Application {
         gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
         String level_label = "";
         ArrayList<Button> level_buttons = new ArrayList<Button>();
+        ArrayList<Image> button_images = new ArrayList<>();
         for (int i=0; i<max_unlocked_level; i++) {
             level_label = Util.convertLanguage(language, "Level ") + (i + 1);
+            button_images.add(new Image(".//Images/asteroids/Mega/asteroidR"+i+".png",200,200,true,true));
+            gc_main.drawImage(button_images.get(i),100+300*i,300);
+
             level_buttons.add(new Button(level_label));
-            level_buttons.get(i).setMinSize(100, 100);
-            level_buttons.get(i).setLayoutX(100 + 200 * i);
+            level_buttons.get(i).setMinSize(200, 200);
+            level_buttons.get(i).setLayoutX(100 + 300 * i);
             level_buttons.get(i).setLayoutY(300);
+
+            level_buttons.get(i).setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 30");
 
             final int j=i+1;
             level_buttons.get(i).setOnAction(new EventHandler<ActionEvent>() {
@@ -541,7 +547,7 @@ public class GameEngine extends Application {
         endMainGame = false;
         page = Page.MAIN;
         current_game_level = 1;
-        max_unlocked_level = 1;
+        max_unlocked_level = 3;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
