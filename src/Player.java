@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 public class Player extends MovingAnimatedImage {
@@ -35,9 +37,10 @@ public class Player extends MovingAnimatedImage {
     private boolean isGameCompleted;
     private boolean shieldOn;
     private boolean beforeDoor;
+    private boolean goOutOfPuzzle;
 
     /* the door before which the player was last */
-    private Door currentDoor;
+    private Door currentDoor = new Door();
 
     /* sets of frames */
     private final Image[] fIdleLeft = new Image[5];
@@ -306,6 +309,13 @@ public class Player extends MovingAnimatedImage {
 
     public boolean getBeforeDoor() {return beforeDoor;}
 
+    public Door getCurrentDoor() {return currentDoor;}
+
+    public boolean getIsGameCompleted() {return isGameCompleted;}
+
+    public boolean getGoOutOfPuzzle() {return goOutOfPuzzle;}
+
+    //setter function
     public void setBeforeDoor(ArrayList<Door> doors) {
         for (Door d : doors) {
             if (this.intersects(d) && !(d.getIsCompleted())) {
@@ -318,7 +328,11 @@ public class Player extends MovingAnimatedImage {
         }
     }
 
-    public Door getCurrentDoor() {return currentDoor;}
-
-    public boolean getIsGameCompleted() {return isGameCompleted;}
+    public void setGoOutOfPuzzle() {
+        if (this.getBoundary().intersects(new Rectangle2D(0,64*2,64/2,64*3))) {
+            goOutOfPuzzle = true;
+        } else {
+            goOutOfPuzzle = false;
+        }
+    }
 }

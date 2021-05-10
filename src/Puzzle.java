@@ -73,7 +73,7 @@ public class Puzzle {
                         initializeRock(rock_file, c, i);
                         break;
                     case PLAYER_CELL:
-                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 30, Player.PlayerState.ALIVE);
+                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 300, Player.PlayerState.ALIVE);
                         break;
                     case TREASURE_CELL:
                         treasure = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);

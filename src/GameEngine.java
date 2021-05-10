@@ -54,7 +54,6 @@ public class GameEngine extends Application {
     /* the current (or last) puzzle level */
     private static int current_puzzle_level;
     private static int current_puzzle_type;
-    private boolean goToPuzzle = false;
 
     @Override
     public void start(Stage theStage) {
@@ -248,7 +247,6 @@ public class GameEngine extends Application {
                     public void handle(KeyEvent e)
                     {
                         String code = e.getCode().toString();
-                        //TODO: configured for QWERTY keyboard
                         if ( !input.contains(code) ){
                             input.add( code );
                         }
@@ -270,15 +268,6 @@ public class GameEngine extends Application {
         Treasure display_treasure = main_game.getTreasure();
         ArrayList<BackTile> display_backtiles = main_game.getBacktiles();
 
-        // TODO : find where to place this to get a puzzle page
-        // (it's not in the AnimationTimer)
-        if (goToPuzzle) {
-            page = Page.PUZZLE;
-            scene = getPuzzleScene();
-            stage.setScene(scene);
-            stage.show();
-        }
-
         new AnimationTimer() {
             public void handle(long current_nano_time) {
                 if (endMainGame){
@@ -291,12 +280,11 @@ public class GameEngine extends Application {
                 Player display_player = main_game.getPlayer();
 
                 if (display_player.getBeforeDoor()) {
-                    goToPuzzle = true;
                     current_puzzle_type = display_player.getCurrentDoor().getPuzzleType();
                     current_puzzle_level = display_player.getCurrentDoor().getPuzzleLevel();
                     page = Page.PUZZLE;
-                } else {
-                    goToPuzzle = false;
+                    updateScene(page);
+                    this.stop();
                 }
 
                 //TODO: edit the position here
@@ -354,11 +342,6 @@ public class GameEngine extends Application {
                     updateScene(page);
                     this.stop();
                 }
-
-                // display goToPuzzle (testing purpose)
-                gc_game.setFill(Color.WHITE);
-                gc_game.setFont(FONT_SMALL);
-                gc_game.fillText(String.valueOf(goToPuzzle),300, 100);
 
             }
         }.start();
@@ -428,6 +411,15 @@ public class GameEngine extends Application {
                 }
 
                 Player display_player = puzzle.getPlayer();
+
+                //TODO : find how to get the player to have the coordinates of the door when he gets out
+                display_player.setGoOutOfPuzzle();
+                if (display_player.getGoOutOfPuzzle()) {
+                    page = Page.GAME;
+                    updateScene(page);
+                    //display_player.setPosition(display_player.getCurrentDoor().getPositionX(), display_player.getCurrentDoor().getPositionY());
+                    this.stop();
+                }
 
                 //draw background image
                 gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);

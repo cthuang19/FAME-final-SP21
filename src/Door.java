@@ -23,38 +23,26 @@ public class Door extends AnimatedImage {
     private int puzzleLevel;
 
     public Door () {
-        super();
-        positionX = 0;
-        positionY = 0;
-        Image[] f = new Image[] {DOOR_IMAGE};
-        isCompleted = false;
-        puzzleType = 1;
-        puzzleLevel = 1;
+        this(DOOR_IMAGE,0,0,1,1);
     }
 
     public Door(Image image) {
-        super();
-        positionX = 0;
-        positionY = 0;
-        Image[] f = new Image[]{image};
-        setFrames(f);
-        isCompleted = false;
+        this(image,0,0,1,1);
     }
 
     public Door(double x, double y) {
-        super();
-        positionX = x;
-        positionY = y;
-        Image[] f = new Image[] {DOOR_IMAGE};
-        setFrames(f);
-        isCompleted = false;
+        this(x,y,1,1);
     }
 
     public Door(double x, double y, int pt, int pl) {
+        this(DOOR_IMAGE,x,y,pt,pl);
+    }
+
+    public Door(Image image, double x, double y, int pt, int pl) {
         super();
         positionX = x;
         positionY = y;
-        Image[] f = new Image[] {DOOR_IMAGE};
+        Image[] f = new Image[] {image};
         setFrames(f);
         isCompleted = false;
         puzzleType = pt;
