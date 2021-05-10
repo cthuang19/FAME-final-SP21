@@ -20,7 +20,7 @@ public class GameEngine extends Application {
     public static final int CANVAS_WIDTH = 1600;
     public static final int CANVAS_HEIGHT = 800;
     public static final int BUTTON_WIDTH = 600;
-    public static final int BUTTON_HEIGHT = 75;
+    public static final int BUTTON_HEIGHT = 150;
 
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
@@ -92,6 +92,9 @@ public class GameEngine extends Application {
         Group root_language = new Group();
         Scene scene_language = new Scene(root_language);
         Canvas canvas_language = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_language = canvas_language.getGraphicsContext2D();
+
+        gc_language.drawImage(BACKGROUND_IMAGE, 0, 0);
 
         Button english_button = new Button("English (US)");
         Button french_button = new Button("Français (Fr)");
@@ -103,16 +106,21 @@ public class GameEngine extends Application {
         french_button.setLayoutX(450);
         french_button.setLayoutY(600);
 
+        Image english_button_image = new Image(".//Images/gui/purple/panel-4.png",BUTTON_WIDTH, BUTTON_HEIGHT,false,true);
+        Image french_button_image = new Image(".//Images/gui/blue/panel-5.png",BUTTON_WIDTH, BUTTON_HEIGHT,false,true);
+
+        gc_language.drawImage(english_button_image,450,400);
+        gc_language.drawImage(french_button_image,450,600);
+
+        english_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
+        french_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
+
+
         //set the button handler and switch to a different scene
         english_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 page = Page.INITIAL;
                 language = Language.ENGLISH;
-                /*
-                scene = getInitialScene();
-                stage.setScene(scene);
-                stage.show();
-                */
                 updateScene(page);
             }
         });
@@ -121,11 +129,6 @@ public class GameEngine extends Application {
             @Override public void handle(ActionEvent e) {
                 page = Page.INITIAL;
                 language = Language.FRENCH;
-                /*
-                scene = getInitialScene();
-                stage.setScene(scene);
-                stage.show();
-                */
                 updateScene(page);
             }
         });
@@ -134,9 +137,6 @@ public class GameEngine extends Application {
         root_language.getChildren().add(english_button);
         root_language.getChildren().add(french_button);
 
-        GraphicsContext gc_language = canvas_language.getGraphicsContext2D();
-
-        gc_language.drawImage(BACKGROUND_IMAGE, 0, 0);
         return scene_language;
     }
 
@@ -545,7 +545,7 @@ public class GameEngine extends Application {
     
     public static void main(String args[]) {
         endMainGame = false;
-        page = Page.MAIN;
+        page = Page.LANGUAGE;
         current_game_level = 1;
         max_unlocked_level = 3;
         current_puzzle_type = 1;
