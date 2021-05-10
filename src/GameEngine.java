@@ -24,7 +24,7 @@ public class GameEngine extends Application {
 
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
-    public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 30);
+    public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
 
     public static final Font FONT_SMALL = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 15);
 
@@ -149,14 +149,22 @@ public class GameEngine extends Application {
         Group root_initial = new Group();
         Scene initial = new Scene(root_initial);
         Canvas canvas_initial = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_initial = canvas_initial.getGraphicsContext2D();
+
+        gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
 
         String next_label = "";
         next_label = Util.convertLanguage(language, "next");
 
         Button next_button = new Button(next_label);
         next_button.setMinSize(100, 100);
-        next_button.setLayoutX(1335);
-        next_button.setLayoutY(712);
+        next_button.setLayoutX(1320);
+        next_button.setLayoutY(680);
+        next_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+
+        Image next_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
+        gc_initial.drawImage(next_button_image,1320,680);
+
         next_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 page = Page.MAIN;
@@ -168,25 +176,23 @@ public class GameEngine extends Application {
 
         root_initial.getChildren().add(canvas_initial);
         root_initial.getChildren().add(next_button);
-        
-        GraphicsContext gc_initial = canvas_initial.getGraphicsContext2D();
-        
+
         //depends on the language of the game
         //the initial scene will load different file
         String fileName = "";
         fileName = Util.convertLanguage(language, "story_english.txt");
         
-        FileReader fr = new FileReader(".//text_files/" + fileName);
+        FileReader fr = new FileReader(".//story_files/" + fileName);
         ArrayList<String> all = fr.allLines();
-        gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
+
         // drawing a rectangle background
-        gc_initial.setFill(Color.MIDNIGHTBLUE);
-        gc_initial.fillRect(50, 50, 1300, 700);
+        Image gui_image = new Image(".//Images/gui/blue/panel-1.png",1300,700,false,true);
+        gc_initial.drawImage(gui_image,50,50);
         // drawing the text
         gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_initial.fillText(all.get(i), 100, 150 + 80 * i);
+            gc_initial.fillText(all.get(i), 155, 180 + 80 * i);
         }
         return initial;
     }
