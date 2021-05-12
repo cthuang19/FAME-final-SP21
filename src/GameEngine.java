@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class GameEngine extends Application {
 
-    public static final int CANVAS_WIDTH = 1600;
+    public static final int CANVAS_WIDTH = 1500;
     public static final int CANVAS_HEIGHT = 800;
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 150;
@@ -323,13 +323,15 @@ public class GameEngine extends Application {
                 }
 
                 //TODO: edit the position here
+                System.out.println("dimensionX = " + main_game.getDimensionX());
+                System.out.println("dimensionY = " + main_game.getDimensionY());
                 double offsetX = display_player.getPositionX() - CANVAS_WIDTH/2;
 				if (offsetX<0) offsetX=0;
-                if (offsetX>main_game.getDimensionX() - CANVAS_WIDTH/2) offsetX=main_game.getDimensionX() - CANVAS_WIDTH/2;
+                if (offsetX>main_game.getDimensionX() - CANVAS_WIDTH) offsetX=main_game.getDimensionX() - CANVAS_WIDTH;
                 
                 double offsetY = display_player.getPositionY() - CANVAS_HEIGHT/2;
 				if (offsetY<0) offsetY=0;
-                if (offsetY>main_game.getDimensionY() - CANVAS_HEIGHT/2) offsetY=main_game.getDimensionY() - CANVAS_HEIGHT/2;
+                if (offsetY>main_game.getDimensionY() - CANVAS_HEIGHT) offsetY=main_game.getDimensionY() - CANVAS_HEIGHT;
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);

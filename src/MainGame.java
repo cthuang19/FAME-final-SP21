@@ -52,16 +52,12 @@ public class MainGame {
         FileReader fr = new FileReader(".//game_environment_files/game_level_"+ this.level +".txt");
         FileReader fr_rock = new FileReader(".//game_environment_files/game_level_"+ this.level +"_tiles.txt");
         FileReader fr_back_tiles = new FileReader(".//game_environment_files/game_level_"+ this.level +"_backtiles.txt");
-        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines());
-
-        //change this if needed
+        
+        //default value, will change after initializing the array
         dimensionX = 1430;
         dimensionY = 800;
-        //change it to something like this according to the level
-        /*
-        dimensionX = BASIC_DIMENSIONX * (level/3 + 1);
-        dimensionY = BASIC_DIMENSIONY * (level/3 + 1);
-        */
+
+        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines());
         isCompleted = false;
     }
 
