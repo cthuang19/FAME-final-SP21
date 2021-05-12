@@ -322,9 +322,6 @@ public class GameEngine extends Application {
                     this.stop();
                 }
 
-                //TODO: edit the position here
-                System.out.println("dimensionX = " + main_game.getDimensionX());
-                System.out.println("dimensionY = " + main_game.getDimensionY());
                 double offsetX = display_player.getPositionX() - CANVAS_WIDTH/2;
 				if (offsetX<0) offsetX=0;
                 if (offsetX>main_game.getDimensionX() - CANVAS_WIDTH) offsetX=main_game.getDimensionX() - CANVAS_WIDTH;
@@ -578,7 +575,7 @@ public class GameEngine extends Application {
         endMainGame = false;
         page = Page.LANGUAGE;
         current_game_level = 1;
-        max_unlocked_level = 1;
+        max_unlocked_level = 2;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
