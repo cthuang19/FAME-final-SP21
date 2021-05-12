@@ -576,7 +576,7 @@ public class GameEngine extends Application {
         endMainGame = false;
         page = Page.LANGUAGE;
         current_game_level = 1;
-        max_unlocked_level = 9;
+        max_unlocked_level = 1;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
