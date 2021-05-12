@@ -248,6 +248,14 @@ public class GameEngine extends Application {
 
         gc_main.drawImage(new Image(".//Images/spaceship/spiked_ship_3_small_red.png"),75,350);
 
+/*        AnimatedImage ship = new AnimatedImage();
+        final Image[] fship = new Image[4];
+        for (int i=0;i<4;i++) fship[i] = new Image(".//Images/spaceship/red_ship/red_ship_"+i+".png");
+        ship.setFrames(fship);
+        ship.setDuration(0.2);
+        gc_main.drawImage(ship.getFrame(0),75,300);
+*/
+
         root_main.getChildren().add(canvas_main);
         for (int i=0; i<max_unlocked_level; i++) {
             root_main.getChildren().add(level_buttons.get(i));
@@ -566,7 +574,7 @@ public class GameEngine extends Application {
     
     public static void main(String args[]) {
         endMainGame = false;
-        page = Page.PUZZLE;
+        page = Page.LANGUAGE;
         current_game_level = 1;
         max_unlocked_level = 9;
         current_puzzle_type = 1;
