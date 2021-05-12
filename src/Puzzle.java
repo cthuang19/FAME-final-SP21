@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+import javafx.scene.image.Image;
 
 public class Puzzle {
 
@@ -76,7 +78,14 @@ public class Puzzle {
                         player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 300, Player.PlayerState.ALIVE);
                         break;
                     case TREASURE_CELL:
-                        treasure = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
+                        Random rand = new Random();
+                        if (rand.nextInt(2)==0) {
+                            Image treasure_image = new Image(".//Images/puzzle_treasures/heart.png");
+                            treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
+                        } else {
+                            Image treasure_image = new Image(".//Images/puzzle_treasures/energy.png");
+                            treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
+                        }
                         break;
                 }
             }

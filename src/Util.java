@@ -7,6 +7,7 @@ public class Util {
         my_dict.put("next", "suivant");
         my_dict.put("story_english.txt", "story_french.txt");
         my_dict.put("Level ", "Niveau ");
+        my_dict.put("LEVEL ", "NIVEAU ");
         if (lang == GameEngine.Language.FRENCH) {
             return my_dict.get(message);
         }

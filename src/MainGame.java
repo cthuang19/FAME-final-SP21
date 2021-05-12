@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import javafx.scene.image.Image;
 
 public class MainGame {
 
@@ -106,7 +107,8 @@ public class MainGame {
                         greenGhosts.add(new Ghost("green_ghost_"+c+"_"+i, c * CELL_WIDTH, i * CELL_WIDTH, Ghost.Colour.GREEN, Ghost.GhostState.PASSIVE));
                         break;    
                     case TREASURE_CELL:
-                        treasure = new Treasure(c * CELL_WIDTH, i * CELL_WIDTH);
+                        Image treasure_image = new Image(".//Images/treasures/Treasure"+level+".png");
+                        treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
                         break;
                     case DOOR_CELL:
                         doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH));
