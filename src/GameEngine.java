@@ -25,7 +25,7 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 6;
+    private static final int MAX_LEVEL = 1;
 
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
 
@@ -272,13 +272,26 @@ public class GameEngine extends Application {
         Scene scene_main = new Scene(root_main);
         Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_main = canvas_main.getGraphicsContext2D();
-
+        gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
         //display the ending message
         if (max_unlocked_level > MAX_LEVEL) {
             //TODO: display the message of completing the whole game and exit if possible
+            String endingFileName = Util.convertLanguage(language, "ending_english.txt");
+            Image gui_image = new Image(".//Images/gui/yellow/panel-1.png",1300,700,false,true);
+            gc_main.drawImage(gui_image, 50, 50);
+
+            //TODO: probably change the font style here
+            gc_main.setFill(Color.BLACK);
+            gc_main.setFont(FONT_LARGE);
+            FileReader fr = new FileReader(".//story_files/" + endingFileName);
+            ArrayList<String> all = fr.allLines();
+            for (int i = 0; i < all.size(); i++) {
+                gc_main.fillText(all.get(i), 155, 180 + 80 * i);
+            }
+            root_main.getChildren().add(canvas_main);
+            return scene_main;
         }
 
-        gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
         String level_label = "";
         ArrayList<Button> level_buttons = new ArrayList<Button>();
         ArrayList<Image> button_images = new ArrayList<>();
