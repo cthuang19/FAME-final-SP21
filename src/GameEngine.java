@@ -31,7 +31,7 @@ public class GameEngine extends Application {
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
 
     /* the page of the current scene (not sure if useful)*/
-    enum Page {LANGUAGE, INITIAL, MAIN, GAME, PUZZLE};
+    enum Page {LANGUAGE, CREDITS, INITIAL, MAIN, GAME, PUZZLE};
     
     /* the language of the game */
     enum Language {ENGLISH, FRENCH};
@@ -61,6 +61,9 @@ public class GameEngine extends Application {
         switch (page) {
             case LANGUAGE:
                 scene = getLanguageScene();
+                break;
+            case CREDITS:
+                scene = getCreditsScene();
                 break;
             case INITIAL:
                 scene = getInitialScene();
@@ -115,6 +118,14 @@ public class GameEngine extends Application {
         english_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
         french_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
 
+        Button credits_button = new Button("Credits");
+        credits_button.setMinSize(100, 100);
+        credits_button.setLayoutX(1320);
+        credits_button.setLayoutY(680);
+        credits_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+
+        Image credits_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
+        gc_language.drawImage(credits_button_image,1320,680);
 
         //set the button handler and switch to a different scene
         english_button.setOnAction(new EventHandler<ActionEvent>() {
@@ -132,12 +143,67 @@ public class GameEngine extends Application {
                 updateScene(page);
             }
         });
+
+        credits_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                page = Page.CREDITS;
+                updateScene(page);
+            }
+        });
         
         root_language.getChildren().add(canvas_language);
         root_language.getChildren().add(english_button);
         root_language.getChildren().add(french_button);
+        root_language.getChildren().add(credits_button);
 
         return scene_language;
+    }
+
+    private Scene getCreditsScene() {
+        Group root_credits = new Group();
+        Scene credits = new Scene(root_credits);
+        Canvas canvas_credits = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_credits = canvas_credits.getGraphicsContext2D();
+
+        gc_credits.drawImage(BACKGROUND_IMAGE, 0, 0);
+
+        String back_label = "";
+        back_label = Util.convertLanguage(language, "back");
+
+        Button back_button = new Button(back_label);
+        back_button.setMinSize(100, 100);
+        back_button.setLayoutX(1320);
+        back_button.setLayoutY(680);
+        back_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+
+        Image back_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
+        gc_credits.drawImage(back_button_image,1320,680);
+
+        back_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                page = Page.LANGUAGE;
+                scene = getLanguageScene();
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
+
+        root_credits.getChildren().add(canvas_credits);
+        root_credits.getChildren().add(back_button);
+
+        FileReader fr = new FileReader(".//story_files/credits.txt");
+        ArrayList<String> all = fr.allLines();
+
+        // drawing a rectangle background
+        Image gui_image = new Image(".//Images/gui/blue/panel-1.png",1300,700,false,true);
+        gc_credits.drawImage(gui_image,50,50);
+        // drawing the text
+        gc_credits.setFill(Color.LIGHTYELLOW);
+        gc_credits.setFont(FONT_LARGE);
+        for (int i = 0; i < all.size(); i++) {
+            gc_credits.fillText(all.get(i), 160, 160 + 60 * i);
+        }
+        return credits;
     }
 
     /**
@@ -550,6 +616,9 @@ public class GameEngine extends Application {
         switch (p) {
             case LANGUAGE:
                 temp = getLanguageScene();
+                break;
+            case CREDITS:
+                temp = getCreditsScene();
                 break;
             case INITIAL:
                 temp = getInitialScene();
