@@ -24,6 +24,9 @@ public class GameEngine extends Application {
 
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
+    /* the maximum level for the game*/
+    private static final int MAX_LEVEL = 6;
+
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
 
     public static final Font FONT_SMALL = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 15);
@@ -269,6 +272,11 @@ public class GameEngine extends Application {
         Scene scene_main = new Scene(root_main);
         Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_main = canvas_main.getGraphicsContext2D();
+
+        //display the ending message
+        if (max_unlocked_level > MAX_LEVEL) {
+            //TODO: display the message of completing the whole game and exit if possible
+        }
 
         gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
         String level_label = "";
