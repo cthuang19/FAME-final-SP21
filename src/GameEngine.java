@@ -25,7 +25,7 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 1;
+    private static final int MAX_LEVEL = 6;
 
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
 
@@ -425,10 +425,12 @@ public class GameEngine extends Application {
                     gc_game.drawImage(b.getFrame(0), b.getPositionX() - offsetX, b.getPositionY() - offsetY);
                 }
 
+                
                 //draw the asteroids
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), a.getPositionX() - offsetX, a.getPositionY() - offsetY);
                 }
+                
 
                 //draw the treasure
                 gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
