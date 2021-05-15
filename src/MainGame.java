@@ -200,6 +200,10 @@ public class MainGame {
             }
         }
 
+        if (input.contains("J")) {
+            player.setGripWall(true);
+        }
+
         if (input.contains(null)) {
             /*if (player.getDirection() == Player.CharacterDirection.UP) {
                 player.updateImages("idle right");

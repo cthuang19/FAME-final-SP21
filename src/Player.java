@@ -31,13 +31,14 @@ public class Player extends MovingAnimatedImage {
     private double timePassed;
     private long shieldTimeStamp;
 
-    enum PlayerState {ALIVE, HURT, DEAD, DOOR};
+    enum PlayerState {ALIVE, HURT, DEAD};
     private PlayerState state;
     private boolean invulnerable;
     private boolean isGameCompleted;
     private boolean shieldOn;
     private boolean beforeDoor;
     private boolean goOutOfPuzzle;
+    private boolean gripWall;
 
     /* the door before which the player was last */
     private Door currentDoor = new Door();
@@ -176,12 +177,10 @@ public class Player extends MovingAnimatedImage {
      */
     public void update(double time, ArrayList<Asteroid> asteroids, ArrayList<Ghost> ghosts, Treasure treasure) {
 
-        /*if ((System.currentTimeMillis() - shieldTimeStamp) / 1000 > 1)*/
         updateFieldEnergy();
         switch (state) {
             case ALIVE :
                 if (beforeDoor) {
-                    this.state = PlayerState.DOOR;
                     this.timeStamp = System.currentTimeMillis();
                 }
 
@@ -210,8 +209,13 @@ public class Player extends MovingAnimatedImage {
                 if (isIntersect) {
                     positionX = originalX;
                     positionY = originalY;
-                    velocityX=-velocityX*0.5;
-                    velocityY=-velocityY*0.5;
+                    if (gripWall) {
+                        velocityX = 0;
+                        velocityY = 0;
+                    } else {
+                        velocityX = -velocityX * 0.5;
+                        velocityY = -velocityY * 0.5;
+                    }
                     return;
                 }
 
@@ -281,13 +285,6 @@ public class Player extends MovingAnimatedImage {
                     this.lives = 3;
                 }
                 break;
-/*            case DOOR : // wait for the time of the animation of going through the door
-                timePassed = (System.currentTimeMillis()-timeStamp)/1000;
-                this.setVelocity(0, 0);
-                if (timePassed > 3) {
-                    this.state = PlayerState.ALIVE;
-                }
-                break;*/
             default:
                 state = PlayerState.ALIVE;
                 break;
@@ -335,4 +332,7 @@ public class Player extends MovingAnimatedImage {
             goOutOfPuzzle = false;
         }
     }
+
+    public void setGripWall(boolean b) {gripWall=b;}
+
 }
