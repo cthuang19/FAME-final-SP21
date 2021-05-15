@@ -10,6 +10,7 @@ public class Util {
             put("Level ", "Niveau ");
             put("LEVEL ", "NIVEAU ");
             put("ending_english.txt", "ending_french.txt");
+            put("exit", "sortie");
         } 
     };
 

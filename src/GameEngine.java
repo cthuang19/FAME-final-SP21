@@ -25,7 +25,9 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 6;
+    private static final int MAX_LEVEL = 1;
+
+    public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
 
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
 
@@ -204,7 +206,7 @@ public class GameEngine extends Application {
         gc_credits.setFill(Color.LIGHTYELLOW);
         gc_credits.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_credits.fillText(all.get(i), 160, 160 + 60 * i);
+            gc_credits.fillText(all.get(i), 170, 160 + 60 * i);
         }
         return credits;
     }
@@ -261,7 +263,7 @@ public class GameEngine extends Application {
         gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_initial.fillText(all.get(i), 155, 180 + 80 * i);
+            gc_initial.fillText(all.get(i), 160, 180 + 70 * i);
         }
         return initial;
     }
@@ -282,13 +284,35 @@ public class GameEngine extends Application {
 
             //TODO: probably change the font style here
             gc_main.setFill(Color.BLACK);
-            gc_main.setFont(FONT_LARGE);
+            gc_main.setFont(FONT_XLARGE);
             FileReader fr = new FileReader(".//story_files/" + endingFileName);
             ArrayList<String> all = fr.allLines();
             for (int i = 0; i < all.size(); i++) {
-                gc_main.fillText(all.get(i), 155, 180 + 80 * i);
+                gc_main.fillText(all.get(i), 280, 340 + 70 * i);
             }
+
+            String exit_label = "";
+            exit_label = Util.convertLanguage(language, "exit");
+
+            Button exit_button = new Button(exit_label);
+            exit_button.setMinSize(100, 100);
+            exit_button.setLayoutX(1320);
+            exit_button.setLayoutY(680);
+            exit_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+
+            Image exit_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
+            gc_main.drawImage(exit_button_image,1320,680);
+
+            exit_button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    page = Page.CREDITS;
+                    scene = getCreditsScene();
+                    stage.setScene(scene);
+                    stage.show();
+                }
+            });
             root_main.getChildren().add(canvas_main);
+            root_main.getChildren().add(exit_button);
             return scene_main;
         }
 

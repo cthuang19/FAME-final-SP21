@@ -1,1 +1,3 @@
-//TODO: convert the ending story to french
+Félicitations ! Vous avez récupéré toutes les pièces
+nécessaires pour réparer votre vaisseau. Cliquez sur
+sortie pour revenir sur Terre.

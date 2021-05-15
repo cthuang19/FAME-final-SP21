@@ -1,2 +1,2 @@
-Congratulation! You have collected all the pieces to 
-repair your spaceship. Click exit to go back to earth!
+Congratulations! You have collected all the pieces to
+repair your spaceship. Click exit to go back to Earth!
