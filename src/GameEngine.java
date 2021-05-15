@@ -430,6 +430,7 @@ public class GameEngine extends Application {
         switch (current_puzzle_type) {
             case 1 :
                 puzzle.setLevel(current_puzzle_level);
+                puzzle.initializeLights();
                 break;
             default :
                 puzzle.setLevel(current_puzzle_level);
@@ -475,12 +476,14 @@ public class GameEngine extends Application {
                 switch (current_puzzle_type) {
                     case 1 :
                         puzzle.updateFSM(input);
+                        puzzle.updateLights();
                         break;
                     default :
                         break;
                 }
 
                 Player display_player = puzzle.getPlayer();
+                ArrayList<AnimatedImage> lights = puzzle.getLights();
 
                 //TODO : find how to get the player to have the coordinates of the door when he gets out
                 display_player.setGoOutOfPuzzle();
@@ -512,6 +515,7 @@ public class GameEngine extends Application {
                 if (!display_treasure.getRecovered()) {
                     if (display_player.intersects(display_treasure)) {
                         // stop displaying treasure : repaint background and asteroids over
+                        //TODO: maybe repainting only the backtiles would be enough
                         gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
                         for (Asteroid a : display_asteroid) {
                             gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
@@ -522,15 +526,15 @@ public class GameEngine extends Application {
                     }
                 }
 
+                // draw the lights for the FSM
+                for (int i=0; i<3; i++) {
+                    gc_puzzle.drawImage(lights.get(i).getFrame(0), 512+128*i+7, 192+3, 50,50);
+                }
+
                 // draw the player
                 gc_puzzle.drawImage(display_player.getFrame(t), display_player.getPositionX(), display_player.getPositionY());
 
                 drawPlayerStatus(gc_puzzle, puzzle.getPlayerLives(), puzzle.getPlayerFieldEnergy(),"puzzle" );
-
-                // for FSM test
-                gc_puzzle.setFill(Color.RED);
-                gc_puzzle.setFont(FONT_SMALL);
-                gc_puzzle.fillText(String.valueOf(puzzle.getIsCompleted()), 300, 30);
 
             }
         }.start();
@@ -634,7 +638,7 @@ public class GameEngine extends Application {
     
     public static void main(String args[]) {
         endMainGame = false;
-        page = Page.LANGUAGE;
+        page = Page.PUZZLE;
         current_game_level = 1;
         max_unlocked_level = 6;
         current_puzzle_type = 1;

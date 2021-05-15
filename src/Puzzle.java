@@ -151,6 +151,10 @@ public class Puzzle {
             player.updateImages("idle right");
         }
 
+        if (input.contains("J")) {
+            player.setGripWall(true);
+        }
+
         if (input.contains(null)) {
             if (player.getDirection() == Player.CharacterDirection.UP) {
                 player.updateImages("idle right");
@@ -165,6 +169,7 @@ public class Puzzle {
                 player.updateImages("idle left");
             }
             player.setShieldOn(false);
+            player.setGripWall(false);
         }
     }
     /**

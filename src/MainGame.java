@@ -218,6 +218,7 @@ public class MainGame {
                 player.updateImages("idle left");
             }*/
             player.setShieldOn(false);
+            player.setGripWall(false);
         }
     }
     /**

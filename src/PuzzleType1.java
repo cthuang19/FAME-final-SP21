@@ -1,6 +1,8 @@
 // just a test, don't know if it will be useful
 // or if we can just use the Puzzle class
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 /** a puzzle type 1 is a pattern printed on the background
@@ -16,6 +18,10 @@ public class PuzzleType1 extends Puzzle {
     //private PuzzleState state;
     private int state;
     private long timeStamp;
+
+    private ArrayList<AnimatedImage> lights = new ArrayList<>();
+    private final Image[] lightOn = new Image[4];
+    private final Image[] lightOff = new Image[4];
 
     public PuzzleType1() {
         super(1, 1);
@@ -96,5 +102,43 @@ public class PuzzleType1 extends Puzzle {
         System.out.println(state);
     }
 
+    public void initializeLights() {
+        //for (int i=0;i<4;i++) lightOn[i] = new Image(".//Images/puzzle_lights/lightOn"+i+".png");
+        //for (int i=0;i<4;i++) lightOff[i] = new Image(".//Images/puzzle_lights/lightOff"+i+".png");
+
+        for (int i=0;i<4;i++) lightOn[i] = new Image(".//Images/puzzle_lights/testOn.png");
+        for (int i=0;i<4;i++) lightOff[i] = new Image(".//Images/puzzle_lights/testOff.png");
+
+
+        for (int j=0;j<3;j++) {
+            lights.add(new AnimatedImage());
+            lights.get(j).setDuration(0.2);
+            lights.get(j).setFrames(lightOff);
+        }
+    }
+
+    public void updateLights() {
+        switch (state) {
+            case 0 :
+                for (int i=0; i<3; i++) lights.get(i).setFrames(lightOff);
+                break;
+            case 1 :
+                lights.get(0).setFrames(lightOn);
+                for (int i=1; i<3; i++) lights.get(i).setFrames(lightOff);
+                break;
+            case 2 :
+                for (int i=0; i<2; i++) lights.get(i).setFrames(lightOn);
+                lights.get(2).setFrames(lightOff);
+                break;
+            case 3 :
+                for (int i=0; i<3; i++) lights.get(i).setFrames(lightOn);
+                break;
+            default :
+                for (int i=0; i<3; i++) lights.get(i).setFrames(lightOff);
+                break;
+        }
+    }
+
+    public ArrayList<AnimatedImage> getLights() {return lights;}
 
 }
