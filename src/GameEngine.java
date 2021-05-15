@@ -25,7 +25,7 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 1;
+    private static final int MAX_LEVEL = 7;
 
     public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
 
@@ -104,35 +104,16 @@ public class GameEngine extends Application {
 
         gc_language.drawImage(BACKGROUND_IMAGE, 0, 0);
 
+        // draw english button
         Button english_button = new Button("English (US)");
-        Button french_button = new Button("Français (Fr)");
         english_button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-        french_button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-
         english_button.setLayoutX(450);
         english_button.setLayoutY(400);
-        french_button.setLayoutX(450);
-        french_button.setLayoutY(600);
 
         Image english_button_image = new Image(".//Images/gui/purple/panel-4.png",BUTTON_WIDTH, BUTTON_HEIGHT,false,true);
-        Image french_button_image = new Image(".//Images/gui/blue/panel-5.png",BUTTON_WIDTH, BUTTON_HEIGHT,false,true);
-
         gc_language.drawImage(english_button_image,450,400);
-        gc_language.drawImage(french_button_image,450,600);
-
         english_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
-        french_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
 
-        Button credits_button = new Button("Credits");
-        credits_button.setMinSize(100, 100);
-        credits_button.setLayoutX(1320);
-        credits_button.setLayoutY(680);
-        credits_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
-
-        Image credits_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
-        gc_language.drawImage(credits_button_image,1320,680);
-
-        //set the button handler and switch to a different scene
         english_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 page = Page.INITIAL;
@@ -140,6 +121,16 @@ public class GameEngine extends Application {
                 updateScene(page);
             }
         });
+
+        // draw french button
+        Button french_button = new Button("Français (Fr)");
+        french_button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        french_button.setLayoutX(450);
+        french_button.setLayoutY(600);
+
+        Image french_button_image = new Image(".//Images/gui/blue/panel-5.png",BUTTON_WIDTH, BUTTON_HEIGHT,false,true);
+        gc_language.drawImage(french_button_image,450,600);
+        french_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
 
         french_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -149,13 +140,8 @@ public class GameEngine extends Application {
             }
         });
 
-        credits_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                page = Page.CREDITS;
-                updateScene(page);
-            }
-        });
-        
+        Button credits_button = drawLittleButton("Credits", gc_language, Page.INITIAL);
+
         root_language.getChildren().add(canvas_language);
         root_language.getChildren().add(english_button);
         root_language.getChildren().add(french_button);
@@ -172,26 +158,7 @@ public class GameEngine extends Application {
 
         gc_credits.drawImage(BACKGROUND_IMAGE, 0, 0);
 
-        String back_label = "";
-        back_label = Util.convertLanguage(language, "back");
-
-        Button back_button = new Button(back_label);
-        back_button.setMinSize(100, 100);
-        back_button.setLayoutX(1320);
-        back_button.setLayoutY(680);
-        back_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
-
-        Image back_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
-        gc_credits.drawImage(back_button_image,1320,680);
-
-        back_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                page = Page.LANGUAGE;
-                scene = getLanguageScene();
-                stage.setScene(scene);
-                stage.show();
-            }
-        });
+        Button back_button = drawLittleButton("back", gc_credits, Page.LANGUAGE);
 
         root_credits.getChildren().add(canvas_credits);
         root_credits.getChildren().add(back_button);
@@ -224,26 +191,7 @@ public class GameEngine extends Application {
 
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
 
-        String next_label = "";
-        next_label = Util.convertLanguage(language, "next");
-
-        Button next_button = new Button(next_label);
-        next_button.setMinSize(100, 100);
-        next_button.setLayoutX(1320);
-        next_button.setLayoutY(680);
-        next_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
-
-        Image next_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
-        gc_initial.drawImage(next_button_image,1320,680);
-
-        next_button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                page = Page.MAIN;
-                scene = getMainScene();
-                stage.setScene(scene);
-                stage.show();
-            }
-        });
+        Button next_button = drawLittleButton("next", gc_initial, Page.MAIN);
 
         root_initial.getChildren().add(canvas_initial);
         root_initial.getChildren().add(next_button);
@@ -277,7 +225,7 @@ public class GameEngine extends Application {
         gc_main.drawImage(BACKGROUND_IMAGE, 0, 0);
         //display the ending message
         if (max_unlocked_level > MAX_LEVEL) {
-            //TODO: display the message of completing the whole game and exit if possible
+            //display the message of completing the whole game and exit
             String endingFileName = Util.convertLanguage(language, "ending_english.txt");
             Image gui_image = new Image(".//Images/gui/yellow/panel-1.png",1300,700,false,true);
             gc_main.drawImage(gui_image, 50, 50);
@@ -291,26 +239,7 @@ public class GameEngine extends Application {
                 gc_main.fillText(all.get(i), 280, 340 + 70 * i);
             }
 
-            String exit_label = "";
-            exit_label = Util.convertLanguage(language, "exit");
-
-            Button exit_button = new Button(exit_label);
-            exit_button.setMinSize(100, 100);
-            exit_button.setLayoutX(1320);
-            exit_button.setLayoutY(680);
-            exit_button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
-
-            Image exit_button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
-            gc_main.drawImage(exit_button_image,1320,680);
-
-            exit_button.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    page = Page.CREDITS;
-                    scene = getCreditsScene();
-                    stage.setScene(scene);
-                    stage.show();
-                }
-            });
+            Button exit_button = drawLittleButton("exit", gc_main, Page.CREDITS);
             root_main.getChildren().add(canvas_main);
             root_main.getChildren().add(exit_button);
             return scene_main;
@@ -326,19 +255,13 @@ public class GameEngine extends Application {
             level_buttons.add(new Button(level_label));
             level_buttons.get(i).setMinSize(200, 200);
 
-            if (i<4) {
-                gc_main.drawImage(button_images.get(i),100+300*i,100);
-                level_buttons.get(i).setLayoutX(100 + 300 * i);
+            if (i<3) {
+                gc_main.drawImage(button_images.get(i),200+400*i,100);
+                level_buttons.get(i).setLayoutX(200 + 400 * i);
                 level_buttons.get(i).setLayoutY(100);
-            }
-            if (i==4) {
-                gc_main.drawImage(button_images.get(i),1200,300);
-                level_buttons.get(i).setLayoutX(1200);
-                level_buttons.get(i).setLayoutY(300);
-            }
-            if (i>4) {
-                gc_main.drawImage(button_images.get(i),1000-300*(i-5),500);
-                level_buttons.get(i).setLayoutX(1000-300*(i-5));
+            } else {
+                gc_main.drawImage(button_images.get(i),1000-400*(i-3),500);
+                level_buttons.get(i).setLayoutX(1000-400*(i-3));
                 level_buttons.get(i).setLayoutY(500);
             }
 
@@ -686,12 +609,34 @@ public class GameEngine extends Application {
         scene = temp;
         stage.setScene(temp);
     }
+
+    private Button drawLittleButton(String message, GraphicsContext gc, Page destination) {
+        String label = "";
+        label = Util.convertLanguage(language, message);
+
+        Button button = new Button(label);
+        button.setMinSize(100, 100);
+        button.setLayoutX(1320);
+        button.setLayoutY(680);
+        button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+
+        Image button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
+        gc.drawImage(button_image,1320,680);
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                page = destination;
+                updateScene(destination);
+            }
+        });
+        return button;
+    }
     
     public static void main(String args[]) {
         endMainGame = false;
         page = Page.LANGUAGE;
         current_game_level = 1;
-        max_unlocked_level = 2;
+        max_unlocked_level = 6;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
