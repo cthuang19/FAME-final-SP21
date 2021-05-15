@@ -25,7 +25,7 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 6;
+    private static final int MAX_LEVEL = 1;
 
     public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
 
@@ -242,8 +242,25 @@ public class GameEngine extends Application {
                 gc_main.fillText(all.get(i), 280, 340 + 70 * i);
             }
 
-            Button exit_button = drawLittleButton("exit", gc_main, Page.CREDITS);
+            //the restart button to restart the game
+            Button restart_button = drawEndingButton("restart", gc_main, 200, 500);
+            restart_button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    page = Page.LANGUAGE;
+                    updateScene(page);
+                }
+            });
+
+            //the exit button to exit the game
+            Button exit_button = drawEndingButton("exit", gc_main, 700, 500);
+            exit_button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    System.exit(0);
+                }
+            });
+
             root_main.getChildren().add(canvas_main);
+            root_main.getChildren().add(restart_button);
             root_main.getChildren().add(exit_button);
             return scene_main;
         }
@@ -617,6 +634,14 @@ public class GameEngine extends Application {
         stage.setScene(temp);
     }
 
+    //TODO: probably can combine the two methods below together
+    /**
+     * draw the little button
+     * @param message the message shown on the button
+     * @param gc the graphic context the scene is currently on
+     * @param destination the page destination that the button will lead to
+     * @return the button with the following info
+     */
     private Button drawLittleButton(String message, GraphicsContext gc, Page destination) {
         String label = "";
         label = Util.convertLanguage(language, message);
@@ -636,6 +661,26 @@ public class GameEngine extends Application {
                 updateScene(destination);
             }
         });
+        return button;
+    }
+
+    /**
+     * create a button for the ending scene
+     * @param message the message shown on the button
+     * @param gc the graphic context that the scene is currently on
+     * @param x the x position of the button
+     * @param y the y position of the button
+     * @return a button containing the info passed in from parameter
+     */
+    private Button drawEndingButton(String message, GraphicsContext gc, int x, int y) {
+        String label = Util.convertLanguage(language, message);
+        Button button = new Button(label);
+        button.setMinSize(450, BUTTON_HEIGHT);
+        button.setLayoutX(x);
+        button.setLayoutY(y);
+        button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 30");
+        Image button_image = new Image(".//Images/gui/purple/panel-2.png",450,BUTTON_HEIGHT,false,true);
+        gc.drawImage(button_image,x,y);
         return button;
     }
     
