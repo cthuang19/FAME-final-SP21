@@ -10,7 +10,6 @@ import javafx.geometry.Rectangle2D;
 
 public class Asteroid extends AnimatedImage{
     
-//    private static final Image ASTEROID_IMAGE = new Image(".//Images/asteroids/Mega/asteroidR1.png");
     private static final Image ASTEROID_IMAGE = new Image(".//Images/tileset/tiles/tile01.png");
     private double positionX;
     private double positionY;

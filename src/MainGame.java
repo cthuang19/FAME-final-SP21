@@ -151,33 +151,25 @@ public class MainGame {
     // TODO : figure out why the frames aren't updating
     public void movePlayer(ArrayList<String> input) {
         // basic movement of the player
-        if (input.contains("W")) {      // Z on AZERTY keyboard
-            //player.addForces(0, -5);   // UP
+        if (input.contains("W")) {      // UP           // Z on AZERTY keyboard
             player.setVelocity(0, -5);
             player.setDirection(Player.CharacterDirection.UP);
             player.updateImages("thrust up");
-            //System.out.println("fThrustUp");
         }
-        if (input.contains("D")) {
-            //player.addForces(5, 0);    // RIGHT
+        if (input.contains("D")) {      // RIGHT
             player.setVelocity(5, 0);
             player.setDirection(Player.CharacterDirection.RIGHT);
             player.updateImages("thrust right");
-            //System.out.println("fThrustRight");
         }
-        if (input.contains("S")) {
-            //player.addForces(0, 5);    // DOWN
+        if (input.contains("S")) {      // DOWN
             player.setVelocity(0, 5);
             player.setDirection(Player.CharacterDirection.DOWN);
             player.updateImages("thrust down");
-            //System.out.println("fThrustDown");
         }
-        if (input.contains("A")) {      // Q on AZERTY keyboard
-            //player.addForces(-5, 0);   // LEFT
+        if (input.contains("A")) {      // LEFT         // Q on AZERTY keyboard
             player.setVelocity(-5, 0);
             player.setDirection(Player.CharacterDirection.LEFT);
             player.updateImages("thrust left");
-            //System.out.println("fThrustLeft");
         }
 
         //add or remove shield to the player
@@ -205,7 +197,7 @@ public class MainGame {
         }
 
         if (input.contains(null)) {
-            /*if (player.getDirection() == Player.CharacterDirection.UP) {
+            if (player.getDirection() == Player.CharacterDirection.UP) {
                 player.updateImages("idle right");
             }
             if (player.getDirection() == Player.CharacterDirection.RIGHT) {
@@ -216,7 +208,7 @@ public class MainGame {
             }
             if (player.getDirection() == Player.CharacterDirection.LEFT) {
                 player.updateImages("idle left");
-            }*/
+            }
             player.setShieldOn(false);
             player.setGripWall(false);
         }

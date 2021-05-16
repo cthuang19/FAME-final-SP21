@@ -144,7 +144,8 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
     {
         return s.getBoundary().intersects(this.getBoundary());
     }
-    // MovingAnimatedImage intersects Asteroid
+
+    // MovingAnimatedImage intersects AnimatedImage
 	public boolean intersects(AnimatedImage a)
 	{
 		if (a instanceof Asteroid || a instanceof Treasure || a instanceof Door) {
@@ -174,6 +175,7 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		result = Math.sqrt(result);
         return result;
     }
+
 	//setter functions
 	public void setVelocity(double x, double y) {
 		velocityX = x;

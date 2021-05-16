@@ -29,7 +29,6 @@ public class Player extends MovingAnimatedImage {
 
     private long timeStamp;
     private double timePassed;
-    private long shieldTimeStamp;
 
     enum PlayerState {ALIVE, HURT, DEAD};
     private PlayerState state;
@@ -37,7 +36,7 @@ public class Player extends MovingAnimatedImage {
     private boolean isGameCompleted;
     private boolean shieldOn;
     private boolean beforeDoor;
-    private boolean goOutOfPuzzle;
+    private boolean goOut;
     private boolean gripWall;
 
     /* the door before which the player was last */
@@ -164,7 +163,6 @@ public class Player extends MovingAnimatedImage {
         if (fieldEnergy > 0) {
             if (shieldOn) {
                 fieldEnergy -= 1;
-                //shieldTimeStamp = System.currentTimeMillis();
             }
         }
     }
@@ -237,7 +235,6 @@ public class Player extends MovingAnimatedImage {
                     velocityY=-velocityY*0.5;
                 }
 
-                // TODO: split in several functions
                 // check if the player intersects with ghost
                 if (!(this.shieldOn)) {
                     if (this.invulnerable) {
@@ -265,7 +262,6 @@ public class Player extends MovingAnimatedImage {
 
             case HURT :
                 this.lives -= 1;
-                //setFrames(explosions);
                 if (this.lives == 0) {
                     this.state = PlayerState.DEAD;
                     this.timeStamp = System.currentTimeMillis();
@@ -276,7 +272,7 @@ public class Player extends MovingAnimatedImage {
                     this.timeStamp = System.currentTimeMillis();
                 }
                 break;
-            case DEAD : // wait for some time before respawning at the beginning of the level
+            case DEAD :
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
                 this.setVelocity(0, 0);
                 if (timePassed > 3) {
@@ -291,7 +287,7 @@ public class Player extends MovingAnimatedImage {
         }
     }
 
-    //getter function
+    //getter functions
     public double getInitialX() { return initialX;}
 
     public double getInitialY() {return initialY;}
@@ -310,9 +306,9 @@ public class Player extends MovingAnimatedImage {
 
     public boolean getIsGameCompleted() {return isGameCompleted;}
 
-    public boolean getGoOutOfPuzzle() {return goOutOfPuzzle;}
+    public boolean getGoOut() {return goOut;}
 
-    //setter function
+    //setter functions
     public void setBeforeDoor(ArrayList<Door> doors) {
         for (Door d : doors) {
             if (this.intersects(d) && !(d.getIsCompleted())) {
@@ -325,11 +321,11 @@ public class Player extends MovingAnimatedImage {
         }
     }
 
-    public void setGoOutOfPuzzle() {
+    public void setGoOut() {
         if (this.getBoundary().intersects(new Rectangle2D(0,64*2,64/2,64*3))) {
-            goOutOfPuzzle = true;
+            goOut = true;
         } else {
-            goOutOfPuzzle = false;
+            goOut = false;
         }
     }
 

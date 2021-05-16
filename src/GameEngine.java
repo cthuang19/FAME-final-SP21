@@ -99,9 +99,11 @@ public class GameEngine extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     /**
      * create the language scene and return it
-     * @return the scene in selecting language
+     * the scene contains languages buttons and credits button
+     * @return the scene in selected language
      */
     private Scene getLanguageScene() {
 
@@ -162,6 +164,11 @@ public class GameEngine extends Application {
         return scene_language;
     }
 
+    /**
+     * create the credits scene and return it
+     * the scene contains credits and back button
+     * @return the scene
+     */
     private Scene getCreditsScene() {
         Group root_credits = new Group();
         Scene credits = new Scene(root_credits);
@@ -191,7 +198,8 @@ public class GameEngine extends Application {
     }
 
     /**
-     * create the initial scene according to the language produced
+     * create the initial scene according to the language chosen and return it
+     * the scene contains story and next button
      * @return the initial scene
      */
     private Scene getInitialScene() {
@@ -228,6 +236,11 @@ public class GameEngine extends Application {
         return initial;
     }
 
+    /**
+     * create the main scene and return it
+     * the scene contains level buttons
+     * @return the main scene
+     */
     public Scene getMainScene() {
         endMainGame = false;
         gameOver = false;
@@ -323,6 +336,11 @@ public class GameEngine extends Application {
         return scene_main;
     }
 
+    /**
+     * create the game scene and return it
+     * the scene contains the level
+     * @return the game scene
+     */
     public Scene getGameScene() {
         Group root_game = new Group();
         Scene scene_game = new Scene(root_game);
@@ -372,10 +390,19 @@ public class GameEngine extends Application {
 
                 Player display_player = main_game.getPlayer();
 
+                // stepping in a puzzle
                 if (display_player.getBeforeDoor()) {
                     current_puzzle_type = display_player.getCurrentDoor().getPuzzleType();
                     current_puzzle_level = display_player.getCurrentDoor().getPuzzleLevel();
                     page = Page.PUZZLE;
+                    updateScene(page);
+                    this.stop();
+                }
+
+                // going out of the level
+                display_player.setGoOut();
+                if (display_player.getGoOut()) {
+                    page = Page.MAIN;
                     updateScene(page);
                     this.stop();
                 }
@@ -390,20 +417,16 @@ public class GameEngine extends Application {
 
                 //draw background image
                 gc_game.drawImage(BACKGROUND_IMAGE, 0, 0);
-
-                //draw the backtiles
                 for (BackTile b: display_backtiles) {
                     gc_game.drawImage(b.getFrame(0), b.getPositionX() - offsetX, b.getPositionY() - offsetY);
                 }
-
-                //draw the asteroids
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), a.getPositionX() - offsetX, a.getPositionY() - offsetY);
                 }
 
                 //draw the treasure
-                gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
-                       display_treasure.getPositionY_() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX() - offsetX,
+                       display_treasure.getPositionY() - offsetY, MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
 
                 // draw the doors
                 ArrayList<Door> display_door = main_game.getDoors();
@@ -441,6 +464,11 @@ public class GameEngine extends Application {
         return scene_game;
     }
 
+    /**
+     * create the puzzle scene and return it
+     * the scene contains the puzzle
+     * @return the puzzle scene
+     */
     public Scene getPuzzleScene() {
         Group root_puzzle = new Group();
         Scene scene_puzzle = new Scene(root_puzzle);
@@ -507,8 +535,8 @@ public class GameEngine extends Application {
                 ArrayList<AnimatedImage> lights = puzzle.getLights();
 
                 //TODO : find how to get the player to have the coordinates of the door when he gets out
-                display_player.setGoOutOfPuzzle();
-                if (display_player.getGoOutOfPuzzle()) {
+                display_player.setGoOut();
+                if (display_player.getGoOut()) {
                     page = Page.GAME;
                     updateScene(page);
                     //display_player.setPosition(display_player.getCurrentDoor().getPositionX(), display_player.getCurrentDoor().getPositionY());
@@ -527,8 +555,8 @@ public class GameEngine extends Application {
                 // draw the treasure only if the level in completed
                 // and set door.isCompleted to true
                 if (puzzle.getIsCompleted()&&(!display_treasure.getRecovered())) {
-                    gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_(),
-                            display_treasure.getPositionY_(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
+                    gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX(),
+                            display_treasure.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                     //display_player.getCurrentDoor().setIsCompleted(true);
                 }
 
@@ -536,7 +564,6 @@ public class GameEngine extends Application {
                 if (!display_treasure.getRecovered()) {
                     if (display_player.intersects(display_treasure)) {
                         // stop displaying treasure : repaint background and asteroids over
-                        //TODO: maybe repainting only the backtiles would be enough
                         gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
                         for (Asteroid a : display_asteroid) {
                             gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
@@ -548,8 +575,10 @@ public class GameEngine extends Application {
                 }
 
                 // draw the lights for the FSM
-                for (int i=0; i<3; i++) {
-                    gc_puzzle.drawImage(lights.get(i).getFrame(0), 512+128*i+7, 192+3, 50,50);
+                if (current_puzzle_type == 1) {
+                    for (int i = 0; i < 3; i++) {
+                        gc_puzzle.drawImage(lights.get(i).getFrame(0), 512 + 128 * i + 7, 192 + 3, 50, 50);
+                    }
                 }
 
                 // draw the player
@@ -564,6 +593,11 @@ public class GameEngine extends Application {
         return scene_puzzle;
     }
 
+    /**
+     * create the end of level scene and return it
+     * the scene contains a message and restart and exit buttons
+     * @return the end of level scene
+     */
     private Scene getEndLevelScene() {
         Group root_endgame = new Group();
         Scene scene_endgame = new Scene(root_endgame);
@@ -636,10 +670,8 @@ public class GameEngine extends Application {
     }
 
     /**
-     * update the scene show on stage
-     * according to the page variable
-     * @param p the page variable represents
-     * which page the game is on
+     * update the scene show on stage according to the page variable
+     * @param p the page variable represents which page the game is on
      */
     private void updateScene(Page p) {
         Scene temp;
@@ -672,7 +704,6 @@ public class GameEngine extends Application {
         scene = temp;
         stage.setScene(temp);
     }
-
 
     /**
      * create a button

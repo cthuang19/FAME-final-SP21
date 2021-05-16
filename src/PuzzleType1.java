@@ -14,8 +14,6 @@ import java.util.ArrayList;
 public class PuzzleType1 extends Puzzle {
 
     // states of the FSM that will recognize the pattern
-    //enum PuzzleState {ZERO, ONE, TWO, THREE};
-    //private PuzzleState state;
     private int state;
     private long timeStamp;
 
@@ -103,12 +101,8 @@ public class PuzzleType1 extends Puzzle {
     }
 
     public void initializeLights() {
-        //for (int i=0;i<4;i++) lightOn[i] = new Image(".//Images/puzzle_lights/lightOn"+i+".png");
-        //for (int i=0;i<4;i++) lightOff[i] = new Image(".//Images/puzzle_lights/lightOff"+i+".png");
-
         for (int i=0;i<4;i++) lightOn[i] = new Image(".//Images/puzzle_lights/testOn.png");
         for (int i=0;i<4;i++) lightOff[i] = new Image(".//Images/puzzle_lights/testOff.png");
-
 
         for (int j=0;j<3;j++) {
             lights.add(new AnimatedImage());

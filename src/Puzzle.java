@@ -113,26 +113,22 @@ public class Puzzle {
      */
     public void movePlayer(ArrayList<String> input) {
         // basic movement of the player
-        if (input.contains("W")) {      // Z on AZERTY keyboard
-            //player.addForces(0, -5);   // UP
+        if (input.contains("W")) {      // UP           // Z on AZERTY keyboard
             player.setVelocity(0, -5);
             player.setDirection(Player.CharacterDirection.UP);
             player.updateImages("thrust up");
         }
-        if (input.contains("D")) {
-            //player.addForces(5, 0);    // RIGHT
+        if (input.contains("D")) {      // RIGHT
             player.setVelocity(5, 0);
             player.setDirection(Player.CharacterDirection.RIGHT);
             player.updateImages("thrust right");
         }
-        if (input.contains("S")) {
-            //player.addForces(0, 5);    // DOWN
+        if (input.contains("S")) {      // DOWN
             player.setVelocity(0, 5);
             player.setDirection(Player.CharacterDirection.DOWN);
             player.updateImages("thrust down");
         }
-        if (input.contains("A")) {      // Q on AZERTY keyboard
-            //player.addForces(-5, 0);   // LEFT
+        if (input.contains("A")) {      // LEFT         // Q on AZERTY keyboard
             player.setVelocity(-5, 0);
             player.setDirection(Player.CharacterDirection.LEFT);
             player.updateImages("thrust left");
