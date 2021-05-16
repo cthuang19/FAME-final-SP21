@@ -21,6 +21,9 @@ public class GameEngine extends Application {
     public static final int CANVAS_HEIGHT = 800;
     public static final int BUTTON_WIDTH = 600;
     public static final int BUTTON_HEIGHT = 150;
+    public static final int SMALL_BUTTON_SIZE = 100;
+    public static final int SMALL_BUTTON_X = 1320;
+    public static final int SMALL_BUTTON_Y = 680;
 
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
@@ -143,7 +146,7 @@ public class GameEngine extends Application {
             }
         });
 
-        Button credits_button = drawLittleButton("Credits", gc_language, Page.INITIAL);
+        Button credits_button = drawButton("Credits", gc_language, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.CREDITS);
 
         root_language.getChildren().add(canvas_language);
         root_language.getChildren().add(english_button);
@@ -161,7 +164,7 @@ public class GameEngine extends Application {
 
         gc_credits.drawImage(BACKGROUND_IMAGE, 0, 0);
 
-        Button back_button = drawLittleButton("back", gc_credits, Page.LANGUAGE);
+        Button back_button = drawButton("back", gc_credits, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.LANGUAGE);
 
         root_credits.getChildren().add(canvas_credits);
         root_credits.getChildren().add(back_button);
@@ -194,7 +197,7 @@ public class GameEngine extends Application {
 
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
 
-        Button next_button = drawLittleButton("next", gc_initial, Page.MAIN);
+        Button next_button = drawButton("next", gc_initial, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.MAIN);
 
         root_initial.getChildren().add(canvas_initial);
         root_initial.getChildren().add(next_button);
@@ -243,16 +246,10 @@ public class GameEngine extends Application {
             }
 
             //the restart button to restart the game
-            Button restart_button = drawEndingButton("restart", gc_main, 200, 500);
-            restart_button.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    page = Page.LANGUAGE;
-                    updateScene(page);
-                }
-            });
+            Button restart_button = drawButton("restart", gc_main, 200, 500, 450, BUTTON_HEIGHT, Page.LANGUAGE);
 
             //the exit button to exit the game
-            Button exit_button = drawEndingButton("exit", gc_main, 700, 500);
+            Button exit_button = drawButton("exit", gc_main, 700, 500, 450, BUTTON_HEIGHT, null);
             exit_button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                     System.exit(0);
@@ -634,35 +631,6 @@ public class GameEngine extends Application {
         stage.setScene(temp);
     }
 
-    //TODO: probably can combine the two methods below together
-    /**
-     * draw the little button
-     * @param message the message shown on the button
-     * @param gc the graphic context the scene is currently on
-     * @param destination the page destination that the button will lead to
-     * @return the button with the following info
-     */
-    private Button drawLittleButton(String message, GraphicsContext gc, Page destination) {
-        String label = "";
-        label = Util.convertLanguage(language, message);
-
-        Button button = new Button(label);
-        button.setMinSize(100, 100);
-        button.setLayoutX(1320);
-        button.setLayoutY(680);
-        button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
-
-        Image button_image = new Image(".//Images/gui/purple/panel-2.png",100,100,false,true);
-        gc.drawImage(button_image,1320,680);
-
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                page = destination;
-                updateScene(destination);
-            }
-        });
-        return button;
-    }
 
     /**
      * create a button for the ending scene
@@ -670,17 +638,28 @@ public class GameEngine extends Application {
      * @param gc the graphic context that the scene is currently on
      * @param x the x position of the button
      * @param y the y position of the button
+     * @param button_w the width of the button
+     * @param button_h the height of the button
+     * @param destination the destination page that pressing the button will lead to 
      * @return a button containing the info passed in from parameter
      */
-    private Button drawEndingButton(String message, GraphicsContext gc, int x, int y) {
+    private Button drawButton(String message, GraphicsContext gc, int x, int y, int button_w, int button_h, Page destination) {
         String label = Util.convertLanguage(language, message);
         Button button = new Button(label);
-        button.setMinSize(450, BUTTON_HEIGHT);
+        button.setMinSize(button_w, button_h);
         button.setLayoutX(x);
         button.setLayoutY(y);
-        button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 30");
-        Image button_image = new Image(".//Images/gui/purple/panel-2.png",450,BUTTON_HEIGHT,false,true);
+        button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+        Image button_image = new Image(".//Images/gui/purple/panel-2.png",button_w,button_h,false,true);
         gc.drawImage(button_image,x,y);
+        if (destination != null) {
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    page = destination;
+                    updateScene(destination);
+                }
+            });
+        }
         return button;
     }
     

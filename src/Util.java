@@ -11,6 +11,9 @@ public class Util {
             put("LEVEL ", "NIVEAU ");
             put("ending_english.txt", "ending_french.txt");
             put("exit", "sortie");
+
+            //TODO: restart in french
+            put("restart", "restart_french");
         } 
     };
 
