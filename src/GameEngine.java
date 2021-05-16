@@ -28,7 +28,7 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 1;
+    private static final int MAX_LEVEL = 6;
 
     public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
 
