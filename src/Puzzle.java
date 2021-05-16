@@ -149,6 +149,8 @@ public class Puzzle {
 
         if (input.contains("J")) {
             player.setGripWall(true);
+        } else {
+            player.setGripWall(false);
         }
 
         if (input.contains(null)) {
@@ -165,7 +167,6 @@ public class Puzzle {
                 player.updateImages("idle left");
             }
             player.setShieldOn(false);
-            player.setGripWall(false);
         }
     }
     /**

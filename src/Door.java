@@ -9,8 +9,7 @@ import javafx.geometry.Rectangle2D;
 
 public class Door extends AnimatedImage {
 
-    //TODO: change this to a image of an door
-    private static final Image DOOR_IMAGE = new Image(".//Images/test_door.png");
+    private static final Image DOOR_IMAGE = new Image(".//Images/door/door_def.png");
     private double positionX;
     private double positionY;
 

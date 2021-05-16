@@ -745,7 +745,7 @@ public class GameEngine extends Application {
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
-        page = Page.LANGUAGE;
+        page = Page.MAIN;
         current_game_level = 1;
         max_unlocked_level = 2;
         current_puzzle_type = 1;

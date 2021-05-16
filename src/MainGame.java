@@ -194,6 +194,8 @@ public class MainGame {
 
         if (input.contains("J")) {
             player.setGripWall(true);
+        } else {
+            player.setGripWall(false);
         }
 
         if (input.contains(null)) {
@@ -210,7 +212,6 @@ public class MainGame {
                 player.updateImages("idle left");
             }
             player.setShieldOn(false);
-            player.setGripWall(false);
         }
     }
     /**
