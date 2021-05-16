@@ -28,7 +28,7 @@ public class GameEngine extends Application {
     private static final int MAIN_GAME_DISPLAY_WIDTH = 64;
 
     /* the maximum level for the game*/
-    private static final int MAX_LEVEL = 6;
+    private static final int MAX_LEVEL = 3;
 
     public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
 
@@ -39,7 +39,7 @@ public class GameEngine extends Application {
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
 
     /* the page of the current scene (not sure if useful)*/
-    enum Page {LANGUAGE, CREDITS, INITIAL, MAIN, GAME, PUZZLE};
+    enum Page {LANGUAGE, CREDITS, INITIAL, MAIN, GAME, PUZZLE, ENDLEVEL};
     
     /* the language of the game */
     enum Language {ENGLISH, FRENCH};
@@ -58,6 +58,9 @@ public class GameEngine extends Application {
 
     /* check if the game has ended*/
     private static boolean endMainGame;
+
+    /* check if the game has ended by game over */
+    private static boolean gameOver;
 
     /* the current (or last) puzzle level */
     private static int current_puzzle_level;
@@ -84,6 +87,9 @@ public class GameEngine extends Application {
                 break;
             case PUZZLE:
                 scene = getPuzzleScene();
+                break;
+            case ENDLEVEL:
+                scene = getEndLevelScene();
                 break;
             default:
                 Group group_default = new Group();
@@ -164,7 +170,7 @@ public class GameEngine extends Application {
 
         gc_credits.drawImage(BACKGROUND_IMAGE, 0, 0);
 
-        Button back_button = drawButton("back", gc_credits, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.LANGUAGE);
+        Button back_button = drawButton("Back", gc_credits, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.LANGUAGE);
 
         root_credits.getChildren().add(canvas_credits);
         root_credits.getChildren().add(back_button);
@@ -197,7 +203,7 @@ public class GameEngine extends Application {
 
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
 
-        Button next_button = drawButton("next", gc_initial, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.MAIN);
+        Button next_button = drawButton("Next", gc_initial, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.MAIN);
 
         root_initial.getChildren().add(canvas_initial);
         root_initial.getChildren().add(next_button);
@@ -224,6 +230,7 @@ public class GameEngine extends Application {
 
     public Scene getMainScene() {
         endMainGame = false;
+        gameOver = false;
         Group root_main = new Group();
         Scene scene_main = new Scene(root_main);
         Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -246,10 +253,10 @@ public class GameEngine extends Application {
             }
 
             //the restart button to restart the game
-            Button restart_button = drawButton("restart", gc_main, 200, 500, 450, BUTTON_HEIGHT, Page.LANGUAGE);
+            Button restart_button = drawButton("Restart", gc_main, 200, 500, 450, BUTTON_HEIGHT, Page.LANGUAGE);
 
             //the exit button to exit the game
-            Button exit_button = drawButton("exit", gc_main, 700, 500, 450, BUTTON_HEIGHT, null);
+            Button exit_button = drawButton("Exit", gc_main, 700, 500, 450, BUTTON_HEIGHT, null);
             exit_button.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                     System.exit(0);
@@ -389,12 +396,10 @@ public class GameEngine extends Application {
                     gc_game.drawImage(b.getFrame(0), b.getPositionX() - offsetX, b.getPositionY() - offsetY);
                 }
 
-                
                 //draw the asteroids
                 for (Asteroid a: display_asteroid) {
                     gc_game.drawImage(a.getFrame(0), a.getPositionX() - offsetX, a.getPositionY() - offsetY);
                 }
-                
 
                 //draw the treasure
                 gc_game.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX_() - offsetX,
@@ -423,9 +428,8 @@ public class GameEngine extends Application {
                     }
                     main_game.endGame();
                     endMainGame = true;
-                    page = Page.MAIN;
-
-                    //TODO: probably add a delay here for ending message
+                    gameOver = (display_player.getLives()==0);
+                    page = Page.ENDLEVEL;
                     updateScene(page);
                     this.stop();
                 }
@@ -560,6 +564,41 @@ public class GameEngine extends Application {
         return scene_puzzle;
     }
 
+    private Scene getEndLevelScene() {
+        Group root_endgame = new Group();
+        Scene scene_endgame = new Scene(root_endgame);
+        Canvas canvas_endgame = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        GraphicsContext gc_endgame = canvas_endgame.getGraphicsContext2D();
+
+        gc_endgame.drawImage(BACKGROUND_IMAGE, 0, 0);
+
+        Image gui_image = new Image(".//Images/gui/yellow/panel-1.png",1300,700,false,true);
+        gc_endgame.drawImage(gui_image, 50, 50);
+        gc_endgame.setFill(Color.BLACK);
+        gc_endgame.setFont(FONT_XLARGE);
+        if (gameOver) {
+            gc_endgame.fillText("GAME OVER", 550, 340);
+            String text = Util.convertLanguage(language, "The ghosts got you!");
+            gc_endgame.fillText(text, 490, 390);
+        } else {
+            String text = Util.convertLanguage(language, "Congrats! You found a new piece!");
+            gc_endgame.fillText(text, 400, 340);
+        }
+
+        Button restart_button;
+        if (gameOver) {
+            restart_button = drawButton("Restart", gc_endgame, 200, 500, 450, BUTTON_HEIGHT, Page.MAIN);
+        } else {
+            restart_button = drawButton("Choose another level", gc_endgame, 200, 500, 450, BUTTON_HEIGHT, Page.MAIN);
+        }
+        Button exit_button = drawButton("Exit", gc_endgame, 700, 500, 450, BUTTON_HEIGHT, Page.LANGUAGE);
+
+        root_endgame.getChildren().add(canvas_endgame);
+        root_endgame.getChildren().add(restart_button);
+        root_endgame.getChildren().add(exit_button);
+        return scene_endgame;
+    }
+
     /**
      * draw the important information for the game at the top of the screen
      * level, lives, field energy
@@ -623,6 +662,9 @@ public class GameEngine extends Application {
             case PUZZLE:
                 temp = getPuzzleScene();
                 break;
+            case ENDLEVEL:
+                temp = getEndLevelScene();
+                break;
             default:
                 Group group_default = new Group();
                 temp = new Scene(group_default);
@@ -633,7 +675,7 @@ public class GameEngine extends Application {
 
 
     /**
-     * create a button for the ending scene
+     * create a button
      * @param message the message shown on the button
      * @param gc the graphic context that the scene is currently on
      * @param x the x position of the button
@@ -649,8 +691,14 @@ public class GameEngine extends Application {
         button.setMinSize(button_w, button_h);
         button.setLayoutX(x);
         button.setLayoutY(y);
-        button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
-        Image button_image = new Image(".//Images/gui/purple/panel-2.png",button_w,button_h,false,true);
+        Image button_image;
+        if (message.equals("Restart") || message.equals("Exit") || message.equals("Choose another level")) {
+            button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
+            button_image = new Image(".//Images/gui/purple/panel-4.png", button_w, button_h, false, true);
+        } else {
+            button.setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+            button_image = new Image(".//Images/gui/purple/panel-2.png", button_w, button_h, false, true);
+        }
         gc.drawImage(button_image,x,y);
         if (destination != null) {
             button.setOnAction(new EventHandler<ActionEvent>() {
@@ -662,9 +710,10 @@ public class GameEngine extends Application {
         }
         return button;
     }
-    
+
     public static void main(String args[]) {
         endMainGame = false;
+        gameOver = false;
         page = Page.LANGUAGE;
         current_game_level = 1;
         max_unlocked_level = 2;
