@@ -70,38 +70,26 @@ public class Ghost extends MovingAnimatedImage {
      */
     public void initializeImages() {
         setDuration(0.25);
+        String ghost_colour = "red";
         switch(colour) {
             case RED:
-                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
-                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_right_"+i+".png");
-                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_down_"+i+".png");
-                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
+                ghost_colour = "red";
                 break;
             case BLUE:
-                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_up_"+i+".png");
-                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_right_"+i+".png");
-                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_down_"+i+".png");
-                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/blue_ghost/blue_ghost_left_"+i+".png");
+                ghost_colour = "blue";
                 break;
             case YELLOW:
-                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_up_"+i+".png");
-                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_right_"+i+".png");
-                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_down_"+i+".png");
-                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/yellow_ghost/yellow_ghost_left_"+i+".png");
+                ghost_colour = "yellow";
                 break;
             case GREEN:
-                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_up_"+i+".png");
-                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_right_"+i+".png");
-                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_down_"+i+".png");
-                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/green_ghost/green_ghost_left_"+i+".png");
-                break;
-            default:
-                for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_up_"+i+".png");
-                for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_right_"+i+".png");
-                for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_down_"+i+".png");
-                for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/red_ghost/red_ghost_left_"+i+".png");
-                break;
+                ghost_colour = "green";  
+                break;     
         }
+        for (int i=0;i<3;i++) fUp[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_up_"+i+".png");
+        for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_right_"+i+".png");
+        for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_down_"+i+".png");
+        for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_left_"+i+".png");
+
         for (int i=0;i<7;i++) fExplosion[i]=new Image(".//Images/explosion/test_explosion/explosion_"+i+".png");
         setFrames(fUp);
     }
