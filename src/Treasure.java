@@ -16,7 +16,7 @@ public class Treasure extends AnimatedImage{
     /* indicates if the player already took the treasure or not */
     private boolean recovered;
 
-    /* indicates if the treasure is a live or some energy */
+    /* indicates if the treasure is a life or some energy */
     private String type;
 
     public Treasure () {
@@ -51,9 +51,12 @@ public class Treasure extends AnimatedImage{
     public double getPositionY() {return positionY;}
 
     public boolean getRecovered() {return recovered;}
-    public void setRecovered(boolean b) {recovered = b;}
 
     public String getType() {return type;}
+
+    //setter functions
     public void setType(String str) {type = str;}
+
+    public void setRecovered(boolean b) {recovered = b;}
 
 }

@@ -352,7 +352,6 @@ public class GameEngine extends Application {
             root_main.getChildren().add(level_buttons.get(i));
         }
 
-        //Player p = new Player("player test", 0, 0);
         return scene_main;
     }
 
@@ -498,7 +497,7 @@ public class GameEngine extends Application {
         Canvas canvas_puzzle = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_puzzle = canvas_puzzle.getGraphicsContext2D();
         // initialize puzzle
-        PuzzleType1 puzzle = new PuzzleType1(1,player_lives,player_energy);
+        PuzzleType1 puzzle = new PuzzleType1(1, player_lives, player_energy);
         puzzle.setLevel(current_puzzle_level);
         puzzle.initializeLights();
         /*switch (current_puzzle_type) {

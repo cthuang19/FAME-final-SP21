@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -53,16 +52,18 @@ public class Ghost extends MovingAnimatedImage {
         startingPoint=x;
     }
 
+    //getter functions
+    public Colour getColour() {return this.colour;}
+    public GhostState getGhostState() {return this.state;}
+    public boolean getSeesPlayer() {return this.seesPlayer;}
+
+    //setter functions
     public void setDimension(double x, double y) {
         maxX = x;
         maxY = y;
     }
-
     public void setColour(Colour c) {this.colour = c;}
-    public Colour getColour() {return this.colour;}
     public void setGhostState(GhostState s) {this.state = s;}
-    public GhostState getGhostState() {return this.state;}
-    public boolean getSeesPlayer() {return this.seesPlayer;}
 
     /**
      * initialize the image frames and duration
@@ -170,7 +171,7 @@ public class Ghost extends MovingAnimatedImage {
                     break;
                 case EXPLOSIVE:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 3) {   // leave time for the explosion animation
+                    if (timePassed > 2) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                     }
                     break;
@@ -216,7 +217,7 @@ public class Ghost extends MovingAnimatedImage {
                     break;
                 case EXPLOSIVE:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 4) {   // leave time for the explosion animation
+                    if (timePassed > 2) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                     }
                     break;
@@ -261,7 +262,7 @@ public class Ghost extends MovingAnimatedImage {
                     break;
                 case EXPLOSIVE:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 4) {   // leave time for the explosion animation
+                    if (timePassed > 2) {   // leave time for the explosion animation
                         startingPoint = positionX;
                         velocityX = 0.002;
                         state = GhostState.PASSIVE;
@@ -318,7 +319,7 @@ public class Ghost extends MovingAnimatedImage {
                     break;
                 case EXPLOSIVE:
                     timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 4) {   // leave time for the explosion animation
+                    if (timePassed > 2) {   // leave time for the explosion animation
                         state = GhostState.PASSIVE;
                         timeStamp = System.currentTimeMillis();
                     }
@@ -332,7 +333,7 @@ public class Ghost extends MovingAnimatedImage {
      * determines if the player is in the line of sight of the ghost
      * will be used in setSeesPlayer
      * @param player the player
-     * @param obstacles all the walls/asteorids that could hide the player to the ghosts
+     * @param obstacles all the walls/asteroids that could hide the player to the ghosts
      * @return true if the ghost can see the player else false
      */
     public boolean canSeePlayer(Player player, ArrayList<Asteroid> obstacles) {
@@ -352,7 +353,7 @@ public class Ghost extends MovingAnimatedImage {
     /**
      * updates the value of seesPlayer according to the colour of the ghost
      * @param player the player
-     * @param obstacles all the walls/asteorids that could hide the player to the ghosts
+     * @param obstacles all the walls/asteroids that could hide the player to the ghosts
      */
     public void setSeesPlayer(Player player, ArrayList<Asteroid> obstacles) {
         if (canSeePlayer(player, obstacles)) {

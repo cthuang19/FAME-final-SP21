@@ -40,8 +40,6 @@ public class PuzzleType1 extends Puzzle {
                 if (input.contains("W")) {      // Z on AZERTY keyboard
                     this.state = 1;
                     timeStamp = System.currentTimeMillis();
-                } else {
-                    this.state = 0;
                 }
                 break;
             case 1 :
@@ -133,6 +131,7 @@ public class PuzzleType1 extends Puzzle {
         }
     }
 
+    //getter functions
     public ArrayList<AnimatedImage> getLights() {return lights;}
 
 }

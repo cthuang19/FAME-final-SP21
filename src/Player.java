@@ -264,13 +264,12 @@ public class Player extends MovingAnimatedImage {
                 this.lives -= 1;
                 if (this.lives == 0) {
                     this.state = PlayerState.DEAD;
-                    this.timeStamp = System.currentTimeMillis();
                 }
                 else {
                     this.state = PlayerState.ALIVE;
                     invulnerable = true;
-                    this.timeStamp = System.currentTimeMillis();
                 }
+                this.timeStamp = System.currentTimeMillis();
                 break;
             case DEAD :
                 timePassed = (System.currentTimeMillis()-timeStamp)/1000;
@@ -322,16 +321,13 @@ public class Player extends MovingAnimatedImage {
     }
 
     public void setGoOut() {
-        if (this.getBoundary().intersects(new Rectangle2D(0,64*2,64/2,64*3))) {
-            goOut = true;
-        } else {
-            goOut = false;
-        }
+        goOut = this.getBoundary().intersects(new Rectangle2D(0, 64 * 2, 64 / 2, 64 * 3));
     }
 
     public void setGripWall(boolean b) {gripWall=b;}
 
     public void addLife() {this.lives++;}
+
     public void addEnergy() {this.fieldEnergy += 50;}
 
 }

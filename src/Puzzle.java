@@ -22,7 +22,7 @@ public class Puzzle {
     protected double dimensionX;
     protected double dimensionY;
 
-    protected ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
+    protected ArrayList<Asteroid> asteroids = new ArrayList<>();
     protected ArrayList<BackTile> backtiles = new ArrayList<>();
 
     protected Player player;
@@ -177,11 +177,11 @@ public class Puzzle {
      */
     public void update_time(double t, ArrayList<String> input) {
         // empty list to use for the update
-        ArrayList<Ghost> empty_ghosts = new ArrayList<Ghost>();
+        ArrayList<Ghost> empty_ghosts = new ArrayList<>();
         player.update(t, asteroids, empty_ghosts, treasure);
     }
 
-    //getter function
+    //getter functions
     public ArrayList<Asteroid> getAsteroids() { return asteroids;}
 
     public Player getPlayer() { return player;}

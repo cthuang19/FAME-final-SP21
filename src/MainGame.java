@@ -30,12 +30,12 @@ public class MainGame {
     private double dimensionY;
 
     /* lists that contain all the Ghosts of given level */
-    private ArrayList<Ghost> redGhosts = new ArrayList<Ghost>();
-    private ArrayList<Ghost> blueGhosts = new ArrayList<Ghost>();
-    private ArrayList<Ghost> yellowGhosts = new ArrayList<Ghost>();
-    private ArrayList<Ghost> greenGhosts = new ArrayList<Ghost>();
-    private ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>();
-    private ArrayList<Door> doors = new ArrayList<Door>();
+    private ArrayList<Ghost> redGhosts = new ArrayList<>();
+    private ArrayList<Ghost> blueGhosts = new ArrayList<>();
+    private ArrayList<Ghost> yellowGhosts = new ArrayList<>();
+    private ArrayList<Ghost> greenGhosts = new ArrayList<>();
+    private ArrayList<Asteroid> asteroids = new ArrayList<>();
+    private ArrayList<Door> doors = new ArrayList<>();
     private ArrayList<BackTile> backtiles = new ArrayList<>();
 
     private Player player;
@@ -261,7 +261,7 @@ public class MainGame {
     }
 
 
-    //getter function
+    //getter functions
     public ArrayList<Asteroid> getAsteroids() { return asteroids;}
     
     public Player getPlayer() { return player;}
