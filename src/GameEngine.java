@@ -33,6 +33,7 @@ public class GameEngine extends Application {
     public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
     public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
     public static final Font FONT_SMALL = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 15);
+    public static final Font FONT_TITLE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 100);
 
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
 
@@ -109,8 +110,10 @@ public class GameEngine extends Application {
      */
     private Scene getLanguageScene() {
 
-        //reset max unlocked level for the player to restart the game
+        //reset max unlocked level, lives and energy for the player to restart the game
         //max_unlocked_level = 1;
+        //player_lives = 3;
+        //player_energy = 300;
 
         //set all the layout of the language scene
         Group root_language = new Group();
@@ -119,6 +122,13 @@ public class GameEngine extends Application {
         GraphicsContext gc_language = canvas_language.getGraphicsContext2D();
 
         gc_language.drawImage(BACKGROUND_IMAGE, 0, 0);
+
+        // draw game name
+        Image game_name_image = new Image(".//Images/gui/blue/panel-5.png",BUTTON_WIDTH*2, BUTTON_HEIGHT*2,false,true);
+        gc_language.drawImage(game_name_image, 130, 50);
+        gc_language.setFill(Color.LIGHTYELLOW);
+        gc_language.setFont(FONT_TITLE);
+        gc_language.fillText("GAME NAME", 400, 230);
 
         // draw english button
         Button english_button = new Button("English (US)");
@@ -157,11 +167,18 @@ public class GameEngine extends Application {
         });
 
         Button credits_button = drawButton("Credits", gc_language, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.CREDITS);
+        Button exit_button = drawButton("Exit ", gc_language, 35, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, null);
+        exit_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         root_language.getChildren().add(canvas_language);
         root_language.getChildren().add(english_button);
         root_language.getChildren().add(french_button);
         root_language.getChildren().add(credits_button);
+        root_language.getChildren().add(exit_button);
 
         return scene_language;
     }

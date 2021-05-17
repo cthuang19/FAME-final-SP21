@@ -12,6 +12,7 @@ public class Util {
             put("Credits", "Crédits");
             put("ending_english.txt", "ending_french.txt");
             put("Exit", "Sortir");
+            put("Exit ", "Sortir ");
             put("Restart", "Recommencer");
             put("Choose another level", "Choisir un autre niveau");
             put("Congrats! You found a new piece!", "Bravo ! Vous avez trouvé une nouvelle pièce !");
