@@ -68,6 +68,8 @@ public class GameEngine extends Application {
     /* the current stats of the player to be kept when change of page */
     private static int player_lives = 3;
     private static int player_energy = 300;
+    private static double player_back_puzzle_X = 0;
+    private static double player_back_puzzle_Y = 0;
 
     @Override
     public void start(Stage theStage) {
@@ -408,6 +410,11 @@ public class GameEngine extends Application {
                 main_game.update_time(t);
 
                 Player display_player = main_game.getPlayer();
+                if ((player_back_puzzle_X!=0)&&(player_back_puzzle_Y!=0)) {
+                    display_player.setPosition(player_back_puzzle_X, player_back_puzzle_Y);
+                    player_back_puzzle_X = 0;
+                    player_back_puzzle_Y = 0;
+                }
 
                 player_lives = (int) display_player.getLives();
                 player_energy = (int) display_player.getFieldEnergy();
@@ -416,6 +423,8 @@ public class GameEngine extends Application {
                 if (display_player.getBeforeDoor()) {
                     current_puzzle_type = display_player.getCurrentDoor().getPuzzleType();
                     current_puzzle_level = display_player.getCurrentDoor().getPuzzleLevel();
+                    player_back_puzzle_X = display_player.getCurrentDoor().getPositionX();
+                    player_back_puzzle_Y = display_player.getCurrentDoor().getPositionY();
                     page = Page.PUZZLE;
                     updateScene(page);
                     this.stop();
@@ -567,7 +576,6 @@ public class GameEngine extends Application {
                 if (display_player.getGoOut()) {
                     page = Page.GAME;
                     updateScene(page);
-                    //display_player.setPosition(display_player.getCurrentDoor().getPositionX(), display_player.getCurrentDoor().getPositionY());
                     this.stop();
                 }
 
@@ -782,7 +790,7 @@ public class GameEngine extends Application {
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
-        page = Page.LANGUAGE;
+        page = Page.MAIN;
         current_game_level = 1;
         max_unlocked_level = 2;
         current_puzzle_type = 1;
