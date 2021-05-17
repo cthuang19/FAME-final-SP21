@@ -31,16 +31,16 @@ public class Puzzle {
     protected boolean isCompleted;
 
     public Puzzle() {
-        this(1,1);
+        this(1,1,3,300);
     }
 
-    public Puzzle(int tp, int lvl) {
+    public Puzzle(int tp, int lvl, int player_lives, int player_energy) {
         type = tp;
         level = lvl;
         FileReader fr = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+".txt");
         FileReader fr_rock = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+"_tiles.txt");
         FileReader fr_back_tiles = new FileReader(".//game_environment_files/puzzle_level_"+type+"_"+level+"_backtiles.txt");
-        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines());
+        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines(), player_lives, player_energy);
         isCompleted = false;
         dimensionX = 1430;
         dimensionY = 800;
@@ -54,7 +54,7 @@ public class Puzzle {
      * arraylist of string that was read in the file
      * @param s an arraylist of string
      */
-    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file, ArrayList<String> back_tile_file) {
+    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file, ArrayList<String> back_tile_file, int player_lives, int player_energy) {
         dimensionX = s.get(0).length() * CELL_WIDTH;
         dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
@@ -75,16 +75,18 @@ public class Puzzle {
                         initializeRock(rock_file, c, i);
                         break;
                     case PLAYER_CELL:
-                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 300, Player.PlayerState.ALIVE);
+                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, player_lives, player_energy, Player.PlayerState.ALIVE);
                         break;
                     case TREASURE_CELL:
                         Random rand = new Random();
                         if (rand.nextInt(2)==0) {
                             Image treasure_image = new Image(".//Images/puzzle_treasures/heart.png");
                             treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
+                            treasure.setType("life");
                         } else {
                             Image treasure_image = new Image(".//Images/puzzle_treasures/energy.png");
                             treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
+                            treasure.setType("energy");
                         }
                         break;
                 }

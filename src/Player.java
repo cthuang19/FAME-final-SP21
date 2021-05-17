@@ -331,4 +331,7 @@ public class Player extends MovingAnimatedImage {
 
     public void setGripWall(boolean b) {gripWall=b;}
 
+    public void addLife() {this.lives++;}
+    public void addEnergy() {this.fieldEnergy += 50;}
+
 }

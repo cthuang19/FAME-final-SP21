@@ -22,11 +22,11 @@ public class PuzzleType1 extends Puzzle {
     private final Image[] lightOff = new Image[4];
 
     public PuzzleType1() {
-        super(1, 1);
+        super(1, 1, 3, 300);
     }
 
-    public PuzzleType1(int lvl) {
-        super(1, lvl);
+    public PuzzleType1(int lvl, int player_lives, int player_energy) {
+        super(1, lvl, player_lives, player_energy);
     }
 
     // for now, a basic FSM : recognizes a pattern of UP, RIGHT, LEFT

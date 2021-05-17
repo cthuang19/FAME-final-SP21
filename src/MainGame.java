@@ -44,10 +44,10 @@ public class MainGame {
     private boolean isCompleted;
 
     public MainGame() {
-        this(1);
+        this(1, 3, 300);
     }
 
-    public MainGame(int level) {
+    public MainGame(int level, int player_lives, int player_energy) {
         this.level = level;
         FileReader fr = new FileReader(".//game_environment_files/game_level_"+ this.level +".txt");
         FileReader fr_rock = new FileReader(".//game_environment_files/game_level_"+ this.level +"_tiles.txt");
@@ -57,7 +57,7 @@ public class MainGame {
         dimensionX = 1430;
         dimensionY = 800;
 
-        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines());
+        initializeArray(fr.allLines(), fr_rock.allLines(), fr_back_tiles.allLines(), player_lives, player_energy);
         isCompleted = false;
     }
 
@@ -67,7 +67,7 @@ public class MainGame {
      * arraylist of string that was read in the file
      * @param s an arraylist of string
      */
-    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file, ArrayList<String> back_tile_file) {
+    private void initializeArray(ArrayList<String> s, ArrayList<String> rock_file, ArrayList<String> back_tile_file, int player_lives, int player_energy) {
         dimensionX = s.get(0).length() * CELL_WIDTH;
         dimensionY = s.size() * CELL_WIDTH;
         for (int i = 0; i < s.size(); i++) {
@@ -88,7 +88,7 @@ public class MainGame {
                         initializeRock(rock_file, c, i);
                         break;
                     case PLAYER_CELL:
-                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, 3, 300, Player.PlayerState.ALIVE);
+                        player = new Player("player", c * CELL_WIDTH, i * CELL_WIDTH, player_lives, player_energy, Player.PlayerState.ALIVE);
                         break;
                     case RED_GHOST_CELL:
                         redGhosts.add(new Ghost("red_ghost_"+c+"_"+i, c * CELL_WIDTH, i * CELL_WIDTH, Ghost.Colour.RED, Ghost.GhostState.PASSIVE));

@@ -16,6 +16,7 @@ public class Util {
             put("Choose another level", "Choisir un autre niveau");
             put("Congrats! You found a new piece!", "Bravo ! Vous avez trouvé une nouvelle pièce !");
             put("The ghosts got you!", "Les fantômes vous ont eu !");
+            put("Ship ", "Vaisseau ");
         }
     };
 
