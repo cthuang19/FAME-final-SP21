@@ -136,34 +136,7 @@ public class Ghost extends MovingAnimatedImage {
         }
 
         if (this.colour == Colour.RED) {
-            switch (state) {
-                case PASSIVE:
-                    if (seesPlayer) {
-                        state = GhostState.ACTIVE;
-                    }
-                    break;
-                case SUSPICIOUS:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (seesPlayer) state = GhostState.ACTIVE;
-                    if (timePassed > 4) {
-                        state = GhostState.PASSIVE;
-                        startingPoint=positionX;
-                        velocityX=+2;
-                    }
-                    break;
-                case ACTIVE:
-                    if (!seesPlayer) {
-                        state = GhostState.SUSPICIOUS;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    break;
-                case EXPLOSIVE:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 2) {   // leave time for the explosion animation
-                        state = GhostState.PASSIVE;
-                    }
-                    break;
-            }
+            updateGhostState(player);
             switch (state) {
                 case PASSIVE :
                     velocityX=(positionX-startingPoint>100)?-2:velocityX;
@@ -188,28 +161,7 @@ public class Ghost extends MovingAnimatedImage {
         }
 
         if (this.colour == Colour.BLUE) {
-            switch (state) {
-                case PASSIVE:
-                    if (seesPlayer) {
-                        state = GhostState.ACTIVE;
-                    }
-                    break;
-                case ACTIVE:
-                    if (!seesPlayer) {
-                        state = GhostState.PASSIVE;
-                    }
-                    if (this.intersects(player)) {
-                        state = GhostState.EXPLOSIVE;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    break;
-                case EXPLOSIVE:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 2) {   // leave time for the explosion animation
-                        state = GhostState.PASSIVE;
-                    }
-                    break;
-            }
+            updateGhostState(player);
             if (state == GhostState.ACTIVE) {
                 velocityX=directionGhostX*2;
                 velocityY=directionGhostY*2;
@@ -223,43 +175,7 @@ public class Ghost extends MovingAnimatedImage {
         }
         
         if (this.colour == Colour.YELLOW) {
-            switch (state) {
-                case PASSIVE:
-                    if (seesPlayer) {
-                        state = GhostState.ACTIVE;
-                    }
-                    // patrols in its area
-                    break;
-                case SUSPICIOUS:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (seesPlayer) state = GhostState.ACTIVE;
-                    if (timePassed > 4) {
-                        state = GhostState.PASSIVE;
-                    }
-                    break;
-                case ACTIVE:
-                    if (!seesPlayer) {
-                        startingPoint = positionX;
-                        velocityX = 0.002;
-                        state = GhostState.PASSIVE;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    if (this.intersects(player)) {
-                        state = GhostState.EXPLOSIVE;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    break;
-                case EXPLOSIVE:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 2) {   // leave time for the explosion animation
-                        startingPoint = positionX;
-                        velocityX = 0.002;
-                        state = GhostState.PASSIVE;
-                    }
-                    break;
-                default:
-                    state = GhostState.PASSIVE;
-            }
+            updateGhostState(player);
             switch (state) {
                 case PASSIVE :
                     velocityX=(positionX-startingPoint>100)?-0.002:velocityX;
@@ -285,37 +201,7 @@ public class Ghost extends MovingAnimatedImage {
         }
 
         if (this.colour == Colour.GREEN) {
-            switch (state) {
-                case PASSIVE:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if ((seesPlayer)&&(timePassed > 4)) {
-                        state = GhostState.ACTIVE;
-                    }
-                    // stays hidden behind a rock
-                    break;
-                case SUSPICIOUS:
-                    break;
-                case ACTIVE:
-                    if (!seesPlayer) {
-                        state = GhostState.PASSIVE;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    if (this.intersects(player)) {
-                        state = GhostState.EXPLOSIVE;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    // gets in the path of the player
-                    break;
-                case EXPLOSIVE:
-                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
-                    if (timePassed > 2) {   // leave time for the explosion animation
-                        state = GhostState.PASSIVE;
-                        timeStamp = System.currentTimeMillis();
-                    }
-                    break;
-                default:
-                    state = GhostState.PASSIVE;
-            }
+            updateGhostState(player);
             switch (state) {
                 case PASSIVE :
                     velocityX=(positionX-startingPoint>100)?-0.005:velocityX;
@@ -438,4 +324,133 @@ public class Ghost extends MovingAnimatedImage {
         }
     }
 
+    private void updateGhostState(Player player) {
+        double timePassed = 0;
+       if (this.colour == Colour.RED) {
+            switch (state) {
+                case PASSIVE:
+                    if (seesPlayer) {
+                        state = GhostState.ACTIVE;
+                    }
+                    break;
+                case SUSPICIOUS:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (seesPlayer) state = GhostState.ACTIVE;
+                    if (timePassed > 4) {
+                        state = GhostState.PASSIVE;
+                        startingPoint=positionX;
+                        velocityX=+2;
+                    }
+                    break;
+                case ACTIVE:
+                    if (!seesPlayer) {
+                        state = GhostState.SUSPICIOUS;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    break;
+                case EXPLOSIVE:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 2) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                    }
+                    break;
+            }
+       } else if (this.colour == Colour.BLUE) {
+
+            switch (state) {
+                case PASSIVE:
+                    if (seesPlayer) {
+                        state = GhostState.ACTIVE;
+                    }
+                    break;
+                case ACTIVE:
+                    if (!seesPlayer) {
+                        state = GhostState.PASSIVE;
+                    }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    break;
+                case EXPLOSIVE:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 2) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                    }
+                    break;
+            }
+
+       } else if (this.colour == Colour.YELLOW) {
+            switch (state) {
+                case PASSIVE:
+                    if (seesPlayer) {
+                        state = GhostState.ACTIVE;
+                    }
+                    // patrols in its area
+                    break;
+                case SUSPICIOUS:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (seesPlayer) state = GhostState.ACTIVE;
+                    if (timePassed > 4) {
+                        state = GhostState.PASSIVE;
+                    }
+                    break;
+                case ACTIVE:
+                    if (!seesPlayer) {
+                        startingPoint = positionX;
+                        velocityX = 0.002;
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    break;
+                case EXPLOSIVE:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 2) {   // leave time for the explosion animation
+                        startingPoint = positionX;
+                        velocityX = 0.002;
+                        state = GhostState.PASSIVE;
+                    }
+                    break;
+                default:
+                    state = GhostState.PASSIVE;
+            }
+
+       } else if (this.colour == Colour.GREEN) {
+            switch (state) {
+                case PASSIVE:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if ((seesPlayer)&&(timePassed > 4)) {
+                        state = GhostState.ACTIVE;
+                    }
+                    // stays hidden behind a rock
+                    break;
+                case SUSPICIOUS:
+                    break;
+                case ACTIVE:
+                    if (!seesPlayer) {
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    if (this.intersects(player)) {
+                        state = GhostState.EXPLOSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    // gets in the path of the player
+                    break;
+                case EXPLOSIVE:
+                    timePassed = (System.currentTimeMillis() - timeStamp) / 1000;
+                    if (timePassed > 2) {   // leave time for the explosion animation
+                        state = GhostState.PASSIVE;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    break;
+                default:
+                    state = GhostState.PASSIVE;
+            }
+       }
+    }
 }
