@@ -437,7 +437,7 @@ public class GameEngine extends Application {
                     updateScene(page);
                     this.stop();
                 }
-
+                //TODO: still need modification
                 double offsetX = display_player.getPositionX() - CANVAS_WIDTH/2;
 				if (offsetX<0) offsetX=0;
                 if (offsetX>main_game.getDimensionX() - CANVAS_WIDTH) offsetX=main_game.getDimensionX() - CANVAS_WIDTH;
@@ -792,7 +792,7 @@ public class GameEngine extends Application {
         gameOver = false;
         page = Page.MAIN;
         current_game_level = 1;
-        max_unlocked_level = 2;
+        max_unlocked_level = 3;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
