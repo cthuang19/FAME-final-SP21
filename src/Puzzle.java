@@ -88,6 +88,7 @@ public class Puzzle {
                             treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
                             treasure.setType("energy");
                         }
+                        treasure.setCanBeRecovered(false);
                         break;
                 }
             }

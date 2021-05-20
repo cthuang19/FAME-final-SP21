@@ -253,7 +253,7 @@ public class Player extends MovingAnimatedImage {
                     }
                 }
 
-                if (this.intersects(treasure)) {
+                if (this.intersects(treasure)&&(treasure.getCanBeRecovered())) {
                     isGameCompleted = true;
                     return;
                 }
@@ -326,8 +326,16 @@ public class Player extends MovingAnimatedImage {
 
     public void setGripWall(boolean b) {gripWall=b;}
 
-    public void addLife() {this.lives++;}
+    public void addLife() {
+        if (this.lives<3) {this.lives++;}
+    }
 
-    public void addEnergy() {this.fieldEnergy += 50;}
+    public void addEnergy() {
+        if (this.fieldEnergy<300) {
+            this.fieldEnergy += 50;
+        } else {
+            this.fieldEnergy = 300;
+        }
+    }
 
 }

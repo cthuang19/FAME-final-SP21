@@ -16,7 +16,10 @@ public class Treasure extends AnimatedImage{
     /* indicates if the player already took the treasure or not */
     private boolean recovered;
 
-    /* indicates if the treasure is a life or some energy */
+    /* indicates if the player can take it (in puzzle) */
+    private boolean canBeRecovered = true;
+
+    /* indicates if the treasure is a life or some energy in the puzzle */
     private String type;
 
     public Treasure () {
@@ -39,6 +42,7 @@ public class Treasure extends AnimatedImage{
         setFrames(f);
         setDuration(0.1);
         recovered = false;
+        canBeRecovered = true;
     }
 
     public Rectangle2D getBoundary() {
@@ -52,11 +56,15 @@ public class Treasure extends AnimatedImage{
 
     public boolean getRecovered() {return recovered;}
 
+    public boolean getCanBeRecovered() {return canBeRecovered;}
+
     public String getType() {return type;}
 
     //setter functions
     public void setType(String str) {type = str;}
 
     public void setRecovered(boolean b) {recovered = b;}
+
+    public void setCanBeRecovered(boolean b) {canBeRecovered = b;}
 
 }

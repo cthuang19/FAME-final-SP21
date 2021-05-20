@@ -95,7 +95,7 @@ public class PuzzleType1 extends Puzzle {
                 this.state = 0;
                 break;
         }
-        System.out.println(state);
+        //System.out.println(state);
     }
 
     public void initializeLights() {

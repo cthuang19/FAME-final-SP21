@@ -169,7 +169,7 @@ public class GameEngine extends Application {
         });
 
         Button credits_button = drawButton("Credits", gc_language, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.CREDITS);
-        Button exit_button = drawButton("Exit ", gc_language, 35, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, null);
+        Button exit_button = drawButton("Exit ", gc_language, 25, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, null);
         exit_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 System.exit(0);
@@ -233,9 +233,11 @@ public class GameEngine extends Application {
         gc_initial.drawImage(BACKGROUND_IMAGE, 0, 0);
 
         Button next_button = drawButton("Next", gc_initial, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.MAIN);
+        Button back_button = drawButton("Back", gc_initial, 25, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.LANGUAGE);
 
         root_initial.getChildren().add(canvas_initial);
         root_initial.getChildren().add(next_button);
+        root_initial.getChildren().add(back_button);
 
         //depends on the language of the game
         //the initial scene will load different file
@@ -247,12 +249,12 @@ public class GameEngine extends Application {
 
         // drawing a rectangle background
         Image gui_image = new Image(".//Images/gui/blue/panel-1.png",1300,700,false,true);
-        gc_initial.drawImage(gui_image,50,50);
+        gc_initial.drawImage(gui_image,80,50);
         // drawing the text
         gc_initial.setFill(Color.LIGHTYELLOW);
         gc_initial.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_initial.fillText(all.get(i), 160, 180 + 70 * i);
+            gc_initial.fillText(all.get(i), 190, 180 + 70 * i);
         }
         return initial;
     }
@@ -338,7 +340,7 @@ public class GameEngine extends Application {
             });
         }
 
-        gc_main.drawImage(new Image(".//Images/spaceship/spiked_ship_3_small_red.png"),75,350);
+        gc_main.drawImage(new Image(".//Images/spaceship/spiked_ship_3_small_red.png"),50,230);
 
 /*        AnimatedImage ship = new AnimatedImage();
         final Image[] fship = new Image[4];
@@ -348,6 +350,7 @@ public class GameEngine extends Application {
         gc_main.drawImage(ship.getFrame(0),75,300);
 */
         drawPlayerStatus(gc_main, player_lives, player_energy,"choose level");
+        drawPlayerTreasures(gc_main);
 
         root_main.getChildren().add(canvas_main);
         for (int i=0; i<max_unlocked_level; i++) {
@@ -548,6 +551,7 @@ public class GameEngine extends Application {
         //getting all the fix information to draw
         ArrayList<Asteroid> display_asteroid = puzzle.getAsteroids();
         Treasure display_treasure = puzzle.getTreasure();
+        display_treasure.setCanBeRecovered(false);
         ArrayList<BackTile> display_backtiles = puzzle.getBacktiles();
 
         new AnimationTimer() {
@@ -563,6 +567,7 @@ public class GameEngine extends Application {
                     default :
                         break;
                 }
+                System.out.println(display_treasure.getCanBeRecovered());
 
                 Player display_player = puzzle.getPlayer();
 
@@ -571,7 +576,6 @@ public class GameEngine extends Application {
 
                 ArrayList<AnimatedImage> lights = puzzle.getLights();
 
-                //TODO : find how to get the player to have the coordinates of the door when he gets out
                 display_player.setGoOut();
                 if (display_player.getGoOut()) {
                     page = Page.GAME;
@@ -588,9 +592,11 @@ public class GameEngine extends Application {
                     gc_puzzle.drawImage(a.getFrame(0), a.getPositionX(), a.getPositionY());
                 }
 
+                display_treasure.setCanBeRecovered(puzzle.getIsCompleted());
+
                 // draw the treasure only if the level in completed
                 // and set door.isCompleted to true
-                if (puzzle.getIsCompleted()&&(!display_treasure.getRecovered())) {
+                if (display_treasure.getCanBeRecovered()&&(!display_treasure.getRecovered())) {
                     gc_puzzle.drawImage(display_treasure.getFrame(0), display_treasure.getPositionX(),
                             display_treasure.getPositionY(), MAIN_GAME_DISPLAY_WIDTH, MAIN_GAME_DISPLAY_WIDTH);
                     //display_player.getCurrentDoor().setIsCompleted(true);
@@ -598,7 +604,7 @@ public class GameEngine extends Application {
 
                 // stops displaying treasure if recovered
                 if (!display_treasure.getRecovered()) {
-                    if (display_player.intersects(display_treasure)) {
+                    if (display_player.intersects(display_treasure)&&display_treasure.getCanBeRecovered()) {
                         // stop displaying treasure : repaint background and asteroids over
                         gc_puzzle.drawImage(BACKGROUND_IMAGE, 0, 0);
                         for (Asteroid a : display_asteroid) {
@@ -787,12 +793,26 @@ public class GameEngine extends Application {
         return button;
     }
 
+    private void drawPlayerTreasures(GraphicsContext gc) {
+        ArrayList<Image> treasures_images = new ArrayList<>();
+        Image box = new Image(".//Images/gui/cyan/panel-1.png");
+        gc.drawImage(box, 40, 380, 180, 120);
+        for (int i=0; i<max_unlocked_level-1; i++) {
+            treasures_images.add(new Image(".//Images/treasures/Treasure" + (i+1) + ".png", 30, 30, true, true));
+            if (i < 3) {
+                gc.drawImage(treasures_images.get(i), 65 + 50 * i, 400);
+            } else {
+                gc.drawImage(treasures_images.get(i), 65 + 50 * (i - 3), 450);
+            }
+        }
+    }
+
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
         page = Page.MAIN;
         current_game_level = 1;
-        max_unlocked_level = 3;
+        max_unlocked_level = 1;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
