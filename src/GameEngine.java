@@ -288,8 +288,6 @@ public class GameEngine extends Application {
     public Scene getMainScene() {
         endMainGame = false;
         gameOver = false;
-        // boolean isCmd = false; // the boolean tracking whether the cmd button has
-        // been pressed
         Group root_main = new Group();
         Scene scene_main = new Scene(root_main);
         Canvas canvas_main = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
