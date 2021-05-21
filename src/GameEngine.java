@@ -523,9 +523,7 @@ public class GameEngine extends Application {
         Scene scene_puzzle = new Scene(root_puzzle);
         Canvas canvas_puzzle = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_puzzle = canvas_puzzle.getGraphicsContext2D();
-        // initialize puzzle
-        PuzzleType1 puzzle = new PuzzleType1(1, player_lives, player_energy);
-        puzzle.setLevel(current_puzzle_level);
+        PuzzleType1 puzzle = new PuzzleType1(current_puzzle_level, player_lives, player_energy);
         puzzle.initializeLights();
         /*switch (current_puzzle_type) {
             case 1 :
@@ -582,10 +580,8 @@ public class GameEngine extends Application {
                     default :
                         break;
                 }
-                System.out.println(display_treasure.getCanBeRecovered());
 
                 Player display_player = puzzle.getPlayer();
-
                 player_lives = (int) display_player.getLives();
                 player_energy = (int) display_player.getFieldEnergy();
 

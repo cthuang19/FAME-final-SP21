@@ -1,6 +1,3 @@
-// just a test, don't know if it will be useful
-// or if we can just use the Puzzle class
-
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;

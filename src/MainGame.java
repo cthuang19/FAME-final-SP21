@@ -40,6 +40,7 @@ public class MainGame {
 
     private Player player;
     private Treasure treasure;
+    private int doorCount = 0;
 
     private boolean isCompleted;
 
@@ -107,7 +108,8 @@ public class MainGame {
                         treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
                         break;
                     case DOOR_CELL:
-                        doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH));
+                        doorCount++;
+                        doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH, 1, doorCount));
                         break;
                 }
             }
