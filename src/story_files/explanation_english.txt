@@ -1,0 +1,2 @@
+Use W, D, S and A to move around. Try using K to protect yourself, L to go through 
+doors and J to grip walls.

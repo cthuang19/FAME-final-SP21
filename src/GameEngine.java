@@ -37,7 +37,7 @@ public class GameEngine extends Application {
 
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
 
-    /* the page of the current scene (not sure if useful)*/
+    /* the page of the current scene */
     enum Page {LANGUAGE, CREDITS, INITIAL, MAIN, GAME, PUZZLE, ENDLEVEL};
     
     /* the language of the game */
@@ -70,6 +70,7 @@ public class GameEngine extends Application {
     private static int player_energy = 300;
     private static double player_back_puzzle_X = 0;
     private static double player_back_puzzle_Y = 0;
+
 
     @Override
     public void start(Stage theStage) {
@@ -220,7 +221,7 @@ public class GameEngine extends Application {
 
     /**
      * create the initial scene according to the language chosen and return it
-     * the scene contains story and next button
+     * the scene contains story and next and back buttons
      * @return the initial scene
      */
     private Scene getInitialScene() {
@@ -279,7 +280,6 @@ public class GameEngine extends Application {
             Image gui_image = new Image(".//Images/gui/yellow/panel-1.png",1300,700,false,true);
             gc_main.drawImage(gui_image, 50, 50);
 
-            //TODO: probably change the font style here
             gc_main.setFill(Color.BLACK);
             gc_main.setFont(FONT_XLARGE);
             FileReader fr = new FileReader(".//story_files/" + endingFileName);
@@ -305,8 +305,9 @@ public class GameEngine extends Application {
             return scene_main;
         }
 
+        // draw all the buttons for the levels
         String level_label = "";
-        ArrayList<Button> level_buttons = new ArrayList<Button>();
+        ArrayList<Button> level_buttons = new ArrayList<>();
         ArrayList<Image> button_images = new ArrayList<>();
         for (int i=0; i<max_unlocked_level; i++) {
             level_label = Util.convertLanguage(language, "LEVEL ") + (i + 1);
@@ -316,13 +317,13 @@ public class GameEngine extends Application {
             level_buttons.get(i).setMinSize(200, 200);
 
             if (i<3) {
-                gc_main.drawImage(button_images.get(i),200+400*i,100);
-                level_buttons.get(i).setLayoutX(200 + 400 * i);
+                gc_main.drawImage(button_images.get(i),250+400*i,100);
+                level_buttons.get(i).setLayoutX(250 + 400 * i);
                 level_buttons.get(i).setLayoutY(100);
             } else {
-                gc_main.drawImage(button_images.get(i),1000-400*(i-3),500);
-                level_buttons.get(i).setLayoutX(1000-400*(i-3));
-                level_buttons.get(i).setLayoutY(500);
+                gc_main.drawImage(button_images.get(i),1050-400*(i-3),400);
+                level_buttons.get(i).setLayoutX(1050-400*(i-3));
+                level_buttons.get(i).setLayoutY(400);
             }
 
             level_buttons.get(i).setStyle("-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 28");
@@ -351,11 +352,21 @@ public class GameEngine extends Application {
 */
         drawPlayerStatus(gc_main, player_lives, player_energy,"choose level");
         drawPlayerTreasures(gc_main);
+        Button back_button = drawButton("Back", gc_main, 25, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, Page.INITIAL);
+        Button commands_button = drawButton("Cmds", gc_main, SMALL_BUTTON_X, SMALL_BUTTON_Y, SMALL_BUTTON_SIZE, SMALL_BUTTON_SIZE, null);
+
+        commands_button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                drawCommandsMessage(gc_main);
+            }
+        });
 
         root_main.getChildren().add(canvas_main);
         for (int i=0; i<max_unlocked_level; i++) {
             root_main.getChildren().add(level_buttons.get(i));
         }
+        root_main.getChildren().add(back_button);
+        root_main.getChildren().add(commands_button);
 
         return scene_main;
     }
@@ -478,6 +489,10 @@ public class GameEngine extends Application {
                 }
 
                 drawPlayerStatus(gc_game, main_game.getPlayerLives(), main_game.getPlayerFieldEnergy(),"main");
+
+                if ((t < 8) && (current_game_level == 1)) {
+                    drawCommandsMessage(gc_game);
+                }
 
                 if (main_game.isGameEnd()) {
                     if (main_game.isGameComplete() && current_game_level == max_unlocked_level) {
@@ -664,7 +679,7 @@ public class GameEngine extends Application {
             gc_endgame.fillText(text, 490, 390);
         } else {
             String text = Util.convertLanguage(language, "Congrats! You found a new piece!");
-            gc_endgame.fillText(text, 400, 340);
+            gc_endgame.fillText(text, 370, 340);
         }
 
         Button restart_button;
@@ -807,12 +822,28 @@ public class GameEngine extends Application {
         }
     }
 
+    private void drawCommandsMessage(GraphicsContext gc) {
+        String fileName = "";
+        fileName = Util.convertLanguage(language, "explanation_english.txt");
+        FileReader fr = new FileReader(".//story_files/" + fileName);
+        ArrayList<String> all = fr.allLines();
+
+        Image gui_image = new Image(".//Images/gui/blue/panel-4.png",1190,260,false,true);
+        gc.drawImage(gui_image,130,540);
+
+        gc.setFill(Color.LIGHTYELLOW);
+        gc.setFont(FONT_LARGE);
+        for (int i = 0; i < all.size(); i++) {
+            gc.fillText(all.get(i), 230, 650 + 70 * i);
+        }
+    }
+
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
         page = Page.MAIN;
         current_game_level = 1;
-        max_unlocked_level = 1;
+        max_unlocked_level = 6;
         current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);

@@ -18,6 +18,9 @@ public class Util {
             put("Congrats! You found a new piece!", "Bravo ! Vous avez trouvé une nouvelle pièce !");
             put("The ghosts got you!", "Les fantômes vous ont eu !");
             put("Ship ", "Vaisseau ");
+            put("explanation_english.txt", "explanation_french.txt");
+            put("Cmds", "Cmds");
+            put("Ok", "Ok");
         }
     };
 
