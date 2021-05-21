@@ -331,7 +331,7 @@ public class Player extends MovingAnimatedImage {
     }
 
     public void addEnergy() {
-        if (this.fieldEnergy<300) {
+        if (this.fieldEnergy<250) {
             this.fieldEnergy += 50;
         } else {
             this.fieldEnergy = 300;
