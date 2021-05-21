@@ -162,14 +162,15 @@ public class Ghost extends MovingAnimatedImage {
 
         if (this.colour == Colour.BLUE) {
             updateGhostState(player);
-            if (state == GhostState.ACTIVE) {
+            /*if (state == GhostState.ACTIVE) {
                 velocityX=directionGhostX*2;
                 velocityY=directionGhostY*2;
             } else {
                 return;
             }
             positionX += velocityX ;
-            positionY += velocityY ;
+            positionY += velocityY ;*/
+            if (state != GhostState.ACTIVE) {return;}
             moveGhost(asteroids);
             return;
         }
