@@ -52,8 +52,8 @@ public class Player extends MovingAnimatedImage {
     private final Image[] fThrustLeft = new Image[5];
     private final Image[] fThrustRight = new Image[5];
     private final Image[] explosions = new Image[7];
-    private final Image[] shield = new Image[1];
-
+    private final Image[] shieldLeft = new Image[5];
+    private final Image[] shieldRight = new Image[5];
 
     public Player(String n, int x, int y) {
         super(n, x, y, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_MASS);
@@ -106,8 +106,9 @@ public class Player extends MovingAnimatedImage {
         for (int i=0;i<5;i++) fThrustDownRight[i] = new Image(".//Images/spaceman/SpacemanThrustDownRight/SpacemanThrustDownRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
-        for (int i=0;i<7;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion_" + i + ".png");
-        for (int i=0;i<1;i++) shield[i] = new Image(".//Images/shield.png");
+        for (int i=0;i<7;i++) explosions[i] = new Image(".//Images/explosion/explosion/explosion_" + i + ".png");
+        for (int i=0;i<5;i++) shieldLeft[i] = new Image(".//Images/shield/shieldLeft/shieldLeft_" + i + ".png");
+        for (int i=0;i<5;i++) shieldRight[i] = new Image(".//Images/shield/shieldRight/shieldRight_" + i + ".png");
         setFrames(fIdleRight);
     }
 
@@ -145,9 +146,11 @@ public class Player extends MovingAnimatedImage {
             case "thrust right" :
                 setFrames(fThrustRight);
                 break;
-            // TODO : create frames with shield superposed to all the already existing frames
-            case "shield" :
-                setFrames(shield);
+            case "shield left" :
+                setFrames(shieldLeft);
+                break;
+            case "shield right" :
+                setFrames(shieldRight);
                 break;
             default :
                 setFrames(fIdleRight);

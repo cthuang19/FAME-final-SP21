@@ -182,7 +182,11 @@ public class MainGame {
         if (input.contains("K")) {
             player.setShieldOn(true);
             if (player.getShieldOn()) {
-                player.updateImages("shield");
+                if (player.getDirection() == Player.CharacterDirection.LEFT) {
+                    player.updateImages("shield left");
+                } else {
+                    player.updateImages("shield right");
+                }
             } else {
                 player.updateImages("idle right");
             }

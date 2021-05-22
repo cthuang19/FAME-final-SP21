@@ -89,8 +89,7 @@ public class Ghost extends MovingAnimatedImage {
         for (int i=0;i<3;i++) fRight[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_right_"+i+".png");
         for (int i=0;i<3;i++) fDown[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_down_"+i+".png");
         for (int i=0;i<3;i++) fLeft[i] = new Image(".//Images/ghosts/" + ghost_colour + "_ghost/"+ ghost_colour+ "_ghost_left_"+i+".png");
-
-        for (int i=0;i<7;i++) fExplosion[i]=new Image(".//Images/explosion/test_explosion/explosion_"+i+".png");
+        for (int i=0;i<7;i++) fExplosion[i]=new Image(".//Images/explosion/explosion/explosion_"+i+".png");
         setFrames(fUp);
     }
 
@@ -162,14 +161,6 @@ public class Ghost extends MovingAnimatedImage {
 
         if (this.colour == Colour.BLUE) {
             updateGhostState(player);
-            /*if (state == GhostState.ACTIVE) {
-                velocityX=directionGhostX*2;
-                velocityY=directionGhostY*2;
-            } else {
-                return;
-            }
-            positionX += velocityX ;
-            positionY += velocityY ;*/
             if (state != GhostState.ACTIVE) {return;}
             moveGhost(asteroids);
             return;

@@ -15,8 +15,8 @@ public class PuzzleType1 extends Puzzle {
     private long timeStamp;
 
     private ArrayList<AnimatedImage> lights = new ArrayList<>();
-    private final Image[] lightOn = new Image[4];
-    private final Image[] lightOff = new Image[4];
+    private final Image[] lightOn = new Image[1];
+    private final Image[] lightOff = new Image[1];
 
     public PuzzleType1() {
         super(1, 1, 3, 300);
@@ -92,12 +92,11 @@ public class PuzzleType1 extends Puzzle {
                 this.state = 0;
                 break;
         }
-        //System.out.println(state);
     }
 
     public void initializeLights() {
-        for (int i=0;i<4;i++) lightOn[i] = new Image(".//Images/puzzle_lights/testOn.png");
-        for (int i=0;i<4;i++) lightOff[i] = new Image(".//Images/puzzle_lights/testOff.png");
+        lightOn[0] = new Image(".//Images/puzzle_lights/lightOn.png");
+        lightOff[0] = new Image(".//Images/puzzle_lights/lightOff.png");
 
         for (int j=0;j<3;j++) {
             lights.add(new AnimatedImage());
