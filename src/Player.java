@@ -45,10 +45,12 @@ public class Player extends MovingAnimatedImage {
     /* sets of frames */
     private final Image[] fIdleLeft = new Image[5];
     private final Image[] fIdleRight = new Image[5];
-    private final Image[] fThrustUp = new Image[5];
-    private final Image[] fThrustRight = new Image[5];
-    private final Image[] fThrustDown = new Image[5];
+    private final Image[] fThrustUpLeft = new Image[5];
+    private final Image[] fThrustUpRight = new Image[5];
+    private final Image[] fThrustDownLeft = new Image[5];
+    private final Image[] fThrustDownRight = new Image[5];
     private final Image[] fThrustLeft = new Image[5];
+    private final Image[] fThrustRight = new Image[5];
     private final Image[] explosions = new Image[7];
     private final Image[] shield = new Image[1];
 
@@ -98,9 +100,11 @@ public class Player extends MovingAnimatedImage {
         setDuration(0.2);
         for (int i=0;i<5;i++) fIdleLeft[i] = new Image(".//Images/spaceman/SpacemanIdleLeft/SpacemanIdleLeft_"+i+".png");
         for (int i=0;i<5;i++) fIdleRight[i] = new Image(".//Images/spaceman/SpacemanIdleRight/SpacemanIdleRight_"+i+".png");
-        for (int i=0;i<5;i++) fThrustUp[i] = new Image(".//Images/spaceman/SpacemanThrustUp/SpacemanThrustUp_"+i+".png");
+        for (int i=0;i<5;i++) fThrustUpLeft[i] = new Image(".//Images/spaceman/SpacemanThrustUpLeft/SpacemanThrustUpLeft_"+i+".png");
+        for (int i=0;i<5;i++) fThrustUpRight[i] = new Image(".//Images/spaceman/SpacemanThrustUpRight/SpacemanThrustUpRight_"+i+".png");
+        for (int i=0;i<5;i++) fThrustDownLeft[i] = new Image(".//Images/spaceman/SpacemanThrustDownLeft/SpacemanThrustDownLeft_"+i+".png");
+        for (int i=0;i<5;i++) fThrustDownRight[i] = new Image(".//Images/spaceman/SpacemanThrustDownRight/SpacemanThrustDownRight_"+i+".png");
         for (int i=0;i<5;i++) fThrustRight[i] = new Image(".//Images/spaceman/SpacemanThrustRight/SpacemanThrustRight_"+i+".png");
-        for (int i=0;i<5;i++) fThrustDown[i] = new Image(".//Images/spaceman/SpacemanThrustDown/SpacemanThrustDown_"+i+".png");
         for (int i=0;i<5;i++) fThrustLeft[i] = new Image(".//Images/spaceman/SpacemanThrustLeft/SpacemanThrustLeft_"+i+".png");
         for (int i=0;i<7;i++) explosions[i] = new Image(".//Images/explosion/test_explosion/explosion_" + i + ".png");
         for (int i=0;i<1;i++) shield[i] = new Image(".//Images/shield.png");
@@ -119,27 +123,27 @@ public class Player extends MovingAnimatedImage {
         switch (s) {
             case "idle right" :
                 setFrames(fIdleRight);
-                //System.out.println("fIdleRight");
                 break;
             case "idle left" :
                 setFrames(fIdleLeft);
-                //System.out.println("fIdleLeft");
                 break;
-            case "thrust up" :
-                setFrames(fThrustUp);
-                //System.out.println("fThrustUp");
+            case "thrust up left" :
+                setFrames(fThrustUpLeft);
                 break;
-            case "thrust right" :
-                setFrames(fThrustRight);
-                //System.out.println("fThrustRight");
+            case "thrust up right" :
+                setFrames(fThrustUpRight);
                 break;
-            case "thrust down" :
-                setFrames(fThrustDown);
-                //System.out.println("fThrustDown");
+            case "thrust down left" :
+                setFrames(fThrustDownLeft);
+                break;
+            case "thrust down right" :
+                setFrames(fThrustDownRight);
                 break;
             case "thrust left" :
                 setFrames(fThrustLeft);
-                //System.out.println("fThrustLeft");
+                break;
+            case "thrust right" :
+                setFrames(fThrustRight);
                 break;
             // TODO : create frames with shield superposed to all the already existing frames
             case "shield" :

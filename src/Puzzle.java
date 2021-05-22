@@ -115,11 +115,13 @@ public class Puzzle {
      * @param input the keycode that represents which key was pressed
      */
     public void movePlayer(ArrayList<String> input) {
-        // basic movement of the player
         if (input.contains("W")) {      // UP           // Z on AZERTY keyboard
             player.setVelocity(0, -5);
-            player.setDirection(Player.CharacterDirection.UP);
-            player.updateImages("thrust up");
+            if (player.getDirection() == Player.CharacterDirection.RIGHT) {
+                player.updateImages("thrust up right");
+            } else {
+                player.updateImages("thrust up left");
+            }
         }
         if (input.contains("D")) {      // RIGHT
             player.setVelocity(5, 0);
@@ -128,8 +130,11 @@ public class Puzzle {
         }
         if (input.contains("S")) {      // DOWN
             player.setVelocity(0, 5);
-            player.setDirection(Player.CharacterDirection.DOWN);
-            player.updateImages("thrust down");
+            if (player.getDirection() == Player.CharacterDirection.RIGHT) {
+                player.updateImages("thrust down right");
+            } else {
+                player.updateImages("thrust down left");
+            }
         }
         if (input.contains("A")) {      // LEFT         // Q on AZERTY keyboard
             player.setVelocity(-5, 0);
@@ -147,7 +152,7 @@ public class Puzzle {
             }
         } else {
             player.setShieldOn(false);
-            player.updateImages("idle right");
+            //player.updateImages("idle right");
         }
 
         if (input.contains("J")) {
@@ -157,14 +162,8 @@ public class Puzzle {
         }
 
         if (input.contains(null)) {
-            if (player.getDirection() == Player.CharacterDirection.UP) {
-                player.updateImages("idle right");
-            }
             if (player.getDirection() == Player.CharacterDirection.RIGHT) {
                 player.updateImages("idle right");
-            }
-            if (player.getDirection() == Player.CharacterDirection.DOWN) {
-                player.updateImages("idle left");
             }
             if (player.getDirection() == Player.CharacterDirection.LEFT) {
                 player.updateImages("idle left");
