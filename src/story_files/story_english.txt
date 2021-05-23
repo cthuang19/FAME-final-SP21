@@ -1,6 +1,6 @@
 You are an astronaut. You just had an accident but you cannot remember anything about it. 
 Your spaceship can keep you alive but it cannot bring you back home. You are in an asteroid 
 belt and it seems that it was once inhabited. Your goal is to find all the pieces that you 
-need for repairing your ship and go home. Maybe you will even discover what happened to 
-you and what happened to the people who used to live in there. But beware, the asteroids 
-are not as dead as you might think...
+need for repairing your spaceship and go home. Maybe you will even discover what happened 
+to you and what happened to the people who used to live there. But be aware, the aboriginal 
+people are not as dead as you might think...
