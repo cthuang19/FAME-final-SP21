@@ -6,11 +6,9 @@ public class Util {
         {
             put("Next", "Suivant");
             put("Back", "Retour");
-            put("story_english.txt", "story_french.txt");
             put("Level ", "Niveau ");
             put("LEVEL ", "NIVEAU ");
             put("Credits", "Crédits");
-            put("ending_english.txt", "ending_french.txt");
             put("Exit", "Sortir");
             put("Exit ", "Sortir ");
             put("Restart", "Recommencer");
@@ -18,9 +16,15 @@ public class Util {
             put("Congrats! You found a new piece!", "Bravo ! Vous avez trouvé une nouvelle pièce !");
             put("The ghosts got you!", "Les fantômes vous ont eu !");
             put("Ship ", "Vaisseau ");
-            put("explanation_english.txt", "explanation_french.txt");
             put("Cmds", "Cmds");
             put("Ok", "Ok");
+
+            // file names
+            put("story_english.txt", "story_french.txt");
+            put("ending_english.txt", "ending_french.txt");
+            put("explanation_english.txt", "explanation_french.txt");
+            put("puzzle_explanation_english.txt", "puzzle_explanation_french.txt");
+
         }
     };
 

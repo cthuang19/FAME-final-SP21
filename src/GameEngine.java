@@ -524,7 +524,7 @@ public class GameEngine extends Application {
 
                 drawPlayerStatus(gc_game, main_game.getPlayerLives(), main_game.getPlayerFieldEnergy(), "main");
 
-                if ((t < 8) && (current_game_level == 1)) {
+                if ((t < 6) && (current_game_level == 1)) {
                     drawCommandsMessage(gc_game);
                 }
 
@@ -669,6 +669,10 @@ public class GameEngine extends Application {
                         display_player.getPositionY());
 
                 drawPlayerStatus(gc_puzzle, puzzle.getPlayerLives(), puzzle.getPlayerFieldEnergy(), "puzzle");
+
+                if ((t < 6) && (current_puzzle_level == 1)) {
+                    drawPuzzleMessage(gc_puzzle);
+                }
 
             }
         }.start();
@@ -868,10 +872,26 @@ public class GameEngine extends Application {
         }
     }
 
+    private void drawPuzzleMessage(GraphicsContext gc) {
+        String fileName = "";
+        fileName = Util.convertLanguage(language, "puzzle_explanation_english.txt");
+        FileReader fr = new FileReader(".//story_files/" + fileName);
+        ArrayList<String> all = fr.allLines();
+
+        Image gui_image = new Image(".//Images/gui/blue/panel-4.png", 1190, 220, false, true);
+        gc.drawImage(gui_image, 130, 580);
+
+        gc.setFill(Color.LIGHTYELLOW);
+        gc.setFont(FONT_LARGE);
+        for (int i = 0; i < all.size(); i++) {
+            gc.fillText(all.get(i), 230, 675 + 70 * i);
+        }
+    }
+
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
-        page = Page.MAIN;
+        page = Page.LANGUAGE;
         current_game_level = 1;
         max_unlocked_level = 6;
         current_puzzle_type = 1;
