@@ -151,6 +151,16 @@ public class MainGame {
      * @param input the keycode that represents which key was pressed
      */
     public void movePlayer(ArrayList<String> input) {
+
+        // default set of frames when nothing is pressed
+        if (player.getDirection() == Player.CharacterDirection.RIGHT) {
+            player.updateImages("idle right");
+        }
+        if (player.getDirection() == Player.CharacterDirection.LEFT) {
+            player.updateImages("idle left");
+        }
+        player.setShieldOn(false);
+
         if (input.contains("W")) {      // UP           // Z on AZERTY keyboard
             player.setVelocity(0, -5);
             if (player.getDirection() == Player.CharacterDirection.RIGHT) {
@@ -208,15 +218,6 @@ public class MainGame {
             player.setGripWall(false);
         }
 
-        if (input.contains(null)) {
-            if (player.getDirection() == Player.CharacterDirection.RIGHT) {
-                player.updateImages("idle right");
-            }
-            if (player.getDirection() == Player.CharacterDirection.LEFT) {
-                player.updateImages("idle left");
-            }
-            player.setShieldOn(false);
-        }
     }
     /**
      * update each moving element in the game
