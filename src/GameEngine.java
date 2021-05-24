@@ -231,7 +231,7 @@ public class GameEngine extends Application {
         gc_credits.setFill(Color.LIGHTYELLOW);
         gc_credits.setFont(FONT_LARGE);
         for (int i = 0; i < all.size(); i++) {
-            gc_credits.fillText(all.get(i), 170, 160 + 60 * i);
+            gc_credits.fillText(all.get(i), 170, 160 + 55 * i);
         }
         return credits;
     }
