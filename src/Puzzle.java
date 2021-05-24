@@ -30,6 +30,14 @@ public class Puzzle {
 
     protected boolean isCompleted;
 
+    // states of the FSM that will recognize the pattern
+    private int state;
+    private long timeStamp;
+
+    private ArrayList<MovingAnimatedImage> lights = new ArrayList<>();
+    private final Image[] lightOn = new Image[1];
+    private final Image[] lightOff = new Image[1];
+
     public Puzzle() {
         this(1,1,3,300);
     }
@@ -181,6 +189,189 @@ public class Puzzle {
         player.update(t, asteroids, empty_ghosts, treasure);
     }
 
+    /** update of the FSM that will recognize the pattern
+     * updates the variable isCompleted
+     * @param input a keyboard event
+     * **/
+    public void updateFSM(ArrayList<String> input) {
+        if (type == 1) {
+            switch (state) {
+                case 0 :
+                    if (input.contains("W")) {      // Z on AZERTY keyboard
+                        this.state = 1;
+                        timeStamp = System.currentTimeMillis();
+                    }
+                    break;
+                case 1 :
+                    // if UP, stay here + new timeStamp
+                    // else if RIGHT, go to 2 + new timeStamp
+                    //      else if nothing, stay here
+                    //           else (if every key else) go back to 0
+                    if ((System.currentTimeMillis()-timeStamp)/1000 < 1) {
+                        if (input.contains("W")) {      // Z on AZERTY keyboard
+                            this.state = 1;
+                            timeStamp = System.currentTimeMillis();
+                        } else {
+                            if (input.contains("D")) {
+                                this.state = 2;
+                                timeStamp = System.currentTimeMillis();
+                            } else {
+                                if (input.isEmpty()) {
+                                    this.state = 1;
+                                } else {
+                                    //this.state = 0;
+                                }
+                            }
+                        }
+                    } else {
+                        this.state = 0;
+                    }
+                    break;
+                case 2 :
+                    if ((System.currentTimeMillis()-timeStamp)/1000 < 1) {
+                        if (input.contains("W")) {      // Z on AZERTY keyboard
+                            this.state = 1;
+                            timeStamp = System.currentTimeMillis();
+                        } else {
+                            if (input.contains("A")) {  // Q on AZERTY keyboard
+                                this.state = 3;
+                                timeStamp = System.currentTimeMillis();
+                            } else {
+                                if (input.isEmpty()) {
+                                    this.state = 2;
+                                } else {
+                                    //this.state = 0;
+                                }
+                            }
+                        }
+                    } else {
+                        this.state = 0;
+                    }
+                    break;
+                case 3 :
+                    this.isCompleted = true;
+                    break;
+                default :
+                    this.state = 0;
+                    break;
+            }
+        }
+        if (type == 2) {
+            switch (state) {
+                case 0 :
+                    if (player.intersects(lights.get(0))) {
+                        this.state = 1;
+                    }
+                    break;
+                case 1 :
+                    if (player.intersects(lights.get(1))) {
+                        this.state = 2;
+                    } else {
+                        if (player.intersects(lights.get(2)) || player.intersects(lights.get(3))) {
+                            this.state = 0;
+                        }
+                    }
+
+                    break;
+                case 2 :
+                    if (player.intersects(lights.get(2))) {
+                        this.state = 3;
+                    } else {
+                        if (player.intersects(lights.get(3))) {
+                            this.state = 0;
+                        }
+                    }
+                    break;
+                case 3 :
+                    if (player.intersects(lights.get(3))) {
+                        this.state = 4;
+                    }
+                    break;
+                case 4 :
+                    this.isCompleted = true;
+                    break;
+                default :
+                    this.state = 0;
+                    break;
+            }
+        }
+    }
+
+    public void initializeLights() {
+        lightOn[0] = new Image(".//Images/puzzle_lights/platformOn.png",64,64,false,true);
+        lightOff[0] = new Image(".//Images/puzzle_lights/platformOff.png",64,64,false,true);
+
+        if (type == 1) {
+            for (int j = 0; j < 3; j++) {
+                lights.add(new MovingAnimatedImage("light", 512 + 128 * j + 7, 192 + 3, 50, 50, 0));
+                lights.get(j).setDuration(0.2);
+                lights.get(j).setFrames(lightOff);
+            }
+        }
+        if (type == 2) {
+            for (int j=0;j<4;j++) {
+                if (j==0||j==1) {
+                    lights.add(new MovingAnimatedImage("light", 512 + 256 * j, 256, 64, 64, 0));
+                } else {
+                    lights.add(new MovingAnimatedImage("light", 768 - 256 * (3-j), 512, 64, 64, 0));
+                }
+                lights.get(j).setDuration(0.2);
+                lights.get(j).setFrames(lightOff);
+            }
+
+        }
+    }
+
+    public void updateLights() {
+        if (type == 1) {
+            switch (state) {
+                case 0:
+                    for (int i = 0; i < 3; i++) lights.get(i).setFrames(lightOff);
+                    break;
+                case 1:
+                    lights.get(0).setFrames(lightOn);
+                    for (int i = 1; i < 3; i++) lights.get(i).setFrames(lightOff);
+                    break;
+                case 2:
+                    for (int i = 0; i < 2; i++) lights.get(i).setFrames(lightOn);
+                    lights.get(2).setFrames(lightOff);
+                    break;
+                case 3:
+                    for (int i = 0; i < 3; i++) lights.get(i).setFrames(lightOn);
+                    break;
+                default:
+                    for (int i = 0; i < 3; i++) lights.get(i).setFrames(lightOff);
+                    break;
+            }
+        }
+        if (type == 2) {
+            switch (state) {
+                case 0 :
+                    for (int i=0; i<4; i++) lights.get(i).setFrames(lightOff);
+                    break;
+                case 1 :
+                    lights.get(0).setFrames(lightOn);
+                    for (int i=1; i<4; i++) lights.get(i).setFrames(lightOff);
+                    break;
+                case 2 :
+                    for (int i=0; i<2; i++) lights.get(i).setFrames(lightOn);
+                    for (int i=2; i<4; i++) lights.get(i).setFrames(lightOff);
+                    break;
+                case 3 :
+                    for (int i=0; i<3; i++) lights.get(i).setFrames(lightOn);
+                    lights.get(3).setFrames(lightOff);
+                    break;
+                case 4 :
+                    for (int i=0; i<4; i++) lights.get(i).setFrames(lightOn);
+                    break;
+                default :
+                    for (int i=0; i<4; i++) lights.get(i).setFrames(lightOff);
+                    break;
+            }
+        }
+    }
+
+
     //getter functions
     public ArrayList<Asteroid> getAsteroids() { return asteroids;}
 
@@ -201,5 +392,7 @@ public class Puzzle {
     public boolean getIsCompleted() {return isCompleted;}
 
     public int getType() {return type;}
+
+    public ArrayList<MovingAnimatedImage> getLights() {return lights;}
 
 }

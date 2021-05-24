@@ -557,13 +557,9 @@ public class GameEngine extends Application {
         Scene scene_puzzle = new Scene(root_puzzle);
         Canvas canvas_puzzle = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         GraphicsContext gc_puzzle = canvas_puzzle.getGraphicsContext2D();
-        PuzzleType1 puzzle = new PuzzleType1(current_puzzle_level, player_lives, player_energy);
+        Puzzle puzzle = new Puzzle(current_puzzle_type, current_puzzle_level, player_lives, player_energy);
         puzzle.initializeLights();
-        /*
-         * switch (current_puzzle_type) { case 1 :
-         * puzzle.setLevel(current_puzzle_level); puzzle.initializeLights(); break;
-         * default : puzzle.setLevel(current_puzzle_level); break; }
-         */
+
         final long startNanoTime = System.nanoTime();
 
         ArrayList<String> input = new ArrayList<String>();
@@ -596,20 +592,14 @@ public class GameEngine extends Application {
                 double t = (current_nano_time - startNanoTime) / 1000000000.0;
                 puzzle.movePlayer(input);
                 puzzle.update_time(t, input);
-                switch (current_puzzle_type) {
-                case 1:
-                    puzzle.updateFSM(input);
-                    puzzle.updateLights();
-                    break;
-                default:
-                    break;
-                }
+                puzzle.updateFSM(input);
+                puzzle.updateLights();
 
                 Player display_player = puzzle.getPlayer();
                 player_lives = (int) display_player.getLives();
                 player_energy = (int) display_player.getFieldEnergy();
 
-                ArrayList<AnimatedImage> lights = puzzle.getLights();
+                ArrayList<MovingAnimatedImage> lights = puzzle.getLights();
 
                 display_player.setGoOut();
                 if (display_player.getGoOut()) {
@@ -657,10 +647,15 @@ public class GameEngine extends Application {
                     }
                 }
 
-                // draw the lights for the FSM
+                // draw the lights of the platforms for the FSM
                 if (current_puzzle_type == 1) {
                     for (int i = 0; i < 3; i++) {
-                        gc_puzzle.drawImage(lights.get(i).getFrame(0), 512 + 128 * i + 7, 192 + 3, 50, 50);
+                        gc_puzzle.drawImage(lights.get(i).getFrame(0), lights.get(i).getPositionX(), lights.get(i).getPositionY());
+                    }
+                }
+                if (current_puzzle_type == 2) {
+                    for (int i = 0; i < 4; i++) {
+                        gc_puzzle.drawImage(lights.get(i).getFrame(0), lights.get(i).getPositionX(), lights.get(i).getPositionY());
                     }
                 }
 
@@ -671,7 +666,7 @@ public class GameEngine extends Application {
                 drawPlayerStatus(gc_puzzle, puzzle.getPlayerLives(), puzzle.getPlayerFieldEnergy(), "puzzle");
 
                 if ((t < 6) && (current_puzzle_level == 1)) {
-                    drawPuzzleMessage(gc_puzzle);
+                    drawPuzzleMessage(gc_puzzle, current_puzzle_type);
                 }
 
             }
@@ -872,9 +867,9 @@ public class GameEngine extends Application {
         }
     }
 
-    private void drawPuzzleMessage(GraphicsContext gc) {
+    private void drawPuzzleMessage(GraphicsContext gc, int current_pt) {
         String fileName = "";
-        fileName = Util.convertLanguage(language, "puzzle_explanation_english.txt");
+        fileName = Util.convertLanguage(language, "puzzle_" + current_pt + "_explanation_english.txt");
         FileReader fr = new FileReader(".//story_files/" + fileName);
         ArrayList<String> all = fr.allLines();
 
@@ -891,10 +886,10 @@ public class GameEngine extends Application {
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
-        page = Page.LANGUAGE;
+        page = Page.PUZZLE;
         current_game_level = 1;
         max_unlocked_level = 6;
-        current_puzzle_type = 1;
+        current_puzzle_type = 2;
         current_puzzle_level = 1;
         launch(args);
     }
