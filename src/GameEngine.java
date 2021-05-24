@@ -31,10 +31,10 @@ public class GameEngine extends Application {
     /* the maximum level for the game */
     private static final int MAX_LEVEL = 6;
 
-    public static final Font FONT_XLARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 35);
-    public static final Font FONT_LARGE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 27);
-    public static final Font FONT_SMALL = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 15);
-    public static final Font FONT_TITLE = Font.font("helvetica", FontWeight.LIGHT, FontPosture.REGULAR, 100);
+    public static final Font FONT_XLARGE = Font.font("optima", FontWeight.LIGHT, FontPosture.REGULAR, 35);
+    public static final Font FONT_LARGE = Font.font("optima", FontWeight.LIGHT, FontPosture.REGULAR, 27);
+    public static final Font FONT_SMALL = Font.font("optima", FontWeight.LIGHT, FontPosture.REGULAR, 15);
+    public static final Font FONT_TITLE = Font.font("optima", FontWeight.LIGHT, FontPosture.REGULAR, 100);
 
     public static final Image BACKGROUND_IMAGE = new Image(".//Images/Background-4.png");
 
@@ -119,9 +119,9 @@ public class GameEngine extends Application {
     private Scene getLanguageScene() {
 
         // reset max unlocked level, lives and energy for the player to restart the game
-        // max_unlocked_level = 1;
-        // player_lives = 3;
-        // player_energy = 300;
+        max_unlocked_level = 1;
+        player_lives = 3;
+        player_energy = 300;
 
         // set all the layout of the language scene
         Group root_language = new Group();
@@ -137,7 +137,7 @@ public class GameEngine extends Application {
         gc_language.drawImage(game_name_image, 130, 50);
         gc_language.setFill(Color.LIGHTYELLOW);
         gc_language.setFont(FONT_TITLE);
-        gc_language.fillText("GAME NAME", 400, 230);
+        gc_language.fillText("SPACE ODDITY", 350, 230);
 
         // draw english button
         Button english_button = new Button("English (US)");
@@ -149,7 +149,7 @@ public class GameEngine extends Application {
                 true);
         gc_language.drawImage(english_button_image, 450, 400);
         english_button.setStyle(
-                "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
+                "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25; -fx-font-family: optima");
 
         english_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -170,7 +170,7 @@ public class GameEngine extends Application {
                 true);
         gc_language.drawImage(french_button_image, 450, 600);
         french_button.setStyle(
-                "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
+                "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25; -fx-font-family: optima;");
 
         french_button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -348,7 +348,7 @@ public class GameEngine extends Application {
             }
 
             level_buttons.get(i).setStyle(
-                    "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 28");
+                    "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 28; -fx-font-family: optima;");
 
             final int j = i + 1;
             level_buttons.get(i).setOnAction(new EventHandler<ActionEvent>() {
@@ -817,11 +817,11 @@ public class GameEngine extends Application {
         Image button_image;
         if (message.equals("Restart") || message.equals("Exit") || message.equals("Choose another level")) {
             button.setStyle(
-                    "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25");
+                    "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 25; -fx-font-family: optima");
             button_image = new Image(".//Images/gui/purple/panel-4.png", button_w, button_h, false, true);
         } else {
             button.setStyle(
-                    "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20");
+                    "-fx-background-color: transparent;-fx-border-color: transparent;-fx-text-fill: white;-fx-font-size: 20; -fx-font-family: optima");
             button_image = new Image(".//Images/gui/purple/panel-2.png", button_w, button_h, false, true);
         }
         gc.drawImage(button_image, x, y);
@@ -886,10 +886,10 @@ public class GameEngine extends Application {
     public static void main(String args[]) {
         endMainGame = false;
         gameOver = false;
-        page = Page.PUZZLE;
+        page = Page.LANGUAGE;
         current_game_level = 1;
         max_unlocked_level = 6;
-        current_puzzle_type = 2;
+        current_puzzle_type = 1;
         current_puzzle_level = 1;
         launch(args);
     }

@@ -54,8 +54,6 @@ public class Puzzle {
         dimensionY = 800;
     }
 
-    public void setLevel(int lvl) {level = lvl;}
-
     /**
      * helper function
      * help initialize the game_array with the according
@@ -203,10 +201,6 @@ public class Puzzle {
                     }
                     break;
                 case 1 :
-                    // if UP, stay here + new timeStamp
-                    // else if RIGHT, go to 2 + new timeStamp
-                    //      else if nothing, stay here
-                    //           else (if every key else) go back to 0
                     if ((System.currentTimeMillis()-timeStamp)/1000 < 1) {
                         if (input.contains("W")) {      // Z on AZERTY keyboard
                             this.state = 1;

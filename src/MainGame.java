@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+
 import javafx.scene.image.Image;
 
 public class MainGame {
@@ -40,7 +42,8 @@ public class MainGame {
 
     private Player player;
     private Treasure treasure;
-    private int doorCount = 0;
+    private int doorCount1 = 0;
+    private int doorCount2 = 0;
 
     private boolean isCompleted;
 
@@ -108,8 +111,14 @@ public class MainGame {
                         treasure = new Treasure(treasure_image, c * CELL_WIDTH, i * CELL_WIDTH);
                         break;
                     case DOOR_CELL:
-                        doorCount++;
-                        doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH, 1, doorCount));
+                        Random rand = new Random();
+                        if (rand.nextInt(2)==0) {
+                            doorCount1++;
+                            doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH, 1, doorCount1));
+                        } else {
+                            doorCount2++;
+                            doors.add(new Door(c * CELL_WIDTH, i * CELL_WIDTH, 2, doorCount2));
+                        }
                         break;
                 }
             }
