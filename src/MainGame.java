@@ -64,8 +64,8 @@ public class MainGame {
     }
 
     /**
-     * helper function help initialize the game_array with the according arraylist
-     * of string that was read in the file
+     * help initialize the game_array with the according arraylist of string that
+     * was read in the file
      * 
      * @param s an arraylist of string
      */
