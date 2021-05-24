@@ -76,11 +76,6 @@ public class MovingAnimatedImage extends AnimatedImage implements java.io.Serial
 		return direction;
 	}
 
-	/*
-	 * public String getStrDirection() { return switch (direction) { case UP ->
-	 * "up"; case RIGHT -> "right"; case DOWN -> "down"; case LEFT -> "left";
-	 * default -> "up"; }; }
-	 */
 	public void setDirection(CharacterDirection cd) {
 		direction = cd;
 	}
