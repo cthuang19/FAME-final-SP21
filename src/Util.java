@@ -23,7 +23,8 @@ public class Util {
             put("story_english.txt", "story_french.txt");
             put("ending_english.txt", "ending_french.txt");
             put("explanation_english.txt", "explanation_french.txt");
-            put("puzzle_explanation_english.txt", "puzzle_explanation_french.txt");
+            put("puzzle_1_explanation_english.txt", "puzzle_1_explanation_french.txt");
+            put("puzzle_2_explanation_english.txt", "puzzle_2_explanation_french.txt");
 
         }
     };
